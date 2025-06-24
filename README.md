@@ -4,3 +4,4 @@ The structure is:
 - `indexer`: Contains scripts to put document resources (specified in a yml) into a Chroma vector database using some (free) text embedding model.
 - `mattermost_interact`: A mattermost chatbot implementation talking to Chroma and a local LLM.
  
+Some more docu at: https://codimd.web.cern.ch/JgVlNcgvTjC38GURvriLhA
