@@ -1,0 +1,107 @@
+/// Toy example of how to use MClabels and how to read
+/// MC tracks using a digitization context and labels
+
+void exampleMCTrackAnalysis(const char* itsdigitfilename) {
+  // initialize the kinematics reader
+  o2::steer::MCKinematicsReader reader("collisioncontext.root");
+
+  TFile digitfile(itsdigitfilename,"OPEN");
+  // tree
+  auto tree = (TTree*)digitfile.Get("o2sim");
+  if (!tree) {
+    return;
+  }
+
+  // digitbranch
+  auto dbr = tree->GetBranch("ITSDigit");
+  if (!dbr) {
+    return;
+  }
+
+  // read digits
+  std::vector<o2::itsmft::Digit> *digits = nullptr;
+  dbr->SetAddress(&digits);
+  dbr->GetEntry(0);
+  if (!digits) {
+    return;
+  }
+
+  // read the labels
+  o2::dataformats::IOMCTruthContainerView* labelROOTbuffer = nullptr; // labels are stored in specific buffered format
+  auto labelbr = tree->GetBranch("ITSDigitMCTruth");
+  if (!labelbr) {
+    return;
+  }
+
+  labelbr->SetAddress(&labelROOTbuffer);
+  labelbr->GetEntry(0);
+  if (!labelROOTbuffer) {
+    return;
+  }
+  o2::dataformats::ConstMCTruthContainer<o2::MCCompLabel> labelcontainer;
+  // we need to convert to actual usable label container
+  labelROOTbuffer->copyandflatten(labelcontainer);
+
+  // MCTracks: exemplary access and analysis
+  int MCdigits = 0;
+  int purenoisedigits = 0;
+  int secondarydigits = 0;
+  int primarydigits = 0;
+  int motherissecondary = 0; // counts all digits coming from a particle whose mother was also a secondary
+
+  for (int pos = 0; pos < digits->size(); ++pos) {
+    auto& digit = (*digits)[pos];
+    bool noisecontrib = false;
+    bool MCcontrib = false;
+    bool primarycontrib = false;
+    bool secondarycontrib = false;
+    auto labels = labelcontainer.getLabels(pos);
+    for (auto label : labels) {
+      if (!label.isNoise()) {
+        auto track = reader.getTrack(label);
+        if (!track) {
+          continue;
+        }
+
+        if (track->isSecondary()) {
+          secondarycontrib = true;
+        }
+        else {
+          primarycontrib = true;
+        }
+
+        // line showing how to navigate MC tracks and obtain the mother track of the "track"
+        auto mothertrackptr = o2::mcutils::MCTrackNavigator::getMother(*track, reader.getTracks(label.getSourceID(), label.getEventID()));
+        if (mothertrackptr) {
+          if (mothertrackptr->isSecondary()) {
+            motherissecondary++;
+          }
+        }
+
+        MCcontrib = true;
+      }
+      else {
+        noisecontrib = true;
+      }
+    }
+    if (noisecontrib && !MCcontrib) {
+      purenoisedigits++;
+    }
+    if (MCcontrib) {
+      MCdigits++;
+    }
+    if (secondarycontrib) {
+      secondarydigits++;
+    }
+    if (primarycontrib) {
+      primarydigits++;
+    }
+  }
+  // print a summary
+  std::cout << "Total digits: " << digits->size() << "\n";
+  std::cout << "Pure noise digits: " << purenoisedigits << "\n";
+  std::cout << "MC contrib digits: " << MCdigits << "\n";
+  std::cout << "Digits with primary track contrib: " << primarydigits << "\n";
+  std::cout << "Digits with secondary track contrib: " << secondarydigits << "\n";
+  std::cout << "Digits from secondary tracks, with secondary as mother: " << motherissecondary << "\n";
+}
