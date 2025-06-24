@@ -1,0 +1,28 @@
+resources:
+  - type: git
+    url: https://github.com/AliceO2Group/simulation
+    include: ["docs/**/*.md", "**/*.py", "**/*.sh", "**/*.pdf"]
+    exclude: ["_sass/**"]
+    branch: main
+
+  - type: git
+    url: https://github.com/AliceO2Group/O2DPG
+    include: ["**/*.md", "**/*.py", "**/*.sh", "**/*.pdf"]
+    exclude: ["data/**"]
+    branch: master
+ 
+  - type: git
+    url: https://github.com/AliceO2Group/analysis-framework
+    include: ["docs/**/*.md", "**/*.py", "**/*.sh", "**/*.pdf"]
+    exclude: ["_saas/**"]
+    branch: master
+
+  #- type: google-slide
+  #  url: https://docs.google.com/presentation/d/1BEQmYtKLjmLshwWulLtqIgasmwGup61xfNF5feZPimY/edit?slide=id.p#slide=id.p
+
+  # this is a harder resource as it requires authentication
+  - type: git
+    url: https://gitlab.cern.ch/alice-pdp/operations-manual
+    include: ["docs/**/*.md"]
+    needs-authentication : True
+    branch: master
