@@ -1,3 +1,4 @@
+import os
 from langchain_huggingface import HuggingFaceEmbeddings
 from sklearn.metrics.pairwise import cosine_similarity # or alternative similarity function
 from dotenv import load_dotenv
@@ -7,8 +8,8 @@ load_dotenv()
 
 if __name__ == "__main__":
     model = HuggingFaceEmbeddings(
-        model_name="BAAI/bge-base-en-v1.5",
-        cache_folder="./models/huggingface",
+        model_name=os.getenv("HF_EMBEDDINGS_REPO"),
+        cache_folder=os.getenv("HF_CACHE_DIR"),
         model_kwargs = {"device": "cuda"} # cpu or cuda
     )
     sentences = [
