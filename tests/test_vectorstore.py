@@ -25,4 +25,13 @@ if __name__ == "__main__":
     for doc in result:
         print(doc) # by default chroma stores cosine distance = 1 - cosine similarity and returns the relevance score
 
-    # chroma_retriever = chroma_vectorstore.as_retriever(search_type="similarity_score_threshold", search_kwargs={"k": 3, "score_threshold": 0.6})
+    """
+    chroma_retriever = chroma_vectorstore.as_retriever(
+        search_type="similarity_score_threshold", 
+        search_kwargs={"k": int(os.getenv("CHROMA_TOP_K")), "score_threshold": 0.6}
+    ) # generalized retriever class
+    result = chroma_retriever.invoke(query)
+    print("Retrieved documents with score threshold:")
+    for doc in result:
+        print(doc) # top k documents with a relevance score above the threshold
+    """
