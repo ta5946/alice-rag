@@ -28,7 +28,7 @@ if __name__ == "__main__":
     """
     chroma_retriever = chroma_vectorstore.as_retriever(
         search_type="similarity_score_threshold", 
-        search_kwargs={"k": int(os.getenv("CHROMA_TOP_K")), "score_threshold": 0.6}
+        search_kwargs={"k": int(os.getenv("CHROMA_TOP_K")), "score_threshold": float(os.getenv("CHROMA_THRESHOLD"))}
     ) # generalized retriever class
     result = chroma_retriever.invoke(query)
     print("Retrieved documents with score threshold:")

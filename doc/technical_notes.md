@@ -31,13 +31,15 @@ With CUDA support, the interface is about 5x faster (~55 tokens per second).
 Models were selected based on [Chatbot Arena](https://huggingface.co/spaces/lmarena-ai/chatbot-arena-leaderboard) scores, the number of HuggingFace downloads 
 and space limitations of the NVIDIA GeForce RTX 2080 GPU.
 
-| Model                      | Quantization | VRAM space | Context length | Notes                                              |
-|----------------------------|--------------|------------|----------------|----------------------------------------------------|
-| Mistral-7B-Instruct-v0.1   | 4 bit        | 4.4 GB     | ?              | Initial model, has special token repetition issues |
-| Mistral-7B-Instruct-v0.3   | 6 bit        | 6.0 GB     | 32k tokens     | Improved version of Mistral                        |
-| Qwen2.5-7B-Instruct        | 6 bit        | 6.7 GB     | 32k tokens     | Good at instruction following, useful for RAG      |
-| Meta-Llama-3.1-8B-Instruct | 6 bit        | 6.6 GB     | 32k tokens     | All around model                                   |
-| gemma-3-12b-it             | 3 bit        | 6.0 GB     | 8k tokens      | Quantization may be too heavy                      |
+| Model                      | Quantization | Size   | Context length | Notes                                              |
+|----------------------------|--------------|--------|----------------|----------------------------------------------------|
+| Mistral-7B-Instruct-v0.1   | 4 bit        | 4.4 GB | ?              | Initial model, has special token repetition issues |
+| Mistral-7B-Instruct-v0.3   | 6 bit        | 6.0 GB | 32k tokens     | Improved version of Mistral                        |
+| Qwen2.5-7B-Instruct        | 6 bit        | 6.7 GB | 32k tokens     | Good at instruction following, useful for RAG      |
+| Meta-Llama-3.1-8B-Instruct | 6 bit        | 6.6 GB | 32k tokens     | All around model                                   |
+| gemma-3-12b-it             | 3 bit        | 6.0 GB | 8k tokens      | Quantization may be too heavy                      |
+
+To estimate the VRAM usage of a model for some number of layers and context length: https://huggingface.co/spaces/oobabooga/accurate-gguf-vram-calculator.
 
 
 ### LangChain ecosystem

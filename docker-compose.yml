@@ -11,6 +11,7 @@ services:
       --hf-repo ${HF_LLM_REPO}
       --n-gpu-layers ${N_GPU_LAYERS}
       --no-kv-offload
+      --ctx-size ${CTX_LENGTH}
       --host 0.0.0.0
     deploy:
       resources:
