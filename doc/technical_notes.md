@@ -56,6 +56,7 @@ and cached locally under `/models`.
 
 
 ## Documents
+
 _At this point the documentation from https://github.com/AliceO2Group/simulation/tree/main/docs and working simulation examples from https://github.com/AliceO2Group/AliceO2/tree/dev/run/SimExamples
 are stored in the `/data` directory. Later they should be pulled directly from the repositories._
 
@@ -68,10 +69,15 @@ The script `indexer.py` 1. Reads the repositories and file types declared in the
 documents, 4. Computes embeddings and stores new or changed documents. It has no issues so far.
 
 
+## TODOs
+
+- Integrate with Mattermost
+- Add document links
+- Adjust chunk size
+
+
 ## Improvements
 
 - Performance metrics (latency, tokens/second)
 - Use reranking model after retrieval
 - Enable LLM reasoning
-- Include document metadata and references (links)
-- Stream LLM responses (word by word)

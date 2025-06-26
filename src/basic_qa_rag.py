@@ -1,6 +1,7 @@
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 from langchain_core.prompts import PromptTemplate
-from utils import LLM, RETRIEVER
+from langsmith import trace
+from utils import LLM, RETRIEVER, TRACING_CLIENT
 
 
 PROMPT_CATEGORIES = {
@@ -43,7 +44,7 @@ def basic_response(prompt):
     print("CHATBOT ANSWER:")
     assistant_text = ""
     for event in LLM.stream(messages):
-        print(event.content, end="", flush=True)
+        print(event.content, end="", flush=True) # replace with render in mattermost
         assistant_text += event.content
     print()
     return assistant_text
@@ -52,11 +53,13 @@ def rag_response(prompt):
     system_message = SystemMessage(
         content="""You are a chatbot designed to help with the 02 simulation documentation.
         Use the provided context to answer the following question.
-        If the context does not contain enough (or any) relevant information just say so.
+        If the context does not contain enough (or any) relevant information say that you do not know the answer.
         Also cite your sources like [n] and do not make up new information."""
     ) # TODO add links to document metadata
 
     retrieved_docs = RETRIEVER.invoke(prompt)
+    if len(retrieved_docs) == 0:
+        retrieved_docs = "No relevant documents were retrieved."
     print("RETRIEVED DOCUMENTS:")
     print(retrieved_docs)
     user_text = PromptTemplate.from_template("""Question:
@@ -76,17 +79,42 @@ def rag_response(prompt):
     for event in LLM.stream(messages):
         print(event.content, end="", flush=True)
         assistant_text += event.content
-        print(event)
     print()
     return assistant_text
 
-
-if __name__ == "__main__":
-    while True:
-        question = input("YOUR QUESTION: ")
+def qa_pipeline(question):
+    with trace(name="basic_qa_rag", inputs={"question": question}) as qa_trace:
         question_category = classify_prompt(question)
         print("QUESTION CLASSIFICATION:", PROMPT_CATEGORIES[question_category])
+        answer = ""
         if question_category == 1:
             answer = basic_response(question)
         elif question_category == 2:
             answer = rag_response(question)
+        create_feedback(qa_trace)
+        return answer
+
+def create_feedback(qa_trace):
+    feedback = input("WAS THE ANSWER HELPFUL? (Y/N): ").lower()
+    score = None
+    if feedback == "y" or feedback == "yes":
+        score = 1
+    elif feedback == "n" or feedback == "no":
+        score = 0
+
+    TRACING_CLIENT.create_feedback(
+        key="correctness",
+        score=score,
+        trace_id=qa_trace.id,
+    ) # to create a database of correct answers
+    return score
+
+
+if __name__ == "__main__":
+    while True:
+        try:
+            question = input("YOUR QUESTION: ")
+            answer = qa_pipeline(question)
+        except Exception as error:
+            print(error)
+        print()

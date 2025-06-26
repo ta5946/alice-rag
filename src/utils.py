@@ -2,12 +2,14 @@ import os
 from langchain_openai import ChatOpenAI
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_chroma import Chroma
+from langsmith import Client
 from dotenv import load_dotenv
 
 load_dotenv()
 
 
 LLM = ChatOpenAI(
+    model=os.getenv("HF_LLM_REPO").split("/")[1].split("-GGUF")[0],
     base_url=os.getenv("LLM_BASE_URL"),
     api_key=os.getenv("LLM_API_KEY")
 )
@@ -29,3 +31,5 @@ RETRIEVER = VECTORSTORE.as_retriever(
     search_type="similarity_score_threshold",
     search_kwargs={"k": int(os.getenv("CHROMA_TOP_K")), "score_threshold": float(os.getenv("CHROMA_THRESHOLD"))}
 )
+
+TRACING_CLIENT = Client()
