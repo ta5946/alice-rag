@@ -1,5 +1,6 @@
 import os
 import chromadb
+from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 from langchain_openai import ChatOpenAI
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_chroma import Chroma
@@ -54,3 +55,17 @@ COMPRESSION_RETRIEVER = ContextualCompressionRetriever(
 )
 
 TRACING_CLIENT = Client()
+
+def messages_to_string(messages):
+    str = "[\n"
+    for msg in messages:
+        if isinstance(msg, SystemMessage):
+            str += f"System: {msg.content}\n"
+        elif isinstance(msg, HumanMessage):
+            str += f"User: {msg.content}\n"
+        elif isinstance(msg, AIMessage):
+            str += f"Assistant: {msg.content}\n"
+        else:
+            raise ValueError(f"Invalid message type: {msg.type}")
+    str += "]"
+    return str

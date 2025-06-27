@@ -1,7 +1,8 @@
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 from langchain_core.prompts import PromptTemplate
 from langsmith import trace
-from utils import LLM, COMPRESSION_RETRIEVER, TRACING_CLIENT
+import simulation_chatbot_prompts as prompts
+from utils import LLM, COMPRESSION_RETRIEVER, TRACING_CLIENT, messages_to_string
 
 
 PROMPT_CATEGORIES = {
@@ -10,21 +11,18 @@ PROMPT_CATEGORIES = {
     # TODO add more categories
 }
 
-# TODO system prompts as configurable parameters
-def classify_prompt(prompt):
-    system_message = SystemMessage(
-        content="""You are a prompt classifier.
-        Your task is to classify the following prompt into one of the categories:
-        1. General question, that can be answered without any additional information,
-        2. Question that requires context from the O2 simulation documentation.
-        
-        Respond only with the category number (1 or 2) and nothing else."""
+def classify_prompt(prompt, message_history):
+    system_message = prompts.classifier_system_message
+    user_text = PromptTemplate.from_template("""(
+    CONVERSATION HISTORY:
+    {conversation_history}
     )
-    user_text = PromptTemplate.from_template("""Question:
+    
+    QUESTION:
     {question}
     
-    Category:""")
-    user_message = HumanMessage(content=user_text.format(question=prompt))
+    CATEGORY:""") # later the message history can be summarized to reduce its length
+    user_message = HumanMessage(content=user_text.format(conversation_history=messages_to_string(message_history), question=prompt))
     messages = [system_message, user_message]
 
     assistant_message = LLM.invoke(messages)
@@ -35,11 +33,18 @@ def classify_prompt(prompt):
     else:
         raise ValueError("Invalid prompt classification:", assistant_message.content)
 
-def basic_response(prompt):
-    system_message = SystemMessage(
-        content="""You are a helpful assistant."""
+def basic_response(prompt, message_history):
+    system_message = prompts.basic_response_system_message
+    user_text = PromptTemplate.from_template("""(
+    CONVERSATION HISTORY:
+    {conversation_history}
     )
-    user_message = HumanMessage(content=prompt)
+    
+    QUESTION:
+    {question}
+    
+    ANSWER:""")
+    user_message = HumanMessage(content=user_text.format(conversation_history=messages_to_string(message_history), question=prompt))
     messages = [system_message, user_message]
 
     print("CHATBOT ANSWER:")
@@ -50,30 +55,30 @@ def basic_response(prompt):
     print()
     return assistant_text
 
-def rag_response(prompt):
-    system_message = SystemMessage(
-        content="""You are a chatbot designed to help with the 02 simulation documentation.
-        Use the provided context to answer the following question.
-        If the context does not contain enough (or any) relevant information say that you do not know the answer.
-        Also cite your sources like [n] and do not make up new information."""
-    ) # TODO add links to document metadata
+def rag_response(prompt, message_history):
+    system_message = prompts.rag_response_system_message # TODO add links to document metadata
 
-    retrieved_docs = COMPRESSION_RETRIEVER.invoke(prompt)
+    retrieved_docs = COMPRESSION_RETRIEVER.invoke(prompt) # TODO generate a rich search query
     if len(retrieved_docs) == 0:
         retrieved_docs = "No relevant documents were retrieved."
     print("RETRIEVED DOCUMENTS:")
     print(retrieved_docs)
 
     # TODO replace question with conversation history
-    user_text = PromptTemplate.from_template("""Question:
+    user_text = PromptTemplate.from_template("""(
+    CONVERSATION HISTORY:
+    {conversation_history}
+    )
+    
+    QUESTION:
     {question}
     
-    Context:
+    CONTEXT:
     {context}
     
-    Answer:""")
+    ANSWER:""")
     user_message = HumanMessage(
-        content=user_text.format(question=prompt, context=retrieved_docs)
+        content=user_text.format(conversation_history=messages_to_string(message_history), question=prompt, context=retrieved_docs)
     )
     messages = [system_message, user_message]
 
@@ -85,26 +90,28 @@ def rag_response(prompt):
     print()
     return assistant_text
 
-def qa_pipeline(question):
-    with trace(name="basic_qa_rag", inputs={"question": question}) as qa_trace:
-        question_category = classify_prompt(question)
+def qa_pipeline(question, message_history):
+    with trace(name="basic_qa_rag", inputs={"question": question, "messages": message_history}) as qa_trace:
+        question_category = classify_prompt(question, message_history)
         print("QUESTION CLASSIFICATION:", PROMPT_CATEGORIES[question_category])
         answer = ""
         if question_category == 1:
-            answer = basic_response(question)
+            answer = basic_response(question, message_history)
         elif question_category == 2:
-            answer = rag_response(question)
+            answer = rag_response(question, message_history)
         qa_trace.add_outputs({"answer": answer})
         create_feedback(qa_trace)
         return answer
 
 def create_feedback(qa_trace):
-    feedback = input("WAS THE ANSWER HELPFUL? (Y/N): ").lower()
+    user_feedback = input("WAS THE ANSWER HELPFUL? (Y/N): ").lower()
     score = None
-    if feedback == "y" or feedback == "yes":
+    if user_feedback == "y" or user_feedback == "yes":
         score = 1
-    elif feedback == "n" or feedback == "no":
+        print(":)")
+    elif user_feedback == "n" or user_feedback == "no":
         score = 0
+        print(":(")
 
     TRACING_CLIENT.create_feedback(
         key="helpful",
@@ -115,10 +122,15 @@ def create_feedback(qa_trace):
 
 
 if __name__ == "__main__":
+    conversation_history = []
     while True:
         try:
             question = input("YOUR QUESTION: ")
-            answer = qa_pipeline(question)
+            if len(conversation_history) == 0:
+                answer = qa_pipeline(question, prompts.default_message_history)
+            else:
+                answer = qa_pipeline(question, conversation_history)
+            conversation_history.extend([HumanMessage(content=question), AIMessage(content=answer)])
         except Exception as error:
             print(error)
         print()
