@@ -1,4 +1,13 @@
-## Environment setup
+# ALICE chatbot development notes
+
+_27. 6. 2025_
+
+_Tjaš Ajdovec_
+
+
+## Setup
+
+### Environment and configuration
 
 If you need to refresh the Docker group use:
 ```bash
@@ -13,8 +22,7 @@ source ~/.virtualenvs/alice-rag/bin/activate
 The **chatbot configuration** is stored and can be changed in the `.env` file similar to the `.env.example`. This includes the selection of language model,
 embedding model and vector database properties.
 
-
-## LLM server
+### LLM server
 
 To run the models we are using a CUDA compiled version of the **llama.cpp** server. It can be run as a Docker container with:
 ```bash
@@ -25,6 +33,8 @@ An example of a HuggingFace model repository is `TheBloke/Mistral-7B-Instruct-v0
 The current version of the LLM server is found in the `docker-compose.yml` file. Web interface for testing purposes is available [here](http://pc-alice-ph01:8080/).
 With CUDA support, the interface is about 5x faster (~55 tokens per second).
 
+
+## Models used
 
 ### LLM selection
 
@@ -41,43 +51,49 @@ and space limitations of the NVIDIA GeForce RTX 2080 GPU.
 
 To estimate the VRAM usage of a model for some number of layers and context length: https://huggingface.co/spaces/oobabooga/accurate-gguf-vram-calculator.
 
-
-### LangChain ecosystem
-
-TODO + / -
-
-
-## Embedding model
+###  Embedding model
 
 For document embedding we can use the **sentence-transformers** library. Models are pulled from HuggingFace repository, such as `BAAI/bge-base-en-v1.5`
 and cached locally under `/models`. 
 
-> We can later upgrade the model to `BAAI/bge-m3` (check [MTEB Leaderboard](https://huggingface.co/spaces/mteb/leaderboard)).
+> We can later upgrade the model to `BAAI/bge-m3` or others (check [MTEB Leaderboard](https://huggingface.co/spaces/mteb/leaderboard)).
+
+### Reranking model
+
+For cross scoring the query and the documents we also use a LangChain wrapper of the sentence-transformers library. The current `BAAI/bge-reranker-base`
+can be upgraded to a larger `BAAI/bge-reranker-v2-m3`. Some manual testing showed better performance of explicit similarity scoring over the default cosine 
+similarity of document embeddings.
 
 
-## Documents
+## Data and indexing
+
+### Documents
 
 _At this point the documentation from https://github.com/AliceO2Group/simulation/tree/main/docs and working simulation examples from https://github.com/AliceO2Group/AliceO2/tree/dev/run/SimExamples
 are stored in the `/data` directory. Later they should be pulled directly from the repositories._
 
-See how **indexer** works.
+See how **indexer** works and also check other relevant GitHub repos.
 
-
-## Vector store
+### Vector store
 
 The script `indexer.py` 1. Reads the repositories and file types declared in the YAML file, 2. Creates a persistent Chroma vector database, 3. Computes hashes for pulled
-documents, 4. Computes embeddings and stores new or changed documents. It has no issues so far.
+documents, 4. Computes embeddings and stores new or changed documents. It works without issues so far.
+
+By default, ChromaDB uses cosine similarity = 1 - cosine distance to return the *top k* most similar documents to the query.
+It then uses a reranker to cross score them and return only the *top n* which are used as problem context for the LLM.
 
 
-## TODOs
+## RAG pipeline
+
+### LangChain ecosystem
+
+TODO + / -, describe components, tracing and annotating runs
+
+
+## TODOs and improvements
 
 - Integrate with Mattermost
 - Add document links
 - Adjust chunk size
-
-
-## Improvements
-
 - Performance metrics (latency, tokens/second)
-- Use reranking model after retrieval
 - Enable LLM reasoning

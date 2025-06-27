@@ -1,7 +1,7 @@
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 from langchain_core.prompts import PromptTemplate
 from langsmith import trace
-from utils import LLM, RETRIEVER, TRACING_CLIENT
+from utils import LLM, COMPRESSION_RETRIEVER, TRACING_CLIENT
 
 
 PROMPT_CATEGORIES = {
@@ -57,7 +57,7 @@ def rag_response(prompt):
         Also cite your sources like [n] and do not make up new information."""
     ) # TODO add links to document metadata
 
-    retrieved_docs = RETRIEVER.invoke(prompt)
+    retrieved_docs = COMPRESSION_RETRIEVER.invoke(prompt)
     if len(retrieved_docs) == 0:
         retrieved_docs = "No relevant documents were retrieved."
     print("RETRIEVED DOCUMENTS:")
