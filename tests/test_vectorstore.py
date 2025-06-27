@@ -1,4 +1,5 @@
 import os
+import chromadb
 from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.cross_encoders import HuggingFaceCrossEncoder
@@ -15,10 +16,11 @@ if __name__ == "__main__":
         cache_folder=os.getenv("HF_CACHE_DIR"),
         model_kwargs = {"device": "cuda"}
     )
+    chroma_client = chromadb.PersistentClient(path=os.getenv("CHROMA_DIR"))
     chroma_vectorstore = Chroma(
-        persist_directory=os.getenv("CHROMA_DIR"),
-        embedding_function=embeddings,
         collection_name="chroma_docs",
+        embedding_function=embeddings,
+        client=chroma_client,
         relevance_score_fn=lambda distance: 1 - distance
     ) # created in indexer folder
     query = "How to obtain a valid alien token to run the O2 simulation?"
