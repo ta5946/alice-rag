@@ -6,7 +6,7 @@ A set of prototype scripts for hosting a minimal RAG chatbot for ALICE, more spe
 ## Repository structure:
 
 - `data`: Static documents about O2 simulation used for RAG testing purposes.
-- `doc`: More project documentation.
+- `doc`: More project documentation and [technical notes](doc/technical_notes.md).
 - `indexer`: Contains scripts to put document resources (specified in a yml) into a Chroma vector database using some (free) text embedding model.
 - `mattermost_interact`: A mattermost chatbot implementation talking to Chroma and a local LLM.
 - `models`: This directory will be created to store the downloaded HuggingFace models.

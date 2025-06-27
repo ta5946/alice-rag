@@ -90,10 +90,17 @@ It then uses a reranker to cross score them and return only the *top n* which ar
 TODO + / -, describe components, tracing and annotating runs
 
 
+## Evaluation
+
+### Different approaches
+
+The folder `doc/evaluation_ideas` contains ideas for evaluating a RAG chatbot without a human annotated question-answer dataset.
+They are based on deep research conducted by ChatGPT and Gemini.
+
+
 ## TODOs and improvements
 
 - Integrate with Mattermost
 - Add document links
 - Adjust chunk size
-- Performance metrics (latency, tokens/second)
 - Enable LLM reasoning

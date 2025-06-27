@@ -50,7 +50,7 @@ if __name__ == "__main__":
     compressor = CrossEncoderReranker(
         model=reranker,
         top_n=int(os.getenv("CHROMA_TOP_N"))
-    )
+    ) # compresses the context to only top n documents
     compression_retriever = ContextualCompressionRetriever(
         base_compressor=compressor,
         base_retriever=chroma_retriever

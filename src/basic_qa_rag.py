@@ -10,6 +10,7 @@ PROMPT_CATEGORIES = {
     # TODO add more categories
 }
 
+# TODO system prompts as configurable parameters
 def classify_prompt(prompt):
     system_message = SystemMessage(
         content="""You are a prompt classifier.
@@ -62,6 +63,8 @@ def rag_response(prompt):
         retrieved_docs = "No relevant documents were retrieved."
     print("RETRIEVED DOCUMENTS:")
     print(retrieved_docs)
+
+    # TODO replace question with conversation history
     user_text = PromptTemplate.from_template("""Question:
     {question}
     
@@ -104,7 +107,7 @@ def create_feedback(qa_trace):
         score = 0
 
     TRACING_CLIENT.create_feedback(
-        key="correctness",
+        key="helpful",
         score=score,
         trace_id=qa_trace.id,
     ) # to create a database of correct answers
