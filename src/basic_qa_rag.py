@@ -91,6 +91,7 @@ def qa_pipeline(question):
             answer = basic_response(question)
         elif question_category == 2:
             answer = rag_response(question)
+        qa_trace.add_outputs({"answer": answer})
         create_feedback(qa_trace)
         return answer
 
