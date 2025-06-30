@@ -1,3 +1,6 @@
 .idea
 .env
-/models
+/models/huggingface/*
+!/models/huggingface/.gitkeep
+/models/llama.cpp/*
+!/models/llama.cpp/.gitkeep
