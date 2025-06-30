@@ -10,7 +10,7 @@ if __name__ == "__main__":
     model = HuggingFaceEmbeddings(
         model_name=os.getenv("HF_EMBEDDINGS_REPO"),
         cache_folder=os.getenv("HF_CACHE_DIR"),
-        model_kwargs = {"device": "cuda"} # cpu or cuda
+        model_kwargs={"device": "cuda"} # cpu or cuda
     )
     sentences = [
         "Roses are red.",

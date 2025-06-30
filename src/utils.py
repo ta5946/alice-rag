@@ -22,7 +22,7 @@ LLM = ChatOpenAI(
 EMBEDDINGS = HuggingFaceEmbeddings(
     model_name=os.getenv("HF_EMBEDDINGS_REPO"),
     cache_folder=os.getenv("HF_CACHE_DIR"),
-    model_kwargs = {"device": "cuda"}
+    model_kwargs={"device": "cuda"}
 )
 
 CHROMA_CLIENT = chromadb.PersistentClient(path=os.getenv("CHROMA_DIR")) # can switch to chromadb.HttpClient()
@@ -41,7 +41,7 @@ VECTORSTORE_RETRIEVER = VECTORSTORE.as_retriever(
 
 RERANKER = HuggingFaceCrossEncoder(
     model_name=os.getenv("HF_RERANKER_REPO"),
-    model_kwargs = {"cache_folder": os.getenv("HF_CACHE_DIR"),"device": "cpu"}
+    model_kwargs={"cache_folder": os.getenv("HF_CACHE_DIR"),"device": "cpu"}
 )
 
 COMPRESSOR = CrossEncoderReranker(

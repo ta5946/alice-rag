@@ -8,7 +8,7 @@ from utils import LLM, COMPRESSION_RETRIEVER, TRACING_CLIENT, messages_to_string
 PROMPT_CATEGORIES = {
     1: "General question",
     2: "Requires context"
-    # TODO add more categories
+    # TODO add more categories as chatbot states
 }
 
 def classify_prompt(prompt, message_history):
@@ -21,7 +21,7 @@ def classify_prompt(prompt, message_history):
     QUESTION:
     {question}
     
-    CATEGORY:""") # later the message history can be summarized to reduce its length
+    CATEGORY:""") # TODO maybe summarize the conversation history to make it shorter
     user_message = HumanMessage(content=user_text.format(conversation_history=messages_to_string(message_history), question=prompt))
     messages = [system_message, user_message]
 
@@ -50,7 +50,7 @@ def basic_response(prompt, message_history):
     print("CHATBOT ANSWER:")
     assistant_text = ""
     for event in LLM.stream(messages):
-        print(event.content, end="", flush=True) # replace with render in mattermost
+        print(event.content, end="", flush=True) # TODO replace with render in mattermost
         assistant_text += event.content
     print()
     return assistant_text
@@ -64,7 +64,6 @@ def rag_response(prompt, message_history):
     print("RETRIEVED DOCUMENTS:")
     print(retrieved_docs)
 
-    # TODO replace question with conversation history
     user_text = PromptTemplate.from_template("""(
     CONVERSATION HISTORY:
     {conversation_history}
@@ -91,7 +90,7 @@ def rag_response(prompt, message_history):
     return assistant_text
 
 def qa_pipeline(question, message_history):
-    with trace(name="basic_qa_rag", inputs={"question": question, "messages": message_history}) as qa_trace:
+    with trace(name="basic_rag_qa", inputs={"question": question, "messages": message_history}) as qa_trace:
         question_category = classify_prompt(question, message_history)
         print("QUESTION CLASSIFICATION:", PROMPT_CATEGORIES[question_category])
         answer = ""

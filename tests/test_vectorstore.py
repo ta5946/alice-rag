@@ -14,7 +14,7 @@ if __name__ == "__main__":
     embeddings = HuggingFaceEmbeddings(
         model_name=os.getenv("HF_EMBEDDINGS_REPO"),
         cache_folder=os.getenv("HF_CACHE_DIR"),
-        model_kwargs = {"device": "cuda"}
+        model_kwargs={"device": "cuda"}
     )
     chroma_client = chromadb.PersistentClient(path=os.getenv("CHROMA_DIR"))
     chroma_vectorstore = Chroma(
@@ -45,7 +45,7 @@ if __name__ == "__main__":
 
     reranker = HuggingFaceCrossEncoder(
         model_name=os.getenv("HF_RERANKER_REPO"),
-        model_kwargs = {"cache_folder": os.getenv("HF_CACHE_DIR"),"device": "cpu"}
+        model_kwargs={"cache_folder": os.getenv("HF_CACHE_DIR"),"device": "cpu"}
     )
     compressor = CrossEncoderReranker(
         model=reranker,
