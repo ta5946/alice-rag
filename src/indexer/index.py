@@ -2,44 +2,24 @@
 # into a vector database (Chroma) using an embedding model.
 # Remembers previous work through hashing.
 # Started May 2025, sandro.wenzel@cern.ch
+# Updated July 2025
 
 import os
 import subprocess
 import yaml
 import hashlib
 from pathlib import Path
-from langchain.document_loaders import (
-    TextLoader, PythonLoader, PDFMinerLoader, UnstructuredHTMLLoader
-)
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from embedder import embed_documents
-from chromadb import Client
-from chromadb.config import Settings
-from chromadb import PersistentClient
-import hashlib
+from embedder import EMBEDDER
+from utils import LOADER_MAPPING, CHROMA_COLLECTION, TEXT_SPLITTER, load_previous_hashes, save_hashes
+from dotenv import load_dotenv
 
-from utils import load_previous_hashes, save_hashes
-
-CONFIG_FILE = "knowledge_base.yml"
-HASHES_FILE = "./indexed_data/hashes.json"
-INDEX_PATH = Path("indexed_data/")
-VECTOR_DB_COLLECTION = "chroma_docs"
+load_dotenv()
 
 
-client = PersistentClient(path="chroma_store")
-collection = client.get_or_create_collection(name=VECTOR_DB_COLLECTION)
-
-LOADER_MAPPING = {
-    ".md": TextLoader,
-    ".txt": TextLoader,
-    ".py": PythonLoader,
-    ".sh": TextLoader,
-    ".html": UnstructuredHTMLLoader,
-    ".htm": UnstructuredHTMLLoader,
-    ".pdf": PDFMinerLoader,
-}
-
-text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
+RESOURCE_FILE = os.getenv("INDEXER_RESOURCE_FILE")
+HASHES_FILE = os.getenv("INDEXER_HASHES_FILE")
+DATA_PATH = Path(os.getenv("INDEXER_DATA_DIR"))
+BATCH_SIZE = int(os.getenv("INDEXER_BATCH_SIZE"))
 
 def compute_hash(text: str, source: str = "", chunk_index: int = 0, embedder_name: str = "") -> str:
     combined = f"{source}|{chunk_index}|{embedder_name}|{text}"
@@ -47,7 +27,7 @@ def compute_hash(text: str, source: str = "", chunk_index: int = 0, embedder_nam
 
 def index_resource(resource):
     repo_name = resource["url"].split("/")[-1].replace(".git", "")
-    repo_path = INDEX_PATH / repo_name
+    repo_path = DATA_PATH / repo_name
 
     if not repo_path.exists():
         subprocess.run(["git", "clone", "--depth", "1", "-b", resource["branch"], resource["url"], str(repo_path)])
@@ -83,50 +63,54 @@ def batched(iterable, batch_size):
         yield iterable[i:i + batch_size]
 
 def main():
-    with open(CONFIG_FILE) as f:
+    with open(RESOURCE_FILE) as f:
         config = yaml.safe_load(f)
 
     old_hashes = load_previous_hashes(HASHES_FILE)
     new_hashes = {}
 
-    BATCH_SIZE = 1000
-
     for resource in config["resources"]:
         files = index_resource(resource)
+        base_url = resource["url"]
+        branch = resource["branch"]
+        repo_name = base_url.rstrip('/').split('/')[-1]
+        repo_path = DATA_PATH / repo_name
 
         for path in files:
-            print (f"Treating {path}")
+            rel_path = path.relative_to(repo_path).as_posix()
+            link = f"{base_url}/blob/{branch}/{rel_path}"
+            print(f"Treating {path} from {link}")
             docs = load_file_content(path)
             if not docs:
                 continue
 
             all_text = "\n".join(doc.page_content for doc in docs)
-            doc_hash = compute_hash(all_text, path, 0, embedder_name="local")
+            doc_hash = compute_hash(all_text, path, 0, embedder_name=EMBEDDER.model_name)
             new_hashes[str(path)] = doc_hash
 
             if old_hashes.get(str(path)) == doc_hash:
-                print (f"Skipping {path} ... already treated")
-                continue  # Skip unchanged
+                print(f"Skipping {path} ... already treated")
+                continue # Skip unchanged
 
-            split_docs = text_splitter.split_documents(docs)
+            split_docs = TEXT_SPLITTER.split_documents(docs)
             texts = [doc.page_content for doc in split_docs]
-            metadatas = [{"source": str(path)} for _ in texts]
-            embeddings = embed_documents(texts)
-            ids=[compute_hash(t, path, i, "local") for i,t in enumerate(texts)]
+            metadatas = [{"source": str(path), "link": link} for t in texts]
+            embeddings = EMBEDDER.embed_documents(texts)
+            ids = [compute_hash(t, path, i, "local") for i, t in enumerate(texts)]
 
             # We add in smaller batches because the add function has a mem limitation or size-limitation per call
             for doc_batch, id_batch, meta_batch, embedd_batch in zip(
-                batched(texts, BATCH_SIZE),
-                batched(ids, BATCH_SIZE),
-                batched(metadatas, BATCH_SIZE), 
-                batched(embeddings, BATCH_SIZE)):
-
-                  collection.add(
+                    batched(texts, BATCH_SIZE),
+                    batched(ids, BATCH_SIZE),
+                    batched(metadatas, BATCH_SIZE),
+                    batched(embeddings, BATCH_SIZE)
+            ):
+                CHROMA_COLLECTION.add(
                     documents=doc_batch,
                     embeddings=embedd_batch,
                     metadatas=meta_batch,
                     ids=id_batch
-                 )
+                )
 
     save_hashes(HASHES_FILE, new_hashes)
 

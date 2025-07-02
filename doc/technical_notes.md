@@ -82,6 +82,19 @@ documents, 4. Computes embeddings and stores new or changed documents. It works 
 By default, ChromaDB uses cosine similarity = 1 - cosine distance to return the *top k* most similar documents to the query.
 It then uses a reranker to cross score them and return only the *top n* which are used as problem context for the LLM.
 
+### Chunking
+
+Chunk size is defined in the `.env` file in characters. The number of tokens per chunk is approximately this / 4.
+The current retrieval parameters are:
+- `chunk_size=1000` characters,
+- `chunk_overlap=100` characters,
+- `similarity_threshold=0.25` cosine similarity retrieval threshold,
+- `top_k=20` retrieved chunks,
+- `top_n=5` final reranked chunks.
+
+Compact language models do not perform better when flooded with context, so the number of chunks is limited to 5.
+When using a more capable generative model (LLM), the parameters can be increased within the limits of reasonable context length (32k tokens).
+
 
 ## RAG pipeline
 
@@ -92,7 +105,7 @@ TODO + / -, describe components, tracing and annotating runs
 
 ## Evaluation
 
-### Different approaches
+### Potential approaches
 
 The folder `doc/evaluation_ideas` contains ideas for evaluating a RAG chatbot without a human annotated question-answer dataset.
 They are based on deep research conducted by ChatGPT and Gemini.
@@ -100,7 +113,6 @@ They are based on deep research conducted by ChatGPT and Gemini.
 
 ## TODOs and improvements
 
-- Integrate with Mattermost
-- Add document links
-- Adjust chunk size
+- **Integrate with Mattermost** (access token)
 - Enable LLM reasoning
+- Build as python package or use top-level script

@@ -1,5 +1,5 @@
 import os
-import chromadb
+from chromadb import PersistentClient
 from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.cross_encoders import HuggingFaceCrossEncoder
@@ -16,9 +16,9 @@ if __name__ == "__main__":
         cache_folder=os.getenv("HF_CACHE_DIR"),
         model_kwargs={"device": "cuda"}
     )
-    chroma_client = chromadb.PersistentClient(path=os.getenv("CHROMA_DIR"))
+    chroma_client = PersistentClient(path=os.getenv("CHROMA_DIR"))
     chroma_vectorstore = Chroma(
-        collection_name="chroma_docs",
+        collection_name=os.getenv("CHROMA_COLLECTION_NAME"),
         embedding_function=embeddings,
         client=chroma_client,
         relevance_score_fn=lambda distance: 1 - distance

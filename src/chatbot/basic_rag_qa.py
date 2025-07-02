@@ -1,3 +1,5 @@
+# TODO integrate with mattermostdriver (need account)
+
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 from langchain_core.prompts import PromptTemplate
 from langsmith import trace
@@ -5,7 +7,7 @@ import simulation_chatbot_prompts as prompts
 from utils import LLM, COMPRESSION_RETRIEVER, TRACING_CLIENT, messages_to_string
 
 
-PROMPT_CATEGORIES = {
+PROMPT_CATEGORY_MAP = {
     1: "General question",
     2: "Requires context"
     # TODO add more categories as chatbot states
@@ -56,7 +58,7 @@ def basic_response(prompt, message_history):
     return assistant_text
 
 def rag_response(prompt, message_history):
-    system_message = prompts.rag_response_system_message # TODO add links to document metadata
+    system_message = prompts.rag_response_system_message
 
     retrieved_docs = COMPRESSION_RETRIEVER.invoke(prompt) # TODO generate a rich search query
     if len(retrieved_docs) == 0:
@@ -92,7 +94,7 @@ def rag_response(prompt, message_history):
 def qa_pipeline(question, message_history):
     with trace(name="basic_rag_qa", inputs={"question": question, "messages": message_history}) as qa_trace:
         question_category = classify_prompt(question, message_history)
-        print("QUESTION CLASSIFICATION:", PROMPT_CATEGORIES[question_category])
+        print("QUESTION CLASSIFICATION:", PROMPT_CATEGORY_MAP[question_category])
         answer = ""
         if question_category == 1:
             answer = basic_response(question, message_history)
@@ -125,6 +127,9 @@ if __name__ == "__main__":
     while True:
         try:
             question = input("YOUR QUESTION: ")
+            if question.lower() in ["q", "quit"]:
+                print("Bye!")
+                break
             if len(conversation_history) == 0:
                 answer = qa_pipeline(question, prompts.default_message_history)
             else:

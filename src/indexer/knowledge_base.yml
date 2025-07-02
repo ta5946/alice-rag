@@ -14,7 +14,7 @@ resources:
   - type: git
     url: https://github.com/AliceO2Group/analysis-framework
     include: ["docs/**/*.md", "**/*.py", "**/*.sh", "**/*.pdf"]
-    exclude: ["_saas/**"]
+    exclude: ["_saas/**"] # TODO can we exclude pwgTables.md
     branch: master
 
   #- type: google-slide

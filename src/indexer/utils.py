@@ -1,11 +1,34 @@
-import json
 import os
+import json
 from pathlib import Path
 from typing import Dict, Optional
+from chromadb import PersistentClient
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain.document_loaders import TextLoader, PythonLoader, PDFMinerLoader, UnstructuredHTMLLoader
+from dotenv import load_dotenv
 
-HASHES_FILE = "hashes.json"
+load_dotenv()
 
-def load_previous_hashes(path: str = HASHES_FILE) -> Dict[str, str]:
+
+LOADER_MAPPING = {
+    ".md": TextLoader,
+    ".txt": TextLoader,
+    ".py": PythonLoader,
+    ".sh": TextLoader,
+    ".html": UnstructuredHTMLLoader,
+    ".htm": UnstructuredHTMLLoader,
+    ".pdf": PDFMinerLoader,
+}
+
+chroma_client = PersistentClient(path=os.getenv("CHROMA_DIR"))
+CHROMA_COLLECTION = chroma_client.get_or_create_collection(name=os.getenv("CHROMA_COLLECTION_NAME"))
+
+TEXT_SPLITTER = RecursiveCharacterTextSplitter(
+    chunk_size=int(os.getenv("CHROMA_CHUNK_SIZE")),
+    chunk_overlap=int(os.getenv("CHROMA_CHUNK_SIZE")) // 10
+) # TODO try semantic text splitter
+
+def load_previous_hashes(path: str) -> Dict[str, str]:
     """
     Load previously saved file hashes from disk.
     Returns an empty dict if file doesn't exist.

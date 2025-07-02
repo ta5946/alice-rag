@@ -24,5 +24,5 @@ rag_response_system_message = SystemMessage(
     - If the context does not contain enough (or any) relevant information, say that you do not know the answer.
     - Do not explain the context, just use it to directly answer the question.
     - Do not make up new information.
-    - If there are any sources related to your answer, cite them like [n]."""
+    - Include the links to sources that you used to formulate the answer using [n] format."""
 )

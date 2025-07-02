@@ -1,5 +1,5 @@
 import os
-import chromadb
+from chromadb import PersistentClient
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 from langchain_openai import ChatOpenAI
 from langchain_huggingface import HuggingFaceEmbeddings
@@ -25,10 +25,10 @@ EMBEDDINGS = HuggingFaceEmbeddings(
     model_kwargs={"device": "cuda"}
 )
 
-CHROMA_CLIENT = chromadb.PersistentClient(path=os.getenv("CHROMA_DIR")) # can switch to chromadb.HttpClient()
+CHROMA_CLIENT = PersistentClient(path=os.getenv("CHROMA_DIR")) # can switch to chromadb.HttpClient()
 
 VECTORSTORE = Chroma(
-    collection_name="chroma_docs",
+    collection_name=os.getenv("CHROMA_COLLECTION_NAME"),
     embedding_function=EMBEDDINGS,
     client=CHROMA_CLIENT,
     relevance_score_fn=lambda distance: 1 - distance
