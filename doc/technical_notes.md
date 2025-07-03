@@ -103,6 +103,20 @@ When using a more capable generative model (LLM), the parameters can be increase
 TODO + / -, describe components, tracing and annotating runs
 
 
+### LangFuse tracing
+
+Is an open source alternative to LangSmith. To set up a self-hosted LangFuse server:
+
+```bash
+git clone https://github.com/langfuse/langfuse.git
+cd langfuse
+docker compose up
+```
+
+Open `langfuse/docker-compose.yml` and set `NEXTAUTH_URL=http://<your-public-ip>:3000`. 
+Then continue to creating an account, organization and set up a project where you can trace your LLM runs.
+
+
 ## Evaluation
 
 ### Potential approaches
