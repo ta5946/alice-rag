@@ -1,5 +1,8 @@
+# TODO separate components and utils
+
 import os
 from chromadb import PersistentClient
+from mattermostdriver import Driver
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 from langchain_openai import ChatOpenAI
 from langchain_huggingface import HuggingFaceEmbeddings
@@ -55,6 +58,26 @@ COMPRESSION_RETRIEVER = ContextualCompressionRetriever(
 )
 
 TRACING_CLIENT = Client()
+
+
+# patch https://github.com/Vaelor/python-mattermost-driver/issues/115
+import ssl
+
+create_default_context_orig = ssl.create_default_context
+def cdc(*args, **kwargs):
+    kwargs["purpose"] = ssl.Purpose.SERVER_AUTH
+    return create_default_context_orig(*args, **kwargs)
+ssl.create_default_context = cdc
+
+MATTERMOST_DRIVER = Driver({
+    "url": os.getenv("MATTERMOST_URL"),
+    "token": os.getenv("MATTERMOST_TOKEN"),
+    "scheme": 'https',
+    "port": int(os.getenv("MATTERMOST_PORT")),
+    "verify": True,
+    "websocket": True
+})
+
 
 def messages_to_string(messages):
     str = "[\n"
