@@ -117,6 +117,17 @@ Open `langfuse/docker-compose.yml` and set `NEXTAUTH_URL=http://<your-public-ip>
 Then continue to creating an account, organization and set up a project where you can trace your LLM runs.
 
 
+### Mattermost integration
+
+The chatbot is integrated as a user **ask.alice.beta@cern.ch** in Mattermost, with its own `MATTERMOST_TOKEN`. It only responds to direct messages.
+The RAG domain has been limited to O2 simulation documentation.
+
+To persistently run the mattermost event handling script:
+```bash
+nohup python src/chatbot/mattermost_listener.py > chatbot.log 2>&1
+```
+
+
 ## Evaluation
 
 ### Potential approaches
@@ -127,6 +138,5 @@ They are based on deep research conducted by ChatGPT and Gemini.
 
 ## TODOs and improvements
 
-- **Integrate with Mattermost** (access token)
 - Enable LLM reasoning
 - Build as python package or use top-level script

@@ -1,7 +1,6 @@
-# TODO integrate with mattermostdriver (need account)
-
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 from langchain_core.prompts import PromptTemplate
+from langchain_core.documents import Document
 from langsmith import trace
 import simulation_chatbot_prompts as prompts
 from utils import LLM, COMPRESSION_RETRIEVER, TRACING_CLIENT, messages_to_string
@@ -52,7 +51,7 @@ def basic_response(prompt, message_history):
     print("CHATBOT ANSWER:")
     assistant_text = ""
     for event in LLM.stream(messages):
-        print(event.content, end="", flush=True) # TODO replace with render in mattermost
+        print(event.content, end="", flush=True) # TODO replace with streaming in mattermost
         assistant_text += event.content
     print()
     return assistant_text
@@ -61,6 +60,8 @@ def rag_response(prompt, message_history):
     system_message = prompts.rag_response_system_message
 
     retrieved_docs = COMPRESSION_RETRIEVER.invoke(prompt) # TODO generate a rich search query
+    if isinstance(retrieved_docs, list):
+        retrieved_docs = [Document(page_content=doc.page_content, metadata=doc.metadata) for doc in retrieved_docs]
     if len(retrieved_docs) == 0:
         retrieved_docs = "No relevant documents were retrieved."
     print("RETRIEVED DOCUMENTS:")
@@ -91,7 +92,7 @@ def rag_response(prompt, message_history):
     print()
     return assistant_text
 
-def qa_pipeline(question, message_history):
+def qa_pipeline(question, message_history, feedback=True):
     with trace(name="basic_rag_qa", inputs={"question": question, "messages": message_history}) as qa_trace:
         question_category = classify_prompt(question, message_history)
         print("QUESTION CLASSIFICATION:", PROMPT_CATEGORY_MAP[question_category])
@@ -101,7 +102,8 @@ def qa_pipeline(question, message_history):
         elif question_category == 2:
             answer = rag_response(question, message_history)
         qa_trace.add_outputs({"answer": answer})
-        create_feedback(qa_trace)
+        if feedback:
+            create_feedback(qa_trace)
         return answer
 
 def create_feedback(qa_trace):
