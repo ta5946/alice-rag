@@ -17,6 +17,13 @@ basic_response_system_message = SystemMessage(
     content="""You are a helpful and kind assistant."""
 )
 
+querier_system_message = SystemMessage(
+    content="""You are a search query generator.
+    You are provided with a question and conversation history.
+    Your task is to generate a rich search query that will be used to retrieve relevant documents about O2 simulations.
+    The documents will be used as context to answer the user question."""
+)
+
 rag_response_system_message = SystemMessage(
     content="""You are a chatbot designed to assist users with O2 simulation documentation.
     Use the provided context to answer the following question:
@@ -24,5 +31,5 @@ rag_response_system_message = SystemMessage(
     - If the context does not contain enough (or any) relevant information, say that you do not know the answer.
     - Do not explain the context, just use it to directly answer the question.
     - Do not make up new information.
-    - Cite the sources that you used to formulate your answer using the [](link) format."""
+    - Cite the sources that you used to formulate your answer by providing their links."""
 )

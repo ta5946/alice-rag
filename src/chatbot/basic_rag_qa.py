@@ -51,15 +51,31 @@ def basic_response(prompt, message_history):
     print("CHATBOT ANSWER:")
     assistant_text = ""
     for event in LLM.stream(messages):
-        print(event.content, end="", flush=True) # TODO replace with streaming in mattermost
+        print(event.content, end="", flush=True)
         assistant_text += event.content
     print()
     return assistant_text
 
 def rag_response(prompt, message_history):
-    system_message = prompts.rag_response_system_message
+    system_message = prompts.querier_system_message
+    user_text = PromptTemplate.from_template("""(
+    CONVERSATION HISTORY:
+    {conversation_history}
+    )
+    
+    QUESTION:
+    {question}
+    
+    SEARCH QUERY:""")
+    user_message = HumanMessage(content=user_text.format(conversation_history=messages_to_string(message_history), question=prompt))
+    messages = [system_message, user_message]
 
-    retrieved_docs = COMPRESSION_RETRIEVER.invoke(prompt) # TODO generate a rich search query
+    print("SEARCH QUERY:")
+    assistant_message = LLM.invoke(messages)
+    search_query = assistant_message.content
+    print(search_query)
+
+    retrieved_docs = COMPRESSION_RETRIEVER.invoke(search_query)
     if isinstance(retrieved_docs, list):
         retrieved_docs = [Document(page_content=doc.page_content, metadata=doc.metadata) for doc in retrieved_docs]
     if len(retrieved_docs) == 0:
@@ -67,6 +83,7 @@ def rag_response(prompt, message_history):
     print("RETRIEVED DOCUMENTS:")
     print(retrieved_docs)
 
+    system_message = prompts.rag_response_system_message
     user_text = PromptTemplate.from_template("""(
     CONVERSATION HISTORY:
     {conversation_history}

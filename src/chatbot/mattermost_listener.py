@@ -1,6 +1,6 @@
 import os
 import json
-from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
+from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 from mattermostdriver import Driver
 from basic_rag_qa import qa_pipeline
 from dotenv import load_dotenv
