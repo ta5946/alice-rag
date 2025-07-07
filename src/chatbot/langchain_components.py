@@ -6,6 +6,7 @@ from langchain_chroma import Chroma
 from langchain_community.cross_encoders import HuggingFaceCrossEncoder
 from langchain.retrievers.document_compressors import CrossEncoderReranker
 from langchain.retrievers import ContextualCompressionRetriever
+from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 from langfuse import get_client
 from langfuse.langchain import CallbackHandler
 from dotenv import load_dotenv
@@ -57,3 +58,18 @@ COMPRESSION_RETRIEVER = ContextualCompressionRetriever(
 TRACING_CLIENT = get_client()
 
 TRACING_HANDLER = CallbackHandler()
+
+
+def messages_to_string(messages):
+    str = "[\n"
+    for msg in messages:
+        if isinstance(msg, SystemMessage):
+            str += f"System: {msg.content}\n"
+        elif isinstance(msg, HumanMessage):
+            str += f"User: {msg.content}\n"
+        elif isinstance(msg, AIMessage):
+            str += f"Assistant: {msg.content}\n"
+        else:
+            raise ValueError(f"Invalid message type: {msg.type}")
+    str += "]"
+    return str

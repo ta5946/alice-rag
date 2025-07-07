@@ -3,8 +3,8 @@ from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 from langchain_core.prompts import PromptTemplate
 from langchain_core.documents import Document
 import simulation_chatbot_prompts as prompts
-from utils import messages_to_string
-from langchain_components import LLM, COMPRESSION_RETRIEVER, TRACING_CLIENT, TRACING_HANDLER
+from mattermost_utils import update_post
+from langchain_components import LLM, COMPRESSION_RETRIEVER, TRACING_CLIENT, TRACING_HANDLER, messages_to_string
 
 
 PROMPT_CATEGORY_MAP = {
@@ -13,7 +13,11 @@ PROMPT_CATEGORY_MAP = {
     # TODO add more categories as chatbot states
 }
 
-async def classify_prompt(prompt, message_history):
+
+async def classify_prompt(prompt, message_history, mattermost_context):
+    if mattermost_context:
+        await update_post(mattermost_context, "🔍 _Analyzing question..._")
+
     system_message = prompts.classifier_system_message
     user_text = PromptTemplate.from_template("""(
     CONVERSATION HISTORY:
@@ -35,7 +39,10 @@ async def classify_prompt(prompt, message_history):
     else:
         raise ValueError("Invalid prompt classification:", assistant_message.content)
 
-async def basic_response(prompt, message_history):
+async def basic_response(prompt, message_history, mattermost_context):
+    if mattermost_context:
+        await update_post(mattermost_context, "🤖 _Generating response..._")
+
     system_message = prompts.basic_response_system_message
     user_text = PromptTemplate.from_template("""(
     CONVERSATION HISTORY:
@@ -54,10 +61,16 @@ async def basic_response(prompt, message_history):
     async for event in LLM.astream(messages, config={"callbacks": [TRACING_HANDLER]}):
         print(event.content, end="", flush=True)
         assistant_text += event.content
+        # TODO increase API rate limit
+        # TODO freeze fix
+        await update_post(mattermost_context, assistant_text) if mattermost_context else None
     print()
     return assistant_text
 
-async def rag_response(prompt, message_history):
+async def rag_response(prompt, message_history, mattermost_context):
+    if mattermost_context:
+        await update_post(mattermost_context, "📄 _Searching for documents..._")
+
     system_message = prompts.querier_system_message
     user_text = PromptTemplate.from_template("""(
     CONVERSATION HISTORY:
@@ -84,6 +97,9 @@ async def rag_response(prompt, message_history):
     print("RETRIEVED DOCUMENTS:")
     print(retrieved_docs)
 
+    if mattermost_context:
+        await update_post(mattermost_context, "🤖 _Generating response..._")
+
     system_message = prompts.rag_response_system_message
     user_text = PromptTemplate.from_template("""(
     CONVERSATION HISTORY:
@@ -107,18 +123,19 @@ async def rag_response(prompt, message_history):
     async for event in LLM.astream(messages, config={"callbacks": [TRACING_HANDLER]}):
         print(event.content, end="", flush=True)
         assistant_text += event.content
+        await update_post(mattermost_context, assistant_text) if mattermost_context else None
     print()
     return assistant_text
 
-async def qa_pipeline(question, message_history, feedback=True):
+async def qa_pipeline(question, message_history, feedback=True, mattermost_context=None):
     with TRACING_CLIENT.start_as_current_span(name="basic_rag_qa", input={"question": question, "messages": message_history}) as qa_trace:
-        question_category = await classify_prompt(question, message_history)
+        question_category = await classify_prompt(question, message_history, mattermost_context)
         print("QUESTION CLASSIFICATION:", PROMPT_CATEGORY_MAP[question_category])
         answer = ""
         if question_category == 1:
-            answer = await basic_response(question, message_history)
+            answer = await basic_response(question, message_history, mattermost_context)
         elif question_category == 2:
-            answer = await rag_response(question, message_history)
+            answer = await rag_response(question, message_history, mattermost_context)
         qa_trace.update_trace(output={"answer": answer})
         if feedback:
             await create_feedback(qa_trace.trace_id)
