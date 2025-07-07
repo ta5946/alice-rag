@@ -1,10 +1,10 @@
+import asyncio
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 from langchain_core.prompts import PromptTemplate
 from langchain_core.documents import Document
-from langsmith import trace
 import simulation_chatbot_prompts as prompts
-from langchain_components import LLM, COMPRESSION_RETRIEVER, TRACING_CLIENT
 from utils import messages_to_string
+from langchain_components import LLM, COMPRESSION_RETRIEVER, TRACING_CLIENT, TRACING_HANDLER
 
 
 PROMPT_CATEGORY_MAP = {
@@ -13,7 +13,7 @@ PROMPT_CATEGORY_MAP = {
     # TODO add more categories as chatbot states
 }
 
-def classify_prompt(prompt, message_history):
+async def classify_prompt(prompt, message_history):
     system_message = prompts.classifier_system_message
     user_text = PromptTemplate.from_template("""(
     CONVERSATION HISTORY:
@@ -27,7 +27,7 @@ def classify_prompt(prompt, message_history):
     user_message = HumanMessage(content=user_text.format(conversation_history=messages_to_string(message_history), question=prompt))
     messages = [system_message, user_message]
 
-    assistant_message = LLM.invoke(messages)
+    assistant_message = await LLM.ainvoke(messages, config={"callbacks": [TRACING_HANDLER]})
     if "1" in assistant_message.content:
         return 1
     elif "2" in assistant_message.content:
@@ -35,7 +35,7 @@ def classify_prompt(prompt, message_history):
     else:
         raise ValueError("Invalid prompt classification:", assistant_message.content)
 
-def basic_response(prompt, message_history):
+async def basic_response(prompt, message_history):
     system_message = prompts.basic_response_system_message
     user_text = PromptTemplate.from_template("""(
     CONVERSATION HISTORY:
@@ -51,13 +51,13 @@ def basic_response(prompt, message_history):
 
     print("CHATBOT ANSWER:")
     assistant_text = ""
-    for event in LLM.stream(messages):
+    async for event in LLM.astream(messages, config={"callbacks": [TRACING_HANDLER]}):
         print(event.content, end="", flush=True)
         assistant_text += event.content
     print()
     return assistant_text
 
-def rag_response(prompt, message_history):
+async def rag_response(prompt, message_history):
     system_message = prompts.querier_system_message
     user_text = PromptTemplate.from_template("""(
     CONVERSATION HISTORY:
@@ -72,11 +72,11 @@ def rag_response(prompt, message_history):
     messages = [system_message, user_message]
 
     print("SEARCH QUERY:")
-    assistant_message = LLM.invoke(messages)
+    assistant_message = await LLM.ainvoke(messages, config={"callbacks": [TRACING_HANDLER]})
     search_query = assistant_message.content
     print(search_query)
 
-    retrieved_docs = COMPRESSION_RETRIEVER.invoke(search_query)
+    retrieved_docs = await COMPRESSION_RETRIEVER.ainvoke(search_query, config={"callbacks": [TRACING_HANDLER]})
     if isinstance(retrieved_docs, list):
         retrieved_docs = [Document(page_content=doc.page_content, metadata=doc.metadata) for doc in retrieved_docs]
     if len(retrieved_docs) == 0:
@@ -104,45 +104,40 @@ def rag_response(prompt, message_history):
 
     print("CHATBOT ANSWER:")
     assistant_text = ""
-    for event in LLM.stream(messages):
+    async for event in LLM.astream(messages, config={"callbacks": [TRACING_HANDLER]}):
         print(event.content, end="", flush=True)
         assistant_text += event.content
     print()
     return assistant_text
 
-def qa_pipeline(question, message_history, feedback=True):
-    with trace(name="basic_rag_qa", inputs={"question": question, "messages": message_history}) as qa_trace:
-        question_category = classify_prompt(question, message_history)
+async def qa_pipeline(question, message_history, feedback=True):
+    with TRACING_CLIENT.start_as_current_span(name="basic_rag_qa", input={"question": question, "messages": message_history}) as qa_trace:
+        question_category = await classify_prompt(question, message_history)
         print("QUESTION CLASSIFICATION:", PROMPT_CATEGORY_MAP[question_category])
         answer = ""
         if question_category == 1:
-            answer = basic_response(question, message_history)
+            answer = await basic_response(question, message_history)
         elif question_category == 2:
-            answer = rag_response(question, message_history)
-        qa_trace.add_outputs({"answer": answer})
+            answer = await rag_response(question, message_history)
+        qa_trace.update_trace(output={"answer": answer})
         if feedback:
-            create_feedback(qa_trace)
+            await create_feedback(qa_trace.trace_id)
         return answer
 
-def create_feedback(qa_trace):
+async def create_feedback(trace_id):
     user_feedback = input("WAS THE ANSWER HELPFUL? (Y/N): ").lower()
-    score = None
+    score = 0 # neutral feedback
     if user_feedback == "y" or user_feedback == "yes":
         score = 1
         print(":)")
     elif user_feedback == "n" or user_feedback == "no":
-        score = 0
+        score = -1
         print(":(")
 
-    TRACING_CLIENT.create_feedback(
-        key="helpful",
-        score=score,
-        trace_id=qa_trace.id,
-    ) # to create a database of correct answers
+    TRACING_CLIENT.create_score(trace_id=trace_id, name="helpfulness", value=score)
     return score
 
-
-if __name__ == "__main__":
+async def main():
     conversation_history = []
     while True:
         try:
@@ -151,10 +146,14 @@ if __name__ == "__main__":
                 print("Bye!")
                 break
             if len(conversation_history) == 0:
-                answer = qa_pipeline(question, prompts.default_message_history)
+                answer = await qa_pipeline(question, prompts.default_message_history)
             else:
-                answer = qa_pipeline(question, conversation_history)
+                answer = await qa_pipeline(question, conversation_history)
             conversation_history.extend([HumanMessage(content=question), AIMessage(content=answer)])
         except Exception as error:
             print(error)
         print()
+
+
+if __name__ == "__main__":
+    asyncio.run(main())

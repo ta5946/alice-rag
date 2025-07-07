@@ -6,7 +6,8 @@ from langchain_chroma import Chroma
 from langchain_community.cross_encoders import HuggingFaceCrossEncoder
 from langchain.retrievers.document_compressors import CrossEncoderReranker
 from langchain.retrievers import ContextualCompressionRetriever
-from langsmith import Client
+from langfuse import get_client
+from langfuse.langchain import CallbackHandler
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -53,4 +54,6 @@ COMPRESSION_RETRIEVER = ContextualCompressionRetriever(
     base_retriever=VECTORSTORE_RETRIEVER
 )
 
-TRACING_CLIENT = Client()
+TRACING_CLIENT = get_client()
+
+TRACING_HANDLER = CallbackHandler()
