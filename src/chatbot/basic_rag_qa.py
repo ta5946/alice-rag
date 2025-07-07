@@ -3,7 +3,8 @@ from langchain_core.prompts import PromptTemplate
 from langchain_core.documents import Document
 from langsmith import trace
 import simulation_chatbot_prompts as prompts
-from utils import LLM, COMPRESSION_RETRIEVER, TRACING_CLIENT, messages_to_string
+from langchain_components import LLM, COMPRESSION_RETRIEVER, TRACING_CLIENT
+from utils import messages_to_string
 
 
 PROMPT_CATEGORY_MAP = {

@@ -17,8 +17,8 @@ def test_llm():
     print("Model response:")
     print(response)
 
-    assert response is not None, "LLM response should not be None"
-    assert "81" in response.content, "LLM response should contain the answer to 9*9"
+    assert response is not None, "LLM response should not be None."
+    assert "81" in response.content, "LLM response should contain the answer to 9*9."
 
 
 if __name__ == "__main__":

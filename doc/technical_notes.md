@@ -102,7 +102,6 @@ When using a more capable generative model (LLM), the parameters can be increase
 
 TODO + / -, describe components, tracing and annotating runs
 
-
 ### LangFuse tracing
 
 Is an open source alternative to LangSmith. To set up a self-hosted LangFuse server:
@@ -115,7 +114,6 @@ docker compose up
 
 Open `langfuse/docker-compose.yml` and set `NEXTAUTH_URL=http://<your-public-ip>:3000`. 
 Then continue to creating an account, organization and set up a project where you can trace your LLM runs.
-
 
 ### Mattermost integration
 
@@ -130,6 +128,11 @@ nohup python src/chatbot/mattermost_listener.py > chatbot.log 2>&1
 
 ## Evaluation
 
+### Component testing
+
+The `/tests` directory contains short scripts for testing basic functionalities of individual LangChain components. This includes the LLM, embedding model, 
+reranking model and vector store. They can be run with `pytest` from the root directory.
+
 ### Potential approaches
 
 The folder `doc/evaluation_ideas` contains ideas for evaluating a RAG chatbot without a human annotated question-answer dataset.
@@ -138,5 +141,5 @@ They are based on deep research conducted by ChatGPT and Gemini.
 
 ## TODOs and improvements
 
-- Enable LLM reasoning
+- Enable LLM reasoning (Qwen3?)
 - Build as python package or use top-level script

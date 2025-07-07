@@ -26,6 +26,15 @@ def test_vectorstore():
     ) # created in indexer folder
     search_query = "How to obtain a valid alien token to run the O2 simulation?"
 
+    # Relevance scores
+    result_with_scores = chroma_vectorstore.similarity_search_with_relevance_scores(
+        k=int(os.getenv("CHROMA_TOP_K")),
+        query=search_query,
+        score_threshold=float(os.getenv("CHROMA_THRESHOLD"))
+    )
+    for doc, score in result_with_scores:
+        print(score)
+
     # Basic retrieval
     chroma_retriever = chroma_vectorstore.as_retriever(
         search_type="similarity_score_threshold",
@@ -55,8 +64,9 @@ def test_vectorstore():
     for doc in reranked_result:
         print(doc) # top k documents reranked
 
+    assert len(result_with_scores) <= int(os.getenv("CHROMA_TOP_K")), "Number of retrieved documents should not be above top-k."
+    assert all(score >= float(os.getenv("CHROMA_THRESHOLD")) for doc, score in result_with_scores), "Document cosine similarity scores should be above retrieval threshold."
     assert len(basic_result) > 0, "Basic retrieval should return at least one document."
-    assert True, "The cosine similarity of last document should be above the threshold." # TODO get relevance scores
     assert len(reranked_result) > 0, "Reranked retrieval should also return at least one document."
     assert all(doc in basic_result for doc in reranked_result), "Reranked documents should be a subset of basic retrieval results."
 
