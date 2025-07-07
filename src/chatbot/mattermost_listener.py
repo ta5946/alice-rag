@@ -53,9 +53,9 @@ async def event_handler(event):
 
         # generate chatbot response
         if len(thread_messages) == 0:
-            bot_message = qa_pipeline(post_message, prompts.default_message_history, feedback=False)
+            bot_message = await qa_pipeline(post_message, prompts.default_message_history, feedback=False)
         else:
-            bot_message = qa_pipeline(post_message, thread_messages, feedback=False)
+            bot_message = await qa_pipeline(post_message, thread_messages, feedback=False)
 
         MATTERMOST_DRIVER.posts.update_post(thinking_post.get("id"), {
             "id": thinking_post.get("id"),
