@@ -21,7 +21,8 @@ querier_system_message = SystemMessage(
     content="""You are a search query generator.
     You are provided with a question and conversation history.
     Your task is to generate a rich search query that will be used to retrieve relevant documents about O2 simulations.
-    The documents will be used as context to answer the user question."""
+    The documents will be used as context to answer the initial user question.
+    Respond only with the search query and nothing else."""
 )
 
 rag_response_system_message = SystemMessage(

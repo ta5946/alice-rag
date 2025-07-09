@@ -1,4 +1,5 @@
 import json
+import asyncio
 from basic_rag_qa import qa_pipeline
 import simulation_chatbot_prompts as prompts
 from mattermost_utils import MATTERMOST_DRIVER, BOT_ID, get_thread_messages
@@ -23,7 +24,7 @@ async def event_handler(event):
         post_id = post_data.get("id")
         post_message = post_data.get("message")
         thread_id = post_data.get("root_id") or post_id
-        thread_messages = await get_thread_messages(thread_id)
+        thread_messages = get_thread_messages(thread_id)
         thread_messages = thread_messages[:-1] if thread_messages and thread_messages[-1].content == post_message else thread_messages # exclude last message
 
         bot_post = MATTERMOST_DRIVER.posts.create_post({
@@ -39,9 +40,13 @@ async def event_handler(event):
 
         # generate chatbot response
         if len(thread_messages) == 0:
-            bot_message = await qa_pipeline(post_message, prompts.default_message_history, feedback=False, mattermost_context=mattermost_context)
+            asyncio.create_task(
+                qa_pipeline(post_message, prompts.default_message_history, feedback=False, mattermost_context=mattermost_context)
+            )
         else:
-            bot_message = await qa_pipeline(post_message, thread_messages, feedback=False, mattermost_context=mattermost_context)
+            asyncio.create_task(
+                qa_pipeline(post_message, thread_messages, feedback=False, mattermost_context=mattermost_context)
+            )
 
     except Exception as error:
         print(f"event_handler(): {error}")
