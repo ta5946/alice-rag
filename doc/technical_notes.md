@@ -115,6 +115,10 @@ docker compose up
 Open `langfuse/docker-compose.yml` and set `NEXTAUTH_URL=http://<your-public-ip>:3000`. 
 Then continue to creating an account, organization and set up a project where you can trace your LLM runs.
 
+To view the history of chatbot RAG pipeline runs use credentials `user@cern.ch/password1.` and log in to the project home at
+http://pc-alice-ph01:3000/project/cmcn8idin0007ob07gtv37lmu.
+
+
 ### Mattermost integration
 
 The chatbot is integrated as a user **ask.alice.beta@cern.ch** in Mattermost, with its own `MATTERMOST_TOKEN`. It only responds to direct messages.
@@ -133,10 +137,29 @@ nohup python src/chatbot/mattermost_listener.py > chatbot.log 2>&1
 The `/tests` directory contains short scripts for testing basic functionalities of individual LangChain components. This includes the LLM, embedding model, 
 reranking model and vector store. They can be run with `pytest` from the root directory.
 
-### Potential approaches
+### Chatbot evaluation plan
 
 The folder `doc/evaluation_ideas` contains ideas for evaluating a RAG chatbot without a human annotated question-answer dataset.
 They are based on deep research conducted by ChatGPT and Gemini.
+
+> Generate a synthetic dataset by creating a question-answer pair for each document <d, q, a>.
+
+Retrieval evaluation:
+- Mean Reciprocal Rank (**MRR**) is the average retrieval rank of the relevant document for some question.
+- Recall at K (**recall@k**) is the proportion of time the relevant document is retrieved in the top K results.
+- _LLM-as-a-judge_ can determine the ratio of relevant documents in the top K results.
+
+Faithfulness evaluation:
+- Citation Accuracy is the proportion of time the LLM correctly cites the relevant document.
+- _LLM-as-a-judge_ can determine the ratio of claims that are supported by the retrieved documents.
+
+Response evaluation:
+- **ROUGE** score measures the overlap between the generated response and correct answer.
+- Or use **Semantic similarity** between the generated response and correct answer.
+- _LLM-as-a-judge_ can score the response on a scale from 1 to 5 based on some criteria.
+
+Chatbot evaluation:
+- _Human-in-the-loop_ can provide feedback on the generated responses, such as helpfulness.
 
 
 ## TODOs and improvements

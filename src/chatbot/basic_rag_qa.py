@@ -124,7 +124,10 @@ async def rag_response(prompt, message_history, mattermost_context):
 async def qa_pipeline(question, message_history, feedback=True, mattermost_context=None):
     answer = ""
     try:
-        with TRACING_CLIENT.start_as_current_span(name="basic_rag_qa", input={"question": question, "messages": message_history}) as qa_trace:
+        with TRACING_CLIENT.start_as_current_span(
+                name="basic_rag_qa",
+                input={"question": question, "messages": message_history}
+        ) as qa_trace:
             question_category = await classify_prompt(question, message_history, mattermost_context)
             print("QUESTION CLASSIFICATION:", PROMPT_CATEGORY_MAP[question_category])
 
@@ -132,7 +135,10 @@ async def qa_pipeline(question, message_history, feedback=True, mattermost_conte
                 answer = await basic_response(question, message_history, mattermost_context)
             elif question_category == 2:
                 answer = await rag_response(question, message_history, mattermost_context)
-            qa_trace.update_trace(output={"answer": answer})
+            qa_trace.update_trace(
+                output={"answer": answer},
+                metadata={"mattermost_context": mattermost_context} # TODO create feedback from mattermost reaction
+            )
 
             if feedback:
                 await create_feedback(qa_trace.trace_id)

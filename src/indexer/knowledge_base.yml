@@ -11,6 +11,11 @@ resources:
     exclude: ["data/**"]
     branch: master
 
+  - type: git
+    url: https://github.com/AliceO2Group/AliceO2
+    include: ["run/SimExamples/**/*.md", "run/SimExamples/**/*.py", "run/SimExamples/**/*.sh", "run/SimExamples/**/*.pdf"] # TODO include .cfg files
+    branch: dev
+
   # focus on simulations for now
 #  - type: git
 #    url: https://github.com/AliceO2Group/analysis-framework
