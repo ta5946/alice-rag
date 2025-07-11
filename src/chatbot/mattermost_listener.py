@@ -2,30 +2,26 @@ import json
 import asyncio
 from basic_rag_qa import qa_pipeline
 import simulation_chatbot_prompts as prompts
-from mattermost_utils import MATTERMOST_DRIVER, BOT_ID, get_thread_messages
+from mattermost_utils import MATTERMOST_DRIVER, BOT_ID, get_thread_messages, delayed_score_message
 from dotenv import load_dotenv
 
 load_dotenv()
 
 
-async def event_handler(event):
+async def handle_post(event_data):
     try:
-        event = json.loads(event)
-        event_data = event.get("data")
-        if not (event.get("event") == "posted" and event_data.get("channel_type") == "D"): # direct messages only
-            return
+        print("HANDLING POST")
+        print(event_data)
         post_data = json.loads(event_data.get("post"))
-        if post_data.get("user_id") == BOT_ID: # ignore bot messages
+        if post_data.get("user_id") == BOT_ID:  # ignore bot messages
             return
 
-        print("HANDLING EVENT:")
-        print(event)
         channel_id = post_data.get("channel_id")
         post_id = post_data.get("id")
         post_message = post_data.get("message")
         thread_id = post_data.get("root_id") or post_id
         thread_messages = get_thread_messages(thread_id)
-        thread_messages = thread_messages[:-1] if thread_messages and thread_messages[-1].content == post_message else thread_messages # exclude last message
+        thread_messages = thread_messages[:-1] if thread_messages and thread_messages[-1].content == post_message else thread_messages  # exclude last message
 
         bot_post = MATTERMOST_DRIVER.posts.create_post({
             "channel_id": channel_id,
@@ -40,13 +36,51 @@ async def event_handler(event):
 
         # generate chatbot response
         if len(thread_messages) == 0:
-            asyncio.create_task(
-                qa_pipeline(post_message, prompts.default_message_history, feedback=False, mattermost_context=mattermost_context)
-            )
+            thread_messages = prompts.default_message_history
+        asyncio.create_task(
+            qa_pipeline(post_message, thread_messages, feedback=False, mattermost_context=mattermost_context)
+        )
+
+    except Exception as error:
+        print(f"handle_post(): {error}")
+
+async def handle_reaction(event_data):
+    try:
+        print("HANDLING REACTION")
+        print(event_data)
+        reaction_data = json.loads(event_data.get("reaction"))
+        post_id = reaction_data.get("post_id")
+        emoji_name = reaction_data.get("emoji_name")
+
+        score_context = {
+            "name": "helpfulness",
+            "value": 0,
+            "comment": "User feedback on whether the chatbot answer was helpful (+1) or not (-1)."
+        }
+
+        # log the user feedback
+        if emoji_name == "+1":
+            score_context["value"] = 1 # positive feedback
+        elif emoji_name == "-1":
+            score_context["value"] = -1 # negative feedback
         else:
-            asyncio.create_task(
-                qa_pipeline(post_message, thread_messages, feedback=False, mattermost_context=mattermost_context)
-            )
+            return
+        asyncio.create_task(
+            delayed_score_message(post_id, score_context)
+        )
+
+    except Exception as error:
+        print(f"handle_reaction(): {error}")
+
+
+async def event_handler(event):
+    try:
+        event = json.loads(event)
+        event_data = event.get("data")
+        if event.get("event") == "posted" and event_data.get("channel_type") == "D": # direct messages only
+            await handle_post(event_data)
+        elif event.get("event") == "reaction_added":
+            await handle_reaction(event_data)
 
     except Exception as error:
         print(f"event_handler(): {error}")

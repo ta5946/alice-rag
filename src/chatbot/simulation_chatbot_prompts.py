@@ -34,3 +34,9 @@ rag_response_system_message = SystemMessage(
     - Do not make up new information.
     - Cite the sources that you used to formulate your answer by providing their links."""
 )
+
+user_feedback_suffix = """
+
+---
+
+_Help us improve the askALICE chatbot by providing your feedback. React to this message with 👍 if the answer was helpful or 👎 if it was not._"""

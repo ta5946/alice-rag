@@ -1,3 +1,5 @@
+# TODO Replace prints with logging
+
 import asyncio
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 from langchain_core.prompts import PromptTemplate
@@ -28,7 +30,7 @@ async def stream_response(messages, mattermost_context, update_interval=10):
             await async_update_post(mattermost_context, assistant_text)
 
     print()
-    await async_update_post(mattermost_context, assistant_text)
+    await async_update_post(mattermost_context, assistant_text + prompts.user_feedback_suffix)
     return assistant_text
 
 async def classify_prompt(prompt, message_history, mattermost_context):
@@ -121,6 +123,7 @@ async def rag_response(prompt, message_history, mattermost_context):
     assistant_text = await stream_response(messages, mattermost_context)
     return assistant_text
 
+
 async def qa_pipeline(question, message_history, feedback=True, mattermost_context=None):
     answer = ""
     try:
@@ -137,7 +140,8 @@ async def qa_pipeline(question, message_history, feedback=True, mattermost_conte
                 answer = await rag_response(question, message_history, mattermost_context)
             qa_trace.update_trace(
                 output={"answer": answer},
-                metadata={"mattermost_context": mattermost_context} # TODO create feedback from mattermost reaction
+                # metadata={"mattermost_context": mattermost_context},
+                tags=[mattermost_context.get("post_id")]
             )
 
             if feedback:

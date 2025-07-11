@@ -165,4 +165,3 @@ Chatbot evaluation:
 ## TODOs and improvements
 
 - Enable LLM reasoning (Qwen3?)
-- Build as python package or use top-level script

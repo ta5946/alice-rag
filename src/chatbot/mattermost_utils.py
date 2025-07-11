@@ -2,6 +2,7 @@ import os
 import asyncio
 from mattermostdriver import Driver
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
+from langchain_components import TRACING_CLIENT
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -61,3 +62,23 @@ def update_post(mattermost_context, message):
 
 async def async_update_post(mattermost_context, message):
     await asyncio.to_thread(update_post, mattermost_context, message)
+
+
+def score_message(post_id, score_context):
+    try:
+        trace_list = TRACING_CLIENT.api.trace.list(tags=[post_id])
+        trace = trace_list.data[0]
+        TRACING_CLIENT.create_score(
+            trace_id=trace.id,
+            score_id=trace.id, # to override previous score
+            name=score_context.get("name"),
+            value=score_context.get("value"),
+            comment=score_context.get("comment")
+        )
+
+    except Exception as error:
+        print(f"score_trace(): {error}")
+
+async def delayed_score_message(post_id, score_context, delay=2):
+    await asyncio.sleep(delay)
+    await asyncio.to_thread(score_message, post_id, score_context)
