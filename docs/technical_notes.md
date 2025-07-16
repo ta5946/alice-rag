@@ -19,6 +19,11 @@ To activate the python virtual environment with the required packages:
 source ~/.virtualenvs/alice-rag/bin/activate
 ```
 
+To set python path to the project directory:
+```bash
+export PYTHONPATH="~/rag:$PYTHONPATH"
+```
+
 The **chatbot configuration** is stored and can be changed in the `.env` file similar to the `.env.example`. This includes the selection of language model,
 embedding model and vector database properties.
 
@@ -82,6 +87,11 @@ documents, 4. Computes embeddings and stores new or changed documents. It works 
 By default, ChromaDB uses cosine similarity = 1 - cosine distance to return the *top k* most similar documents to the query.
 It then uses a reranker to cross score them and return only the *top n* which are used as problem context for the LLM.
 
+To clean up the vector store use:
+```bash
+rm -rf data/
+```
+
 ### Chunking
 
 Chunk size is defined in the `.env` file in characters. The number of tokens per chunk is approximately this / 4.
@@ -127,6 +137,8 @@ The RAG domain has been limited to O2 simulation documentation.
 To persistently run the mattermost event handling script:
 ```bash
 nohup python src/chatbot/mattermost_listener.py > chatbot.log 2>&1
+# or
+python run.py
 ```
 
 
@@ -136,6 +148,8 @@ nohup python src/chatbot/mattermost_listener.py > chatbot.log 2>&1
 
 The `/tests` directory contains short scripts for testing basic functionalities of individual LangChain components. This includes the LLM, embedding model, 
 reranking model and vector store. They can be run with `pytest` from the root directory.
+
+_Due to GPU limitations, stop the chatbot service before running the tests and vice versa._
 
 ### Chatbot evaluation plan
 
@@ -165,3 +179,7 @@ Chatbot evaluation:
 ## TODOs and improvements
 
 - Enable LLM reasoning (Qwen3?)
+- evaluation qa set
+- _transcribe recordings_
+- channel questions
+- jira issues O2 (general, production request)

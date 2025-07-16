@@ -18,13 +18,14 @@ LLM = ChatOpenAI(
     model=os.getenv("HF_LLM_REPO").split("/")[1].split("-GGUF")[0],
     base_url=os.getenv("LLM_BASE_URL"),
     api_key=os.getenv("LLM_API_KEY")
-)
+) # v1 endpoint with no authentication for now
 
 EMBEDDINGS = HuggingFaceEmbeddings(
     model_name=os.getenv("HF_EMBEDDINGS_REPO"),
     cache_folder=os.getenv("HF_CACHE_DIR"),
-    model_kwargs={"device": "cuda"}
-)
+    model_kwargs={"device": "cuda"}, # cpu or cuda
+    encode_kwargs = {"batch_size": 10}  # normalize_embeddings=False by default
+) # normalization not needed if we use cosine similarity
 
 CHROMA_CLIENT = PersistentClient(path=os.getenv("CHROMA_DIR")) # can switch to chromadb.HttpClient()
 
@@ -33,22 +34,22 @@ VECTORSTORE = Chroma(
     embedding_function=EMBEDDINGS,
     client=CHROMA_CLIENT,
     relevance_score_fn=lambda distance: 1 - distance
-)
+) # created in indexer folder
 
 VECTORSTORE_RETRIEVER = VECTORSTORE.as_retriever(
     search_type="similarity_score_threshold",
     search_kwargs={"k": int(os.getenv("CHROMA_TOP_K")), "score_threshold": float(os.getenv("CHROMA_THRESHOLD"))}
-)
+) # generalized retriever class
 
 RERANKER = HuggingFaceCrossEncoder(
     model_name=os.getenv("HF_RERANKER_REPO"),
-    model_kwargs={"cache_folder": os.getenv("HF_CACHE_DIR"),"device": "cpu"}
+    model_kwargs={"cache_folder": os.getenv("HF_CACHE_DIR"),"device": "cpu"} # cuda out of memory
 )
 
 COMPRESSOR = CrossEncoderReranker(
     model=RERANKER,
     top_n=int(os.getenv("CHROMA_TOP_N"))
-)
+) # compresses the context to only top n documents
 
 COMPRESSION_RETRIEVER = ContextualCompressionRetriever(
     base_compressor=COMPRESSOR,

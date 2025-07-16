@@ -1,8 +1,8 @@
 import json
 import asyncio
 from basic_rag_qa import qa_pipeline
-import simulation_chatbot_prompts as prompts
-from mattermost_utils import MATTERMOST_DRIVER, BOT_ID, get_thread_messages, delayed_score_message
+import src.chatbot.simulation_chatbot_prompts as prompts
+from src.chatbot.mattermost_utils import MATTERMOST_DRIVER, BOT_ID, get_thread_messages, delayed_score_message
 from dotenv import load_dotenv
 
 load_dotenv()

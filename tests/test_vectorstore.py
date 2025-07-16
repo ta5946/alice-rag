@@ -1,10 +1,5 @@
 import os
-from chromadb import PersistentClient
-from langchain_chroma import Chroma
-from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_community.cross_encoders import HuggingFaceCrossEncoder
-from langchain.retrievers.document_compressors import CrossEncoderReranker
-from langchain.retrievers import ContextualCompressionRetriever
+from src.chatbot.langchain_components import VECTORSTORE, VECTORSTORE_RETRIEVER, COMPRESSION_RETRIEVER
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -12,22 +7,10 @@ os.environ["LANGCHAIN_TRACING_V2"] = "false"
 
 
 def test_vectorstore():
-    embeddings = HuggingFaceEmbeddings(
-        model_name=os.getenv("HF_EMBEDDINGS_REPO"),
-        cache_folder=os.getenv("HF_CACHE_DIR"),
-        model_kwargs={"device": "cpu"}
-    )
-    chroma_client = PersistentClient(path=os.getenv("CHROMA_DIR"))
-    chroma_vectorstore = Chroma(
-        collection_name=os.getenv("CHROMA_COLLECTION_NAME"),
-        embedding_function=embeddings,
-        client=chroma_client,
-        relevance_score_fn=lambda distance: 1 - distance
-    ) # created in indexer folder
     search_query = "How to obtain a valid alien token to run the O2 simulation?"
 
     # Relevance scores
-    result_with_scores = chroma_vectorstore.similarity_search_with_relevance_scores(
+    result_with_scores = VECTORSTORE.similarity_search_with_relevance_scores(
         k=int(os.getenv("CHROMA_TOP_K")),
         query=search_query,
         score_threshold=float(os.getenv("CHROMA_THRESHOLD"))
@@ -36,33 +19,16 @@ def test_vectorstore():
         print(score)
 
     # Basic retrieval
-    chroma_retriever = chroma_vectorstore.as_retriever(
-        search_type="similarity_score_threshold",
-        search_kwargs={"k": int(os.getenv("CHROMA_TOP_K")), "score_threshold": float(os.getenv("CHROMA_THRESHOLD"))}
-    ) # generalized retriever class
-    basic_result = chroma_retriever.invoke(search_query)
+    basic_result = VECTORSTORE_RETRIEVER.invoke(search_query)
     print("Retrieved documents with relevance score above threshold:")
     for doc in basic_result:
         print(doc) # top k documents with a relevance score above the threshold
 
-    reranker = HuggingFaceCrossEncoder(
-        model_name=os.getenv("HF_RERANKER_REPO"),
-        model_kwargs={"cache_folder": os.getenv("HF_CACHE_DIR"), "device": "cpu"}
-    )
-    compressor = CrossEncoderReranker(
-        model=reranker,
-        top_n=int(os.getenv("CHROMA_TOP_N"))
-    ) # compresses the context to only top n documents
-    compression_retriever = ContextualCompressionRetriever(
-        base_compressor=compressor,
-        base_retriever=chroma_retriever
-    )
-
     # Retrieval with reranking
-    reranked_result = compression_retriever.invoke(search_query)
+    reranked_result = COMPRESSION_RETRIEVER.invoke(search_query)
     print("Retrieved documents with reranking:")
     for doc in reranked_result:
-        print(doc) # top k documents reranked
+        print(doc) # top n documents reranked
 
     assert len(result_with_scores) <= int(os.getenv("CHROMA_TOP_K")), "Number of retrieved documents should not be above top-k."
     assert all(score >= float(os.getenv("CHROMA_THRESHOLD")) for doc, score in result_with_scores), "Document cosine similarity scores should be above retrieval threshold."

@@ -1,5 +1,5 @@
 import os
-from langchain_openai import ChatOpenAI
+from src.chatbot.langchain_components import LLM
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -7,13 +7,9 @@ os.environ["LANGCHAIN_TRACING_V2"] = "false"
 
 
 def test_llm():
-    llm = ChatOpenAI(
-        base_url=os.getenv("LLM_BASE_URL"),
-        api_key=os.getenv("LLM_API_KEY")
-    )  # v1 endpoint with no authentication for now
     prompt = "What is 9*9?"
 
-    response = llm.invoke(prompt)
+    response = LLM.invoke(prompt)
     print("Model response:")
     print(response)
 

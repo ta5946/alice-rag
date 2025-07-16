@@ -9,8 +9,8 @@ import subprocess
 import yaml
 import hashlib
 from pathlib import Path
-from embedder import EMBEDDER
-from utils import LOADER_MAPPING, CHROMA_COLLECTION, TEXT_SPLITTER, load_previous_hashes, save_hashes
+from src.chatbot.langchain_components import EMBEDDINGS
+from src.indexer.utils import LOADER_MAPPING, CHROMA_COLLECTION, TEXT_SPLITTER, load_previous_hashes, save_hashes
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -85,7 +85,7 @@ def main():
                 continue
 
             all_text = "\n".join(doc.page_content for doc in docs)
-            doc_hash = compute_hash(all_text, path, 0, embedder_name=EMBEDDER.model_name)
+            doc_hash = compute_hash(all_text, path, 0, embedder_name=EMBEDDINGS.model_name)
             new_hashes[str(path)] = doc_hash
 
             if old_hashes.get(str(path)) == doc_hash:
@@ -95,7 +95,7 @@ def main():
             split_docs = TEXT_SPLITTER.split_documents(docs)
             texts = [doc.page_content for doc in split_docs]
             metadatas = [{"source": str(path), "link": link} for t in texts]
-            embeddings = EMBEDDER.embed_documents(texts)
+            embeddings = EMBEDDINGS.embed_documents(texts)
             ids = [compute_hash(t, path, i, "local") for i, t in enumerate(texts)]
 
             # We add in smaller batches because the add function has a mem limitation or size-limitation per call

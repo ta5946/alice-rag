@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import Dict, Optional
 from chromadb import PersistentClient
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.document_loaders import TextLoader, PythonLoader, PDFMinerLoader, UnstructuredHTMLLoader
+from langchain_community.document_loaders import TextLoader, PythonLoader, PDFMinerLoader, UnstructuredHTMLLoader
 from dotenv import load_dotenv
 
 load_dotenv()

@@ -4,9 +4,9 @@ import asyncio
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 from langchain_core.prompts import PromptTemplate
 from langchain_core.documents import Document
-import simulation_chatbot_prompts as prompts
-from mattermost_utils import async_update_post
-from langchain_components import LLM, COMPRESSION_RETRIEVER, TRACING_CLIENT, TRACING_HANDLER, messages_to_string
+import src.chatbot.simulation_chatbot_prompts as prompts
+from src.chatbot.mattermost_utils import async_update_post
+from src.chatbot.langchain_components import LLM, COMPRESSION_RETRIEVER, TRACING_CLIENT, TRACING_HANDLER, messages_to_string
 
 
 PROMPT_CATEGORY_MAP = {

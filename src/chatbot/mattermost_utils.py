@@ -2,7 +2,7 @@ import os
 import asyncio
 from mattermostdriver import Driver
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
-from langchain_components import TRACING_CLIENT
+from src.chatbot.langchain_components import TRACING_CLIENT
 from dotenv import load_dotenv
 
 load_dotenv()
