@@ -2,7 +2,7 @@ import os
 import asyncio
 from mattermostdriver import Driver
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
-from src.chatbot.langchain_components import TRACING_CLIENT
+from langfuse import get_client
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -29,6 +29,8 @@ MATTERMOST_DRIVER = Driver({
 
 MATTERMOST_DRIVER.login()
 BOT_ID = MATTERMOST_DRIVER.users.get_user("me").get("id")
+
+TRACING_CLIENT = get_client()
 
 
 def get_thread_messages(thread_id):

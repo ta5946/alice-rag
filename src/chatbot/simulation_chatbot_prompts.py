@@ -9,7 +9,7 @@ classifier_system_message = SystemMessage(
     content="""You are a question classifier.
     Your task is to classify the following question into one of the categories:
     1. General conversation question - can be answered without any additional context,
-    2. Expert question about O2 simulations - requires context from the internal documentation,
+    2. Expert question about O2 simulations - requires context from the internal documentation.
     Respond only with the category number (1 or 2) and nothing else."""
 )
 
