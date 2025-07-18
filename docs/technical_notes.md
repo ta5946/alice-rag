@@ -176,10 +176,20 @@ Chatbot evaluation:
 - _Human-in-the-loop_ can provide feedback on the generated responses, such as helpfulness.
 
 
+## Question extraction
+
+### Mattermost
+
+To create a dataset of frequent questions about ALICE O2 simulations requiring support from experts, we scraped the [O2 Simulation Mattermost channel](https://mattermost.web.cern.ch/alice/channels/o2-simulation).
+We filtered out system messages, bug reports and answers from the experts. Then used the LLM to extract the actual questions which took around 10 minutes.
+Result is ~110 straightforward questions in stored in the file `src/scraper/questions_v2.json`.
+
+
 ## TODOs and improvements
 
 - Enable LLM reasoning (Qwen3?)
-- evaluation qa set
-- _transcribe recordings_
-- channel questions
-- jira issues O2 (general, production request)
+- Build an evaluation question-answer dataset
+- Benchmark the base LLM and RAG chatbot using answer correctness metrics
+- _Scrape Jira issues from O2 (filters general, production request)_
+- Implement the environment variable collection and script generating capability
+- Chatbot in Mattermost channel could tell the user to submit a Jira ticket

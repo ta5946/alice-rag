@@ -18,6 +18,8 @@ def classify_post(post):
         return 1
     elif "2" in assistant_message.content:
         return 2
+    elif "3" in assistant_message.content:
+        return 3
     else:
         raise ValueError("Invalid message classification:", assistant_message.content)
 

@@ -1,0 +1,898 @@
+[
+    {
+        "source": "mattermost",
+        "post_id": "wuohdejkptdjpysug57hke9awy",
+        "create_at": 1681977277781,
+        "user_id": "dbxj1b39spd85k8thjcngnt8gc",
+        "message": "Hi, I am trying to run locally a simulation of a single MB pp collision with a very simple script (that you can find at the link), but the process is hanging indefinitely. I have the same problem both on ubuntu and on macOS, in both cases with a fresh new installation of O2, O2Physics, O2DPG, QualityControl (from scratch). All the relevant logs and files (including the script) can be found here: https://cernbox.cern.ch/s/Ags9Krw4wgK9pSe. Have you any suggestion about what could be wrong? This is just a test, because also for a bit more complex simulations I have the same problem. Thanks! ",
+        "question": "What could be causing the simulation process to hang indefinitely?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "5ngre511rtd68gwyg4zpf4ayeh",
+        "create_at": 1683034334869,
+        "user_id": "xchyiqc69pdou8actqq9gwqfde",
+        "message": "Dear all,\n\nI have one small question. I am still digesting the MC Run 3 framework itself at the same time as implementing the PWG-EM dielectron MCs.\n\nI understood that in MC simulations like:\nhttps://github.com/AliceO2Group/O2DPG/blob/master/MC/run/PWGDQ/runCharmToMuons_fwd_pp.sh\nOr similarly https://github.com/AliceO2Group/O2DPG/blob/master/MC/run/PWGEM/runHFToDielectrons_pp.sh\nOr even https://github.com/AliceO2Group/O2DPG/blob/master/MC/run/PWGDQ/runPromptJpsi_midy_pp.sh\n\nwe are injecting signal (and sometimes triggering at the same time) in a pp minimum bias pp collisions. Each collision has then a signal in it. Is it correct ?\n\nIn the presentation of David during the tutorial (here: https://indico.cern.ch/event/1267433/contributions/5379755/attachments/2635472/4559337/DDChinellato-Tutorial-HandsOn-04.pdf) there was on slide 5 the PYTHIA Gap-triggered concept. It is not clear to me how you do this PYTHIA Gap-triggered concept with the script https://github.com/AliceO2Group/O2DPG/blob/master/MC/bin/o2dpg_sim_workflow.py. Is it be via the --embeddPattern option ??\n\n\n",
+        "question": "Is it correct that in the MC simulations, we inject signal in each pp minimum bias collision, and how does the PYTHIA Gap-triggered concept fit into the script o2dpg_sim_workflow.py?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "mymi8hpzw783ddwp78o5b49e7r",
+        "create_at": 1683034678976,
+        "user_id": "xchyiqc69pdou8actqq9gwqfde",
+        "message": "Is there an example somehow of gap-triggering with external generator ?",
+        "question": "Is there an example of gap-triggering with an external generator?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "kuhbau3j83nd9nuxeybhwwgb9c",
+        "create_at": 1683049346422,
+        "user_id": "cb3ujfswxpd6tm5fj9z53byray",
+        "message": "@swenzel I remember you told me that the on-the-fly simulations (i.e. not saving anything to disk) were used already by DQ or EM - is that correct? Could you perhaps give me a pointer to an example use case? Thanks!",
+        "question": "Did you tell me that on-the-fly simulations (i.e. not saving anything to disk) were used by DQ or EM? Could you provide an example use case?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "14kko5h6u7bf9mm7gm3n8zishc",
+        "create_at": 1683128423632,
+        "user_id": "cb3ujfswxpd6tm5fj9z53byray",
+        "message": "Hi @rbailhac thanks! I will take a look! This does not save the kine files to disk, right? Or does it? \n(the option I am interested in is not to save and provide mc particles straight to analysis in active memory) ",
+        "question": "Does the option exist to not save the kinematics files to disk and instead provide MC particles directly to analysis in active memory?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "fgbowhnq87rjpyh4m99hyeczaa",
+        "create_at": 1683904279818,
+        "user_id": "xchyiqc69pdou8actqq9gwqfde",
+        "message": "Hi @all, I am not sure it is the right channel for this question (do not hesitate to send me somewhere else) but I have the following question. For the case of background + signal embedding in digitization, are both the background and signal kept ? We had in Run 2 signal filtering to spare disk place. How is it in Run 3 ? (Sorry if I missed the info somewhere)",
+        "question": "For the case of background + signal embedding in digitization, are both the background and signal kept? How does this compare to Run 2, where signal filtering was used to save disk space?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "o6yb6apfbp8rixu7oz4sg1pkic",
+        "create_at": 1688471245721,
+        "user_id": "8gj5de5ehjgmpkrab47ts3saoe",
+        "message": "Dear all,\n\nI was wondering, is it possible to establish a volume where photon conversions (to e+e-) are turned off?\nThe FCT has 9 layers, but for my analysis it would be convenient if I could turn off photon interactions in the first layer.\nAll the other interactions should still happen.\n\nIt would also be convenient to know whether the reverse is possible:\nHave all photons convert to e+e- if they reach a layer\n\nIs there a way to do this?",
+        "question": "Is it possible to turn off photon conversions to e+e- in a specific layer while keeping other interactions intact in ALICE O2 simulations?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "rcgszh191frqjkjew7oupfsywc",
+        "create_at": 1692957103245,
+        "user_id": "1uiqyb17bbyemb9j8gqi7ncqdy",
+        "message": "Hello,\nI am new to the ALICE group and I am trying to generate MFT simulations using pythia generator.\nI followed some instructions and I have the o2-sim reconstructed tracks and clusters.\nMy question is that how can I convert the o2-sim files to AO2D ?\nThanks. ",
+        "question": "How can I convert the o2-sim files to AO2D?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "r6yo346km38s9ynzb7oobrkrzh",
+        "create_at": 1698707673673,
+        "user_id": "xhct7puz47gs7k8psm81wubtir",
+        "message": "Dear experts,\nI'm a beginner with O2 simulations and I'm trying to run a simple Hard QCD all on simulation with O2 with\n```o2-sim -n 10 -g pythia8 --configKeyValues \"GeneratorPythia8.config=path_to/pythia8.cfg\" \\ --noGeant```\nWhat I receive in my terminal after executing the command is:\n```[INFO] This is o2-sim version 1.2.0 (a3142359b)\n[INFO] Built by ALIBUILD:1.14.5-jammy, ALIDIST-REV:3551039d457f9ee792f63473bab3cd9f2054838f on OS:Linux-6.2.0-35-generic\n[INFO] BINDING TO ADDRESS ipc:///tmp/o2sim-notifications-80157 type pub\n[INFO] Running with 8 sim workers \n[INFO] CREATING SIM SHARED MEM SEGMENT FOR 8 WORKERS\nSpawning particle server on PID 80160; Redirect output to o2sim_serverlog\nSpawning sim worker 0 on PID 80187; Redirect output to o2sim_workerlog0\nSpawning hit merger on PID 80188; Redirect output to o2sim_mergerlog```\nBut after this I don't see anything else, no matter how much time I wait. Does anybody know what could be the problem?",
+        "question": "What could be the reason for not seeing any further output after spawning the processes when running the O2 simulation?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "jkk35djc538o9j4u11db6qzcmr",
+        "create_at": 1706269890567,
+        "user_id": "tchrdk7jtibcbbempsxh5bg8uc",
+        "message": "Hello,\n\nHow should one turn off delta ray production when simulating with Geant4? Is it in the detector specific `simcuts.dat` file? Asking because I recall that this did not have an effect with Geant4 like a year ago, + I think it was said that these settings were to be moved somewhere else or something like that  :thinking_face: \n\nMany thanks!\n\ncc @upadhyay ",
+        "question": "How should one turn off delta ray production when simulating with Geant4, and is this setting specified in the detector specific `simcuts.dat` file?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "juu4tif6xibpzbz1ngh5uwbhqr",
+        "create_at": 1706270994468,
+        "user_id": "1ws47bhqkfrbfe35f6ebziqrfh",
+        "message": "@mmolande : Do you mean globally or on specific detector levels?\n@mmolande : Do you mean globally or on specific detector levels?",
+        "question": "Do you mean globally or on specific detector levels?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "51ptbfjxhf8gmdpw1p17rtojba",
+        "create_at": 1706281228680,
+        "user_id": "1ws47bhqkfrbfe35f6ebziqrfh",
+        "message": "Reading in the sim docs, https://aliceo2group.github.io/simulation/docs/transport/geometry.html?highlight=cuts, I believe the following approach should work (pinging @bvolkel as expert):\nReading in the sim docs, https://aliceo2group.github.io/simulation/docs/transport/geometry.html?highlight=cuts, I believe the following approach should work (pinging @bvolkel as expert):\na) extract a json file with all processes and cut values: (adjust geometry to your needs)\na) extract a json file with all processes and cut values: (adjust geometry to your needs)\n```\no2-sim-serial -n 0 -m FT0 PIPE -o bar --configKeyValues \"MaterialManagerParam.outputFile=o2_medium_params.json\"\n```\n```\no2-sim-serial -n 0 -m FT0 PIPE -o bar --configKeyValues \"MaterialManagerParam.outputFile=o2_medium_params.json\"\n```\nb) modify json with your choice of processes or cuts\nb) modify json with your choice of processes or cuts\n```\nreplace all \"DRAY\" : 1\nby \"DRAY\" : 0\n```\n```\nreplace all \"DRAY\" : 1\nby \"DRAY\" : 0\n```\nc) run simulation with this custom file\nc) run simulation with this custom file\n```\no2-sim --configKeyValues \"MaterialManagerParam.inputFile=o2_medium_params.json\" ...\n```\n```\no2-sim --configKeyValues \"MaterialManagerParam.inputFile=o2_medium_params.json\" ...\n```\nAs far as I understood, the new Geant4 version should honour these settings.\nAs far as I understood, the new Geant4 version should honour these settings.",
+        "question": "What is the process to customize cut values and run ALICE O2 simulations with specific modifications using the Geant4 version?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "3nknoktqtbrdurmyxuusm3586h",
+        "create_at": 1706696870576,
+        "user_id": "migboig5jpfdi8ursydgy8izuh",
+        "message": "Thanks @ihrivnac .\nSo you are saying, changing the process globally is fine, right? I always understood there was a problem with that. Or was that only with local settings per medium?\nIf the global setting **IS RECOGNISED**, then yes, @mmolande @upadhyay , you could try to change the default `DRAY` setting, in case you haven't done that yet",
+        "question": "Is changing the default DRAY setting globally recognized, or is there still a problem with local settings per medium?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "uu8fbceftjdipbfssb8brp31ec",
+        "create_at": 1707321943419,
+        "user_id": "migboig5jpfdi8ursydgy8izuh",
+        "message": "what does `grpcreate.log` say?",
+        "question": "what does `grpcreate.log` say?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "yz4nsmsjqirsi85qmgaymtsbha",
+        "create_at": 1707323699590,
+        "user_id": "i9jam9rsxby85yhhne63397zxw",
+        "message": "Indeed, the issue was related to the http_proxy at GSI/ Problem which I resolved 10 minutes ago\n\n* alien.py was working.\n* ( TGrid::Connect(\"alien\") was failing\n\nI have resolved the issue, and the MC has been running for a while now.  No crash so far, but not results yet.\n I will provide an update if there are any problems or questions. I do have a question already. We are interested in testing not only reconstruction skimming but also time series analysis.\n\nFor the time series analysis, we need to simulate \"time-Orbits\". Is this easily configurable? It can be addressed later, but if it's straightforward, I might attempt to run that part as well.\n\n* Pilot jobs finished - resuls looks \"reasonable\" - I submit first production\nIn case I want to make rate scan - what is the optimal way  to simulate occuancy from 0 to 50 kHz PbPb, using switches which we have?\nHello @bvolkel, @gconesab, @swenzel, and @Jens,\n\nThe first production with the default settings has been completed, and as I previously explained, using approximately 100 jobs each running for 2 hours on our server, I have gathered sufficient statistics for differential performance parameterization. As mentioned before, we aim to conduct an occupancy scan, emulating the Interaction Rate (IR) from 500 kHz to 5 MHz.\n\nCould you advise on the preferred method for implementing this with the Jet setup? I am currently running the following configuration:\n\n```bash\n\n  # create workflow\n  ${O2DPG_ROOT}/MC/bin/o2dpg_sim_workflow.py -eCM ${CONFIG_ENERGY} -col pp -gen pythia8 -proc \"jets\" \\\n                                              -ptHatMin ${PTHATMIN} -ptHatMax ${PTHATMAX}            \\\n                                              -tf ${NTIMEFRAMES} -ns ${NSIGEVENTS} -e ${SIMENGINE}   \\\n                                              -j ${NWORKERS} -mod \"--skipModules ZDC\"                \\\n                                              -weightPow ${WEIGHTPOW} \\\n                                              -interactionRate 500000\n```\nI understand that the combination of **ns, tf, and interaction rate** parameters should enable me to achieve the desired rate and target statistics. However, I am unsure how to accurately submit rates for a uniform rate distribution from 100 kHz to 3 MHz while aiming for an integral of 10^6 events. Could you clarify how exactly these three parameters are interpreted? I can envision different interpretations.\n\nThank you for your guidance.\nIn the initial test, I observed a relatively narrow multiplicity distribution. Below, I've plotted the DCA resolution ()y for high-momentum tracks (>5 GeV) as a function of TPC occupancy (x axis)- number of tracks. Now, we need to constrain it within the following occupancy ranges such that we will have the same coverage in the data and in the MC.\n\n",
+        "question": "How should the parameters `ns`, `tf`, and `interaction rate` be interpreted and used to simulate occupancy from 0 to 50 kHz PbPb, and how can a uniform rate distribution from 100 kHz to 3 MHz be achieved while aiming for an integral of 10^6 events?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "sremafead7rhbmdkrwjx9krfxc",
+        "create_at": 1707382952293,
+        "user_id": "i9jam9rsxby85yhhne63397zxw",
+        "message": "Hello @swenzel, @bvolkel and @gconesab \n\nThank you, everyone.\n\nI have three questions before I proceed further with interaction rate scan at GSI:\n\n- **Relation Between the Number of Collisions, Interaction Rate, and the Length of Time Frame:** It seems to be overdetermined. Providing the interaction rate, fixing the time frame to 128 orbits, and selecting the number of time frames, the number of collisions per time frame is determined. If we provide all the information:\n   - Number of collisions\n   - Interaction rate\n   - The length of time frame (expected to be fixed)\n   \n   Which number will be prioritized?\n\n- **Output from Production Missing AOD Files:** In the output from the production, all reconstruction was extracted, including or except for skimmed data, but not the AOD file. It seems I am missing something in the script. I didn't spot it in the first submission as I didn't use them, but now we would like to run standard AO2D analysis on top of that data. I assume should be simple swith.\n\n- **For Gustavo - Jet Generation:** How are the jets generated in each collision? We will need a significant fraction of minimum bias (MB) collisions and a fraction of collisions with jets, e.g., 70:30% or 80:20%, to have most of the data with \"realistic\" properties otherwise the \"vertexing and efficiency will  overoptimistic - have very weel defined vertex properties.\n\nFor point 1, I would like to delve into more details: What happens if we provide all the information listed? How is the system reconciled, and which parameters take precedence?\n\nYour guidance and clarification on these matters would be greatly appreciated.\n\n",
+        "question": "What happens if we provide all the information (number of collisions, interaction rate, and the length of time frame) and which parameters take precedence?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "4fyztmx4n3b43kdbr1yttqcycw",
+        "create_at": 1707386676012,
+        "user_id": "i9jam9rsxby85yhhne63397zxw",
+        "message": "Hello @swenzel and @gconesab \n\n1. **Interaction Rate and Collision Integral:** If it's true that the simplest way to conduct a rate scan is by submitting jobs with incrementally increasing interaction rates while keeping the integral number of collisions constant, do I still need to specify the `ns` flag, or will its value be automatically assigned?\n\n2. **Workflow Submission Clarification:** I'm unsure if I've fully understood the submission process. Is it necessary to execute the workflow twice as shown in the following snippet?\n\n    ```bash\n      # create workflow\n      ${O2DPG_ROOT}/MC/bin/o2dpg_sim_workflow.py -eCM ${CONFIG_ENERGY} -col pp -gen pythia8 -proc \"jets\" \\\n                                                  -ptHatMin ${PTHATMIN} -ptHatMax ${PTHATMAX}            \\\n                                                  -tf ${NTIMEFRAMES} -ns ${NSIGEVENTS} -e ${SIMENGINE}   \\\n                                                  -j ${NWORKERS} -mod \"--skipModules ZDC\"                \\\n                                                  -weightPow ${WEIGHTPOW} \\\n                                                  -interactionRate 500000\n      # run workflow\n      ${O2DPG_ROOT}/MC/bin/o2_dpg_workflow_runner.py -f workflow.json -tt tpctimes\n      ${O2DPG_ROOT}/MC/bin/o2_dpg_workflow_runner.py -f workflow.json -tt aod\n    ```\n\n3. **Jet Trigger Configuration for Realistic Physical Background:** As mentioned earlier, I aim to replicate the Run1/2 performance generator setup, which allowed specifying a random fraction for signal enhancement. If the current generator setup doesn't yield a realistic physical background and tends to overestimate occupancy and multiplicity, as seen in my occupancy estimations from skimmed data, I'd prefer to adjust this via a configuration parameter if possible. Otherwise, I'll proceed with the current setup and make necessary rate corrections.\n\nYour advice on these matters would be greatly appreciated.\n\n\n",
+        "question": "1. Do I need to specify the `ns` flag when conducting a rate scan by incrementally increasing interaction rates while keeping the integral number of collisions constant?\n2. Is it necessary to execute the workflow twice as shown in the provided snippet?\n3. How can I configure the jet trigger to yield a more realistic physical background, similar to the Run1/2 performance generator setup?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "j75744xrtino7c3ahq4dwewjpw",
+        "create_at": 1707399938662,
+        "user_id": "i9jam9rsxby85yhhne63397zxw",
+        "message": "Dear @gconesab \n\nI see you post was deleted. \n\nTo start a new simulation, I wonder if it is possible to use the standard jet generator and include MB events ( minimum bias) to achieve a realistic multiplicity distribution. Currently, the occupancy is roughly estimated to be three times higher than what is observed in MB data, and furthermore, the vertexing performance is significantly better for jet events. This discrepancy is crucial as vertex monitoring and DCA monitoring are important observables in our performance parameterisation, which we are obtaining as part of the MC/Data test.\n\nIs there a function to set the fraction of signal collisions relative to MB events, or should I continue with the current setup, taking Sandro's recent advice into account?",
+        "question": "Is there a function to set the fraction of signal collisions relative to MB events, or should I continue with the current setup?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "sbst8fdc6inwxrtyk8uihgotxo",
+        "create_at": 1707401718765,
+        "user_id": "ztcwo5f54pdz9jbxbyf55aakrc",
+        "message": "I do not think  that in the PWGJE this kind of configuration has been even considered. I think other PWG have something like that (without jets but injecting particles),  I have no idea how to do it.",
+        "question": "How can I configure a simulation without jets but by injecting particles in PWGJE or another relevant PWG in ALICE O2?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "j6bwqr3yg7ya7qfwmptqg573pa",
+        "create_at": 1708445818542,
+        "user_id": "919mo57ehi889km811xqgxwzwr",
+        "message": "Hi, I am trying to run Pythia to be able to perform some targeted EMCAL studies. I am using the following commands:\n```\n${O2DPG_ROOT}/MC/bin/o2dpg_sim_workflow.py -eCM 13600  -col pp -gen pythia8 -proc cdiff -tf 1 -ns 1000 -j 10 -interactionRate 769  -run 529006\n${O2DPG_ROOT}/MC/bin/o2_dpg_workflow_runner.py -f workflow.json -tt emcreco_1 --cpu-limit 8\n```\nBut at the moment I am not even able to run it either with the following output `Apparently some of the chosen target tasks are not in the workflow`. Would you be able to advise on how to proceed? Thanks a lot",
+        "question": "Why am I getting the error \"Apparently some of the chosen target tasks are not in the workflow\" when trying to run the simulations, and how can I proceed?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "h3amc7zxq7rgfrbwucr6d3k4ee",
+        "create_at": 1708529216363,
+        "user_id": "wiackyom7pnmdeuq9cjxg7ya1e",
+        "message": "Dear all,\nI have a question about the ```fromBackgroundEvent``` flag in the ```McParticles``` table. This flag intended to be used to check if the particle actually belongs to the selected collision or is wrongly associated to it, right? If yes, how is the correct usage of it? Because is was running some tests, where I selected protons and the flag is true for all protons that I selected (at least in the files I used for testing, which are from the datasets 23k2c_pass4 (anchored to pp of 2022) and 21k6_pp)",
+        "question": "Is the ```fromBackgroundEvent``` flag in the ```McParticles``` table used to check if a particle belongs to the selected collision or is wrongly associated to it, and how should it be correctly used?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "bxxzk9a197rkdgjwctg61biymy",
+        "create_at": 1709051995479,
+        "user_id": "n87pwhqdcpbhifomoihzirqwrr",
+        "message": "I am having another issue. I tried adapting the above `run_jets.sh` script for an anchored production (see attached `run_jets_anchored.sh` file). It seems to run without any error message, however I only have 1 dataframe and 5 collisions in the resulting AO2D instead of the 20 and 100 I asked for;\nAm I supposed to do some cleaning after I run a task on the grid? or will they be overwritten whenever I run another production on the grid",
+        "question": "Am I supposed to do some cleaning after I run a task on the grid, or will they be overwritten whenever I run another production on the grid?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "6axn5rsxz3nkzrhprca9jkmpth",
+        "create_at": 1709108776160,
+        "user_id": "migboig5jpfdi8ursydgy8izuh",
+        "message": "Let me take a look!\nTwo questions @alandou :\n1. where does `${WEIGHTPOW}` come from?\n1. could you send me the log `async_pass_log.log` in case you have it available?",
+        "question": "1. where does `${WEIGHTPOW}` come from?\n2. could you send me the log `async_pass_log.log` in case you have it available?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "w7t7a6z44fn8bn7edke4ozfcge",
+        "create_at": 1709551432193,
+        "user_id": "n87pwhqdcpbhifomoihzirqwrr",
+        "message": "Dear experts,\nI tried running a workflow on the grid; it failed however I don't understand what the error is.\nHere is the link to the stdout log : https://alimonitor.cern.ch/agent/jobs/details.jsp?pid=3031344161\nThe script I used is as follow:\n```\n${O2DPG_ROOT}/GRID/utils/grid_submit.sh --script run_jets_HF_ccbar.sh --jobname hfJetsCCBAR10k --outputspec \"*.log@disk=1\",\"*.root@disk=2\" --packagespec \"VO_ALICE@O2sim::v20240226-1\" --wait --fetch-output --asuser alandou\n```",
+        "question": "What is the error causing the workflow to fail, and how can I understand it from the stdout log?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "51aogz3g8prutg7pxg5ir77djo",
+        "create_at": 1709651574289,
+        "user_id": "migboig5jpfdi8ursydgy8izuh",
+        "message": "Is it same script and therein same run number in both cases?\nOr did you change the run number at some point?\nBecause the interaction rate can make a big difference and is orders of magnitude apart for pp and PbPb.\n\nDepending also on what you generate. Is it pp?",
+        "question": "Is it the same script and run number in both cases, or did you change the run number at some point?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "tw8gojknhtfj8r4bgubqir65dw",
+        "create_at": 1709911083230,
+        "user_id": "n87pwhqdcpbhifomoihzirqwrr",
+        "message": "Dear experts,\nI am continuing to try running a simulation with anchoring. We have already generated a first production without anchoring a few months ago, without issue ([run_jets.sh](https://github.com/AliceO2Group/O2DPG/blob/master/MC/run/PWGGAJE/run_jets.sh)). I am trying to adapt it to work with anchoring (see attached run_jets_anchored.sh script).\nI am running said anchored script on the grid with the following command, but cannot get any AO2D:\n```\n${O2DPG_ROOT}/GRID/utils/grid_submit.sh --script run_jets_anchored.sh --jobname testJetAnchoredLHC22f_20Evts --outputspec \"*.log@disk=1\",\"*.root@disk=2\" --packagespec \"VO_ALICE@O2sim::v20240305-1\" --wait --fetch-output --asuser alandou\n```\nLooking at the logs (https://alimonitor.cern.ch/agent/jobs/details.jsp?pid=3035185901), I see that there seems to be a problem with gensgnconf (signal configuration?), though I am not sure why the anchoring causes this nor what is happening at this gensgnconf step:\n- in `pipeline_action_xxxx.log` files: `INFO Stoping pipeline due to failure in stages with PID [1801, 1903]`, with tasks 1801 and 1903 being `gensgnconf_1`and `gensgnconf_2`\n- in `logtmp_xxxxxx.txt` files, I get a `[ERROR] run with echo in pipe` line with a long json like suite of settings for a workflow resulting from the command `    \"command\": \"cvmfsLongPathName/o2-create-aligned-geometry-workflow --configKeyValues HBFUtils.startTime=1657457522166 --condition-remap=file:///workdir/ccdb=ITS/Calib/Align -b\"` followed by `gensgnconf_1 failed ... checking retry` (or gensgnconf_2) lines\n\nWhat is this gensgnconf step?\nAny ideas about what is the issue or how I could solve it?",
+        "question": "What is the gensgnconf step, and why is it failing in the simulation script?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "ygu5ud3rpjfxfmumqk1686ndhc",
+        "create_at": 1711101897629,
+        "user_id": "m4433ecqp38ptq7r8bgcbwa3rh",
+        "message": "Meanwhile, i also submitted the script on GRID  by logging on lxplus and it works  well. Now i wanted to run an anchored MC production  but it fails.  I think that this is due to the ALIEN_JDL_ANCHOR_SIM_OPTIONS  that i need  after the .ini file ( i.e. genBkg, procBkg, collBkg, embedding, nb and see the attached script) but i don't know how to solve it. When running it on lxplus with sh runBeautyToMUONS_fw_pp-anchor-test.sh  i got the following error: Traceback (most recent call last):\n  File \"/cvmfs/alice.cern.ch/el9-x86_64/Packages/O2DPG/daily-20240320-0100-1/UTILS/parse-async-WorkflowConfig.py\", line 296, in <module>\n    postadjust_ConfigValues(flat_config)\n  File \"/cvmfs/alice.cern.ch/el9-x86_64/Packages/O2DPG/daily-20240320-0100-1/UTILS/parse-async-WorkflowConfig.py\", line 285, in postadjust_ConfigValues\n    for key in gpuglobal:\nTypeError: 'NoneType' object is not iterable\nProblem in anchor config creation. Exiting.\nAny idea how to solve this problem? Thanks a lot.",
+        "question": "How to solve the TypeError: 'NoneType' object is not iterable error when running an anchored MC production with ALIEN_JDL_ANCHOR_SIM_OPTIONS on lxplus?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "fzf4hp517t8mpx57tx6mmngnph",
+        "create_at": 1711102515841,
+        "user_id": "migboig5jpfdi8ursydgy8izuh",
+        "message": "That trace is unfortunately not showing the real issue. It means that something went wrong before.\n\nThere should be other files like\n* `timestampsampling_<runnumber>.log`\n* `async_pass_log.log`\nwhich could give further insight in what is going wrong.\nCould you point me to your directory on alien where that was supposed to be run? Then I can try to find the files myself and have a look.",
+        "question": "Could you point me to your directory on alien where the simulations were supposed to be run so I can find and examine the `timestampsampling_<runnumber>.log` and `async_pass_log.log` files?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "pgkoj3st9inrumtqzjnz91sska",
+        "create_at": 1711122882763,
+        "user_id": "919mo57ehi889km811xqgxwzwr",
+        "message": "Hi, following kind instructions from the tutor of the PWG-dedicated simulation tutorials, Alberto Caliva, I was able to submit MC production test jobs to the GRID. Please note that I am trying to give as input a HepMC file which has a physical location  that is specified in the submission script. The job ID is `3045059057` and the resulting output folder is `/alice/cern.ch/user/s/siragoni/selfjobs/testCoherentRho-20240322-144250`. The HepMC file is passed as: \n```\nexport ALIEN_JDL_ANCHOR_SIM_OPTIONS=\"-gen hepmc -confKey GeneratorFileOrCmd.fileNames=alien:///alice/cern.ch/user/s/siragoni/MC_run3/starlight.hepmc\"\n```\nFinally after tinkering with it for two days, an AOD.root file is produced, but only the BC structures are filled. It feels like no MC event is injected in the simulation at all, and quite in fact both generated and reconstructed information are totally empty. Would you have any advice? I don't see any `sgn*.log` unfortunately, so I cannot check myself. I would also like to see if at least the HepMC file was really fed.... Thanks for any help!",
+        "question": "Why is no MC event being injected into the simulation, resulting in empty generated and reconstructed information, and how can I check if the HepMC file was correctly fed into the simulation?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "fa3fokwh4jbcfce1o1wknfnzpy",
+        "create_at": 1711360115572,
+        "user_id": "3a5ytz8r33fcme33fb8gbicr6e",
+        "message": "Hi all, I'm performing some estimations for a MC request following the instructions provided in Alberto's tutorial (https://indico.cern.ch/event/1384034/contributions/5818034/attachments/2806921/4898185/MC_Tutorials.pdf) and I have a doubt. In slide 30, the computation for the expected running time is shown and I would like to do the same starting from the running time on the GRID of some test productions (https://alimonitor.cern.ch/job_details.jsp?jt_field1=23l2). Hence the question, is the running time reported on monalisa already accounting for the fact that MC run on 8-core slots or is it just the wall time (and I have to multiply by 8 as suggested in the tutorial)?",
+        "question": "Is the running time reported on monalisa already accounting for the fact that MC run on 8-core slots or is it just the wall time (and I have to multiply by 8 as suggested in the tutorial)?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "j9pm6pmfwbfqzndhbzf7kykr9a",
+        "create_at": 1711442606850,
+        "user_id": "919mo57ehi889km811xqgxwzwr",
+        "message": "Thanks a lot for the reply! I have studied a bit how to do it, since I was not too sure how to handle it... An example of how I have handled it (unsuccessfully) is shown here: `/alice/cern.ch/user/s/siragoni/selfjobs/testCoherentRho-20240325-142905`, which I will refer to as `localdir` below. First of all, since the processing script `alien_jobscript.sh` is handled in `localdir`, at runtime and before I run this last script I copy the HepMC file in `localdir`, so that both the script and the HepMC file are at the same level, as in:\n```\n# ----------- EXECUTE ACTUAL JOB  ------------------------------------ \n# source the actual job script from the work dir\nalien.py cp -f file:starlight.hepmc ${MY_JOBWORKDIR}/\n\nchmod +x ./alien_jobscript.sh\n./alien_jobscript.sh\n``` \nThen, I thought that in the script the generator should be referred to as:\n```\nexport ALIEN_JDL_ANCHOR_SIM_OPTIONS=\"-gen hepmc -confKey GeneratorFileOrCmd.fileNames=starlight.hepmc\"\n``` \nUnfortunately, this is not working, I see in fact that in the job directory `localdir/001` :\n```\nWill iterate 0 input files\nProcessing will be on the following list of files:\n\n\nprocessing run 536757, from period LHC23f with pp collisions and mode\nNo runInput_536757.tgz, let's hope we don't need it\nChecking current directory content\ntotal 228\n-rwx------  1 alicesgm edguser 24079 Mar 25 17:29 testCoherentRho-20240325-142905.sh\n-rwx------  1 alicesgm edguser  1654 Mar 25 17:29 alien_jobscript.sh\n-rw-------  1 alicesgm edguser   419 Mar 26 10:29 logging.properties\n-rw-------  1 alicesgm edguser   814 Mar 26 10:29 access_log\n-rw-------  1 alicesgm edguser  1675 Mar 26 10:29 jobtoken9271661257240137965.pem\n-rw-------  1 alicesgm edguser  1415 Mar 26 10:29 jobtoken69888348148384008.pem\ndrwx------  2 alicesgm edguser  4096 Mar 26 10:29 .apptainer\ndrwxr-xr-x 20 alicesgm edguser   620 Mar 26 10:29 ..\n-rw-------  1 alicesgm edguser   358 Mar 26 10:29 stderr\n-rw-------  1 alicesgm edguser  6456 Mar 26 10:29 alien_cpuinfo.log\n-rw-------  1 alicesgm edguser  1282 Mar 26 10:29 alien_meminfo.log\n-rw-------  1 alicesgm edguser  1081 Mar 26 10:29 this_jdl.jdl\n-rwx------  1 alicesgm edguser  2533 Mar 26 10:29 analyse_CPU.py\ndrwx------  4 alicesgm edguser  4096 Mar 26 10:29 tmp\n-rw-------  1 alicesgm edguser 34109 Mar 26 10:29 stdout\n-rw-------  1 alicesgm edguser 33923 Mar 26 10:29 alien_log_3046337092.txt\n-rwx------  1 alicesgm edguser 34270 Mar 26 10:29 setenv_extra.sh\n-rwx------  1 alicesgm edguser 36174 Mar 26 10:29 async_pass.sh\n-rw-------  1 alicesgm edguser     0 Mar 26 10:29 list.list\ndrwx------  4 alicesgm edguser  4096 Mar 26 10:29 .\n-rw-------  1 alicesgm edguser   237 Mar 26 10:29 async_pass_log.log\n```\nSo it sees all the files, apart from the most important HepMC file, which should be also the reason why it is finding 0 input files... Also pinging @alcaliva , sorry for that!",
+        "question": "Why is the job not finding the HepMC file and instead finding 0 input files?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "tyhghwc7b7dqi8zsbktbsk7b7o",
+        "create_at": 1711444812876,
+        "user_id": "919mo57ehi889km811xqgxwzwr",
+        "message": "Thanks Benedikt! Just to clarify, you mean something like:\n```\nLOCALDIR=$pwd\nalien.py cp file:alice/user/s/siragoni/selfjobs/.../starlight.hepmc ${LOCALDIR}/\n``` \n?",
+        "question": "Do you mean something like the command provided for copying a file from ALICE to the local directory?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "pyeykpir33fjxkwscgey9f5b5y",
+        "create_at": 1711448116261,
+        "user_id": "1kdp9jemajgauyc6a1geigoome",
+        "message": "Hi @bvolkel, thanks! Indeed I would need to test the tag for the `apass4` anchoring for the 2022 pp sample (I am also unsure that the one that I used is the correct one).\n\nFollowing what @fcatalan told me, I am now testing with the `O2PDPSuite::async-async-20240115.4.trd-slc7-alidist-O2PDPSuite-daily-20231208-0100-1` tag (which should be for `apass6` though) and it seems to work",
+        "question": "Which tag should I use to test the `apass4` anchoring for the 2022 pp sample?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "y5cr9u1rnjr78nzz74mgedb4wh",
+        "create_at": 1711455531470,
+        "user_id": "919mo57ehi889km811xqgxwzwr",
+        "message": "Thanks a lot Sandro! I have done exactly what you have said. Unfortunately, it fails with the same output (and empty AO2D):\n```\nWill iterate 0 input files\nProcessing will be on the following list of files:\n\n\nprocessing run 536757, from period LHC23f with pp collisions and mode\nNo runInput_536757.tgz, let's hope we don't need it\nChecking current directory content\ntotal 276\n-rwx------  1 alicesgm001 alicesgm 24079 Mar 26 11:29 testCoherentRho-20240326-102713.sh\n-rwx------  1 alicesgm001 alicesgm  1734 Mar 26 11:29 alien_jobscript.sh\n-rw-------  1 alicesgm001 alicesgm   419 Mar 26 11:29 logging.properties\n-rw-------  1 alicesgm001 alicesgm   817 Mar 26 11:29 access_log\n-rw-------  1 alicesgm001 alicesgm  1679 Mar 26 11:29 jobtoken7570561923626811135.pem\n-rw-------  1 alicesgm001 alicesgm  1415 Mar 26 11:29 jobtoken4359682809343690963.pem\ndrwx------  2 alicesgm001 alicesgm  4096 Mar 26 11:30 .apptainer\ndrwxr-xr-x 21 alicesgm001 alicesgm   640 Mar 26 11:30 ..\n-rw-------  1 alicesgm001 alicesgm   358 Mar 26 11:30 stderr\n-rw-------  1 alicesgm001 alicesgm 56770 Mar 26 11:30 alien_cpuinfo.log\n-rw-------  1 alicesgm001 alicesgm  1313 Mar 26 11:30 alien_meminfo.log\n-rw-------  1 alicesgm001 alicesgm  1081 Mar 26 11:30 this_jdl.jdl\n-rwx------  1 alicesgm001 alicesgm  2533 Mar 26 11:30 analyse_CPU.py\ndrwx------  4 alicesgm001 alicesgm  4096 Mar 26 11:30 tmp\n-rw-------  1 alicesgm001 alicesgm 34209 Mar 26 11:30 stdout\n-rw-------  1 alicesgm001 alicesgm 34023 Mar 26 11:30 alien_log_3046772217.txt\n-rwx------  1 alicesgm001 alicesgm 34270 Mar 26 11:30 setenv_extra.sh\n-rwx------  1 alicesgm001 alicesgm 36174 Mar 26 11:30 async_pass.sh\n-rw-------  1 alicesgm001 alicesgm     0 Mar 26 11:30 list.list\ndrwx------  4 alicesgm001 alicesgm  4096 Mar 26 11:30 .\n-rw-------  1 alicesgm001 alicesgm   237 Mar 26 11:30 async_pass_log.log\nTime used so far, before setenv_extra = 0 s\ngrep: wn.xml: No such file or directory\n``` \nPlease note that this is crucial for the progress of the Run 3 measurements of the entire UPC group, since we cannot use standard generators such as Pythia, and can only rely on e.g. STARlight and Superchic, so with HepMC files...",
+        "question": "What could be the reason for the simulation failure and the absence of the AO2D output?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "c1nnqwiupbbn8r39ewobur93rh",
+        "create_at": 1711477979623,
+        "user_id": "919mo57ehi889km811xqgxwzwr",
+        "message": "Thanks!! I must have missed that. I will check and let you know how it goes. Just to clarify, you mean that all the plots for the generation of the MC are filled, and not only the ones relevant to BC?\nI am asking because in the job you have submitted at 3:10pm they are empty",
+        "question": "Are all plots for MC generation filled in the simulations, or only the ones relevant to BC?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "naegidi557nyubmqaxum6i3wir",
+        "create_at": 1711646427673,
+        "user_id": "m4433ecqp38ptq7r8bgcbwa3rh",
+        "message": "Hi @bvolkel et al,   I am also preparing anchored MC simulations with embedding. i did several tests several but none of them were successfull. I still don't manage to get AO2D produced.  Here are few examples of output at /cern.ch/user/b/bastid/selfjobs/testembed-v4-20240328-151636 or /alice/cern.ch/user/b/bastid/selfjobs/testa-20240326-180114). Thanks  ",
+        "question": "How can I successfully produce AO2D in my anchored MC simulations with embedding?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "gt8hgsooojrgmg9dfzyixb84co",
+        "create_at": 1712851831494,
+        "user_id": "919mo57ehi889km811xqgxwzwr",
+        "message": "Hi everyone, sorry for the unusual request. I have just noticed that when launching simulations on GRID, not all the output is saved. I would like to have a look at for example `o2trac_its.root ` to get additional insights on the pT of the track at the end of the ITS. The command I issue is usually of the type:\n``` \n${O2DPG\\_ROOT}/GRID/utils/grid\\_submit.sh --script [run\\_anchored\\_prod3.sh](http://run_anchored_prod3.sh/) --jobname testCoherentRho --outputspec \"\\*.log@disk=1\",\"\\*.root@disk=2\" --packagespec \"VO\\_ALICE@O2sim::v20240303-1\" --wait --fetch-output\n``` \nShould it be modified to get that kind of file? Thanks a lot in advance",
+        "question": "Should the command be modified to save the `o2trac_its.root` file when launching simulations on GRID?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "gyxqqo6pzjbixbqzzigkp15shw",
+        "create_at": 1712853927404,
+        "user_id": "migboig5jpfdi8ursydgy8izuh",
+        "message": "Hej Simone,\nCould you specify if there are ROOT files other than `AO2D.root` saved?\nMeaning are some `tf*/*.root` files also saved?\nI am not an expert with this notation, but maybe\n```\n\"*.log@disk=1\",\"*.root,tf*/o2trac_its.root@disk=2\"\n```\ncould do the job?",
+        "question": "Are `tf*/*.root` files saved in addition to `AO2D.root`?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "31qfx3t3spnb3pr6ipzujm95gw",
+        "create_at": 1713178931489,
+        "user_id": "1ws47bhqkfrbfe35f6ebziqrfh",
+        "message": "Hi @siragoni (and other PWG experts). You mention documentation specific for your PAG. Can you share a link to it? I think it be useful to cross-link or mention these documentations in our central documentation or in the header of this mattermost channel.",
+        "question": "Can you share a link to the documentation specific for your PAG?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "g3gecknnsjyftehkxye3tzreja",
+        "create_at": 1713184086513,
+        "user_id": "irbenxbcdf8bzbm4kh18cijr7w",
+        "message": "Dear @siragoni , @swenzel , \nToday I tried to execute MC following tutorial of Alberto and recent manual of Simone. Unsuccessfully. Last job PID is 3057063797. The HepMC file is coming from Superchic4.2. I tried locally to do Geant4 transport and it works. Output is present and I can open and read files (file is readable and is correct). When moving to GRID running I encountered problems. I tried to get workflow (via o2dpg_sim_workflow.py script) and configuration script (via o2_dpg_workflow_runner.py script) - ok. After getting them I manually edited my_script.sh where I added a line: alien.py cp /alice/cern.ch/user/a/amatyja/selfjobs/bg_eePbPb5360_10000ev.hepmc file:./  and modified the path to have ${PWD}. I also copied the file to GRID to the mentioned location. The execution on the GRID returns error. Since I am not experience in Run3 running I ask you for some help to diagnose the problem.",
+        "question": "Why is the simulation job failing on the GRID when trying to copy the HepMC file using alien.py?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "w56kxnctupb67nzif8sagbadkc",
+        "create_at": 1713252402266,
+        "user_id": "irbenxbcdf8bzbm4kh18cijr7w",
+        "message": "Hi @siragoni , the last try works. I changed O2sim version and asked for all the root files to be left tf*/*.root.\nDear @siragoni , @swenzel , @pbuhler ,\nFrom the documentation of anchored production (example script) I see that some variables are set manually. Here comes questions:\n1. For example PRODSPLIT=153. Due to a different time duration of each runs, should we calculate how many timeframes are in the the run and adjust the product of \"number of splits\" x \"number of prodsplits\" x \"number of timeframes\"? Or are there any recomendations on it? \n2. NSIGEVENTS is a number of signal events per Timeframe (TF). If I have HepMC file with 10000 events and I require NSIGEVENTS=20000, how TFs are filled? Will be there 10000 events filled twice per TF? If I have 10 TFs, so each TF will have the same content of signal? I also understand that any collision without signal event is fed with other process (any MB process), am I correct?",
+        "question": "1. Should PRODSPLIT be adjusted based on the number of timeframes in a run, or are there recommendations for setting it?\n2. How are TFs filled when NSIGEVENTS is greater than the number of events in the HepMC file? Will events be duplicated, and will each TF have the same content of signal events?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "44odbphwptyr5jwexs5479absr",
+        "create_at": 1713515286006,
+        "user_id": "349mzxje5pbz9fes49wk6cz9xc",
+        "message": "Dear Experts,\nI would like to use Pythia for UPC simulations. (STARlight is not an option for now.) On their official website, they have an [example file](https://pythia.org/latest-manual/examples/main70.html) that I was able to run locally and also produce HepMC3 files with it. I have tried to run locally the `o2dpg_sim_workflow.py` and the `workflow.json` but after `o2dpg_workflow_runner.py` doesn't produce the AOD files. With simply `o2-sim -g hepmc --configKeyValues \"HepMC.fileName=test.hepmc\"` the simulation files, Kinetree and Hits are produced so I think the Pythia generated HepMC file is okay. How can I specify the options for `o2dpg_sim_workflow.py`?\nMay be it would be easier or more straightforward to derive the Pythia example like it is done [here](https://github.com/AliceO2Group/O2DPG/blob/master/MC/config/PWGLF/pythia8/generator_pythia8_longlived.C)?\n\nThanks",
+        "question": "How can I specify the options for `o2dpg_sim_workflow.py` to produce AOD files from a Pythia-generated HepMC3 file?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "szitun8o7pybtxatzryf636axa",
+        "create_at": 1713536841202,
+        "user_id": "k1gztq43yfgbber61k3pd736kw",
+        "message": "Dear experts, I was trying to submit a simulation on the grid with the following command:\n\n``` ${O2DPG_ROOT}/O2DPG/GRID/utils/grid_submit.sh --script  anchorMC_cc.sh --jobname test_anchorMC_charm1 --outputspec \"*.log@disk1\",\"*.root@disk=2\" --packagespec \"O2PDPSuite::async-async-20240115.6.trd-slc7-alidist-O2PDPSuite-daily-20231208-0100-1\",\"VO_ALICE@jq::v1.6-3\" ```\n\nThe jobs seem to run correctly but an error occurs at the saving stage:\n```[trace ]: ERROR! Unable to handle job: alien.shell.commands.JAliEnCommandException ```\n(https://alimonitor.cern.ch/jobs/trace.jsp?pid=3061276304)\n\nDo you know how can it be fixed? Thanks in advance for your help!",
+        "question": "Do you know how to fix the error \"alien.shell.commands.JAliEnCommandException\" that occurs during the saving stage of the simulation?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "yogayybjbfbr58rrhoaxdhgb9y",
+        "create_at": 1713962314081,
+        "user_id": "migboig5jpfdi8ursydgy8izuh",
+        "message": "Hej @jnorman \nWhen you say \"generator level\", are you talking about the kinematics file or really only primaries from Pythia8?",
+        "question": "When you say \"generator level\", are you talking about the kinematics file or really only primaries from Pythia8?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "qz9kf3q8gpbe5nq5x88suihrqc",
+        "create_at": 1714662728169,
+        "user_id": "919mo57ehi889km811xqgxwzwr",
+        "message": "Hi everyone, sorry again for the bother. I am here again to ask for some help, this time not with STARlight at least. What I am currently doing is to generate `Jpsi->ee` events with pythia background, so that the event triggers FIT, and the electrons from the decay of the Jpsi trigger EMCAL instead. The exercise that I need to do to finish validating the trigger framework for EMCAL in MC is the following: basically saturating the production with Jpsi s, so that there are a few times where two consecutive Jpsi s are within 13 BCs (the tail in the trigger response in EMCAL is 13 BCs). The reason behind it is that this procedure might validate the implementation of the signal pile up in the trigger logic of the simulation... For now I am simulating the event with:\n```c++ \nNSIGEVENTS=${NEVENTS}\nNBKGEVENTS=${NEVENTS}\nNWORKERS=${NWORKERS:-8}\nNTIMEFRAMES=${NTIMEFRAMES:-1}\n\n${O2DPG_ROOT}/MC/bin/o2dpg_sim_workflow.py -eCM 13600 -gen external -j 10 -ns ${NSIGEVENTS} -tf ${NTIMEFRAMES} -e TGeant4 -mod \"--skipModules ZDC\" \\\n\t-confKey \"GeneratorExternal.fileName=${O2DPG_ROOT}/MC/config/PWGDQ/external/generator/GeneratorParamPromptJpsiToElectronEvtGen_pp13TeV.C;GeneratorExternal.funcName=GeneratorParamPromptJpsiToElectronEvtGen_pp13TeV()\"  \\\n       \t-genBkg pythia8 -procBkg inel -colBkg pp --embedding -nb ${NBKGEVENTS} -interactionRate 498226  -run 537959\n```  \nMay I ask if there is a way of doing that with this command? Maybe simply asking for a lot more signal events than background events (more than what the filling scheme can handle)?",
+        "question": "May I ask if there is a way of doing that with this command? Maybe simply asking for a lot more signal events than background events (more than what the filling scheme can handle)?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "5iywmhbk7fnnmn8cxy8tp4ohur",
+        "create_at": 1714737267352,
+        "user_id": "n87pwhqdcpbhifomoihzirqwrr",
+        "message": "Hi @bvolkel \ndo you have any idea what is going on with the track reconstruction in our simulation?",
+        "question": "What is going on with the track reconstruction in our simulation?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "ps7c36417tfu9j1ahafkexidqc",
+        "create_at": 1714740982441,
+        "user_id": "c97m9narciy19xj7e9sg8ucfma",
+        "message": "Hello everyone, I'm just getting started running MC simulations but I managed to run a small simulation on the grid.\nHowever, the statistics in the output is very small. How can I increase the number of events being simulated?\nSo far I have used these commands:\n**creating a workflow**\n```\n${O2DPG_ROOT}/MC/bin/o2dpg_sim_workflow.py -eCM 13600 -col pp -gen pythia8 -proc cdiff -tf 1 -ns 20000 -e TGeant4 -interactionRate 500000\n```\n**produce script to run workflow**\n```\n${O2DPG_ROOT}/MC/bin/o2_dpg_workflow_runner.py -f workflow.json -tt aod --cpu-limit 8 --produce-script my_script.sh\n```\n**submit jobs on GRID**\n```\n${O2DPG_ROOT}/GRID/utils/grid_submit.sh --script ${O2DPG_ROOT}/MC/run/PWGEM/runHFGapToDielectrons_pp.sh --jobname eeHFGap --outputspec \"*.log@disk=1\",\"*.root@disk=2\" --packagespec \"VO_ALICE@O2sim::v20240502-1\" --wait --fetch-output\n```\nthe corresponding running script is the following: https://github.com/AliceO2Group/O2DPG/blob/master/MC/run/PWGEM/runHFGapToDielectrons_pp.sh\n\nAny help is welcome. Thank you. ",
+        "question": "How can I increase the number of events being simulated in my MC simulation?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "wxhza4buofyf7c3e1ctiyeduce",
+        "create_at": 1715079187149,
+        "user_id": "migboig5jpfdi8ursydgy8izuh",
+        "message": "What is your external generator in\n```\n${O2_ROOT}/bin/o2-sim --noGeant -j 1 --field ccdb --vertexMode kCCDB --run 526641 --configKeyValues \"MFTBase.buildAlignment=true;Diamond.width[2]=6;\" -g external -o genevents --timestamp 1664858227486 --seed 191158313 -n 20\n```\n?\nI would expect  some `ini` file I guess\nWhat is your external generator in\n```\n${O2_ROOT}/bin/o2-sim --noGeant -j 1 --field ccdb --vertexMode kCCDB --run 526641 --configKeyValues \"MFTBase.buildAlignment=true;Diamond.width[2]=6;\" -g external -o genevents --timestamp 1664858227486 --seed 191158313 -n 20\n```\n?\nI would expect  some `ini` file I guess",
+        "question": "What is your external generator in the provided o2-sim command?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "yt7u6komfpnp3dn1rwjo9hd8wh",
+        "create_at": 1715102965860,
+        "user_id": "cpbtrxhrtjrpjnqbthnhr9y8rw",
+        "message": "Hi, I am trying to simulate a Pb--Pb event on the grid using this generator + the ```grid_submit``` command(https://github.com/AliceO2Group/O2DPG/blob/master/MC/config/PWGLF/ini/GeneratorLFHypertritonPbPbGap.ini)\n\nThe simulation goes into error execution due to the ```no space left on device``` error, see for example the stdout below\nIs there any workaround to avoid this issue? \n",
+        "question": "Is there any workaround to avoid the \"no space left on device\" error when running ALICE O2 simulations on the grid?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "5ctbkj7kst8dbmh3i8ea3xg4ga",
+        "create_at": 1715153106135,
+        "user_id": "1ws47bhqkfrbfe35f6ebziqrfh",
+        "message": "Can you please give additional details such as how many timeframes / events? Do you have a job id ? \nThe log indicates indicates a problem during cp of files to GRID storage. This is more a question to the central services - Alien team, I believe.   In any case, this particular copy has lately been taken out from the tool. So if you use the latest grid_submit version from O2DPG, the problem might go away.",
+        "question": "Can you provide details on the number of timeframes/events and the job id? Additionally, why was the file copy to GRID storage problematic and might it be resolved by using the latest grid_submit version from O2DPG?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "9m5q5xhfttfg3nx8he5pe4th6r",
+        "create_at": 1715171558195,
+        "user_id": "c97m9narciy19xj7e9sg8ucfma",
+        "message": "I would have a follow up question.\nI have managed now to run the anchored script on the grid and produce an AO2D.root file.\n\nBefore we would like to request a whole anchored MC production, we would like to study the effect of gap triggering on a test anchored MC. Therefore we would like to calculate a single electron efficiency.\nWith the script I'm currently using (see attached) the statistics is to low.\n\nCould you help me figuring out how I can modify the TimeFrame, ProdSplit and Split parameters to have sufficient statistics in the end while choosing reasonable values?\n\nWhen running the `${O2DPG_ROOT}/MC/bin/o2dpg_sim_workflow_anchored.py` script, there is an information about the space for the number of maximum timeframes.  Would this be suitable to use? \n```\nThis run has space for 601430.0220639554 timeframes\nEach job can do 3930.9151768885977 maximally at a prod split of 153\nWith each job doing 1 timeframes, this corresponds to a filling rate of 0.00025439368569421056\nWe can do this amount of cycle iterations to achieve 100%: 3930.9151768885977\nDetermined start-of-run to be:  1664858227373\nDetermined end-of-run to be:  1664865073059\nDetermined timestamp to be :  1664862656927\nDetermined offset to be :  389160\n```\nI would have a follow up question.\nI have managed now to run the anchored script on the grid and produce an AO2D.root file.\n\nBefore we would like to request a whole anchored MC production, we would like to study the effect of gap triggering on a test anchored MC. Therefore we would like to calculate a single electron efficiency.\nWith the script I'm currently using (see attached) the statistics is to low.\n\nCould you help me figuring out how I can modify the TimeFrame, ProdSplit and Split parameters to have sufficient statistics in the end while choosing reasonable values?\n\nWhen running the `${O2DPG_ROOT}/MC/bin/o2dpg_sim_workflow_anchored.py` script, there is an information about the space for the number of maximum timeframes.  Would this be suitable to use? \n```\nThis run has space for 601430.0220639554 timeframes\nEach job can do 3930.9151768885977 maximally at a prod split of 153\nWith each job doing 1 timeframes, this corresponds to a filling rate of 0.00025439368569421056\nWe can do this amount of cycle iterations to achieve 100%: 3930.9151768885977\nDetermined start-of-run to be:  1664858227373\nDetermined end-of-run to be:  1664865073059\nDetermined timestamp to be :  1664862656927\nDetermined offset to be :  389160\n```",
+        "question": "How can I modify the TimeFrame, ProdSplit, and Split parameters to achieve sufficient statistics while choosing reasonable values?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "tbgkpmmnt3nyjkab1opoczbnnc",
+        "create_at": 1715184350180,
+        "user_id": "n87pwhqdcpbhifomoihzirqwrr",
+        "message": "Dear experts,\nI'm looking at the LHC24b1 simulation anchored to LHC22o pp\nI want to run the exact [anchorMC.sh script that has been used for it](https://alimonitor.cern.ch/users/download.jsp?view=true&path=/alice/cern.ch/user/a/aliprod/LHC24b1/anchorMC.sh), but I'm having trouble finding which of the O2DPG tag it corresponds to. It is different from the few MC/run/ANCHOR/anchorMC.sh versions I checked (initial commit, and few of the later ones). The [stdout](https://alimonitor.cern.ch/users/download.jsp?view=true&path=/alice/sim/2024/LHC24b1/0/528531/995/stdout) for the LHC24b1 simulation mentions `/cvmfs/alice.cern.ch/el7-x86_64/Packages/O2DPG/async-20240115.3.trd-1/MC/run/ANCHOR/anchorMC.sh` but at that point in time there's no MC/run/ANCHOR/anchorMC.sh file\nWhat --packagespec option should I give to use the same anchorMC.sh as that LHC24b1 sim?\nDear experts,\nI'm looking at the LHC24b1 simulation anchored to LHC22o pp\nI want to run the exact [anchorMC.sh script that has been used for it](https://alimonitor.cern.ch/users/download.jsp?view=true&path=/alice/cern.ch/user/a/aliprod/LHC24b1/anchorMC.sh), but I'm having trouble finding which of the O2DPG tag it corresponds to. It is different from the few MC/run/ANCHOR/anchorMC.sh versions I checked (initial commit, and few of the later ones). The [stdout](https://alimonitor.cern.ch/users/download.jsp?view=true&path=/alice/sim/2024/LHC24b1/0/528531/995/stdout) for the LHC24b1 simulation mentions `/cvmfs/alice.cern.ch/el7-x86_64/Packages/O2DPG/async-20240115.3.trd-1/MC/run/ANCHOR/anchorMC.sh` but at that point in time there's no MC/run/ANCHOR/anchorMC.sh file\nWhat --packagespec option should I give to use the same anchorMC.sh as that LHC24b1 sim?",
+        "question": "What --packagespec option should I give to use the same anchorMC.sh as that LHC24b1 sim?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "rr69y77bz3g6bd73odqytqu3oo",
+        "create_at": 1715605571619,
+        "user_id": "c97m9narciy19xj7e9sg8ucfma",
+        "message": "Hey Benedikt, unfortunatlly I don't see a `.stat` file neither in my local directory nor in the one on the grid.\nDo I need to  add the `.stat` files like `--outputspec \"*.stat@disk=1\"`?\n\nThere is one more think I was stumbling across.\nWhen I look at the AO2D file and analyse it with a local task, I'm looking at histograms filled with electrons from different sources. Somehow the histograms seem a loot like double counting is happening there.\nIs this expected due to the `SEED=5` set in the anchorMC.sh script?\nHey Benedikt, unfortunatlly I don't see a `.stat` file neither in my local directory nor in the one on the grid.\nDo I need to  add the `.stat` files like `--outputspec \"*.stat@disk=1\"`?\n\nThere is one more think I was stumbling across.\nWhen I look at the AO2D file and analyse it with a local task, I'm looking at histograms filled with electrons from different sources. Somehow the histograms seem a loot like double counting is happening there.\nIs this expected due to the `SEED=5` set in the anchorMC.sh script?",
+        "question": "Do I need to add the `.stat` files like `--outputspec \"*.stat@disk=1\"`?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "frw7jkhofbre5qzyrtjtsfckfc",
+        "create_at": 1716455499862,
+        "user_id": "919mo57ehi889km811xqgxwzwr",
+        "message": "Hi @swenzel and @bvolkel . Following the previous discussions with our UPC users and the help from Marco in setting up STARlight on GRID, I have been trying to get the recipe to run STARlight directly on the job (instead of manually providing the HepMC files myself) but with no success... As a reminder the recipe we were talking about was:\n- upload the configuration files for STARlight and the utility files to convert to HepMC to a utility directory on `alien` \n- launch the job with the script copying these files to the working directory\n- launching starlight and converting the output to HepMC\n- launching the anchoring script\nUnfortunately all my attempts are failing according to GRID because of some issue maybe at the level of loading the environment:\n``` \nMay 23 10:55:13 [state ]: Job state transition from ASSIGNED to STARTED\nMay 23 10:55:14 [trace ]: Getting InputFile: /alice/cern.ch/user/s/siragoni/selfjobs/testJpsiInPP-20240523-085400/alien_jobscript.sh to /workdir/alien_jobscript.sh (2.537 KB)\nMay 23 10:55:14 [trace ]: Getting InputFile: /alice/cern.ch/user/s/siragoni/selfjobs/testJpsiInPP-20240523-085400/testJpsiInPP-20240523-085400.sh to /workdir/testJpsiInPP-20240523-085400.sh (23.41 KB)\nMay 23 10:55:23 [trace ]: Error setting the environment for [VO_ALICE@O2sim::v20240516-1,VO_ALICE@STARlight::20240714-2]\nMay 23 10:55:24 [state ]: Job state transition from STARTED to ERROR_IB\n``` \nThe jobs are launched with:\n``` \n${O2DPG_ROOT}/GRID/utils/grid_submit.sh --script run_anchored_prod_rho_pp_online_starlight.sh --jobname testJpsiInPP --outputspec \"*.log@disk=1\",\"*.root,tf*/o2*.root@disk=2\" --packagespec \"VO_ALICE@O2sim::v20240516-1\",\"VO_ALICE@STARlight::20240714-2\" --wait --fetch-output\n``` \nIn particular, the environments are loaded as `\"VO_ALICE@O2sim::v20240516-1\",\"VO_ALICE@STARlight::20240714-2\"`... Thanks in advance for any help!",
+        "question": "What is the issue with loading the environment for the job, causing it to transition from STARTED to ERROR_IB?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "5igxfokxi3bqdr69cr8z93d16y",
+        "create_at": 1716799921329,
+        "user_id": "irbenxbcdf8bzbm4kh18cijr7w",
+        "message": "Hi @swenzel, I did some comparisons anchored pp (Pb-Pb is unefficient) vs regular MC efficiency. For anchored, I did simulation by myself with HepMC files (Superchic 4.2 + PYTHIA8.2). Then I run anchored script. The regular MC was done by @pbuhler. There are 4 charged tracks in the event (so very low multiplicity). From comparison I have reconstruction efficiency ~41% for regular MC and 9% for anchored one. I also found that somehow up-down direction is prefered in the anchored MC (like in cosmics reconstruction). Also pT dependence is weird (almost constant vs pT) in anchored MC, while in regular it is low at low-pT and rising towards higher pT. Could you look into that, please?",
+        "question": "Could you look into the reconstruction efficiency and pT dependence differences between regular MC and anchored MC? Specifically, why is the reconstruction efficiency much lower for anchored MC and why is the pT dependence almost constant in anchored MC while it rises towards higher pT in regular MC? Additionally, why is there a preference for up-down direction in anchored MC?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "ne6w7ej5mpb9t8bzfnk6e1hkah",
+        "create_at": 1717710421337,
+        "user_id": "bznhtse8pprufp5eogr84qhmxa",
+        "message": "Dear experts, I have a question about production vertex of injected signals. Let's say a mc collision vertex (x, y, z) simulated by pythia8 is (0, 0, 1) as  an underlying event . Next, I have a cocktail generator containing pi0 and eta. When the cocktail generator is injected to the underlying pythia8 event, where is the production vertex of pi0 and eta? (0, 0, 0) or (0, 0, 1), or somewhere else? Thank you.\nI am sorry for my wide post again. If one wants pythia8 as an underlying event and injected signals (pi0, eta, eta', rho, omega, phi, Jpsi/ psi2s mesons), what is the difference between embedding simulation and cocktail simulation containing pythia8 + 8 mesons?",
+        "question": "Where is the production vertex of pi0 and eta when injected into a pythia8 event with an underlying collision vertex (0, 0, 1)?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "3j7rhtiizfgh8rwy855g1g7i9r",
+        "create_at": 1718101676742,
+        "user_id": "eoxmbzf96brtdfd7rs9qm77tjr",
+        "message": "Hi Sandro. Thanks. Not clear where to add these lines ... the script that I launch contains the definition of several environment variables and then the last line is ${O2DPG_ROOT}/MC/run/ANCHOR/anchorMC.sh\nwhich job script should I modify?",
+        "question": "Which job script should I modify to add the lines?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "zz4mabiepp8s9moansdbegr6be",
+        "create_at": 1718196043903,
+        "user_id": "eoxmbzf96brtdfd7rs9qm77tjr",
+        "message": "my output looks sane\n@swenzel , where does one get the total running time? I see that there are a few pipeline_action_xxxxxx.log files produced and each of them shows a global_runtime. Should one sum them all? ",
+        "question": "Should the total running time be obtained by summing the global_runtime from all the pipeline_action_xxxxxx.log files?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "jts7srg37pnmjfp35djny4myia",
+        "create_at": 1718267840984,
+        "user_id": "919mo57ehi889km811xqgxwzwr",
+        "message": "Hi @swenzel and @bvolkel , sorry in advance for the very unusual question, but since the GRID jobs do not seem to save for me the output if the job itself fails, I am unable to check why the job failed in the first place... The output from the `stdout` is:\n``` \nStop on failure  True\nsetting up ROOT system\nrestdigi_1 failed ... checking retry\nINFO [anchorMC]: Running TPC time series\nLaunching task: ${O2_ROOT}/bin/o2-sim-digitizer-workflow -b --run --condition-not-after 3385078236000 -n 1000 --sims sgn_1 --interactionRate 675881 --incontext collisioncontext.root --disable-write-ini --configKeyValues \"HBFUtils.orbitFirstSampled=175761246;HBFUtils.nHBFPerTF=32;HBFUtils.orbitFirst=161875806;HBFUtils.runNumber=536757;HBFUtils.startTime=1684649621162;DigiParams.seed=504627853;MCHDigitizer.seed=504627853\" --onlyDet ITS,TOF,FDD,MCH,MID,MFT,HMP,PHS,CPV,ZDC --ccdb-tof-sa --forceSelectedDets --combine-devices  &> restdigi_1.log &\nLaunching task: ${O2_ROOT}/bin/o2-sim-digitizer-workflow --only-context --interactionRate 675881 -b --run -n 1000 --sims sgn_2 --seed 504627854 --configKeyValues \"HBFUtils.orbitFirstSampled=175761278;HBFUtils.nHBFPerTF=32;HBFUtils.orbitFirst=161875806;HBFUtils.runNumber=536757;HBFUtils.startTime=1684649621162;DigiParams.passName=${ALIEN_JDL_LPMANCHORPASSNAME:-unanchored}\" --incontext collisioncontext.root --bcPatternFile ccdb &> digicontext_2.log &\nLaunching task: ${O2_ROOT}/bin/o2-fv0-reco-workflow -b --run --condition-not-after 3385078236000 --configKeyValues \"HBFUtils.orbitFirstSampled=175761246;HBFUtils.nHBFPerTF=32;HBFUtils.orbitFirst=161875806;HBFUtils.runNumber=536757;HBFUtils.startTime=1684649621162\" &> fv0reco_1.log &\nLaunching task: ${O2_ROOT}/bin/o2-emcal-reco-workflow --input-type digits --output-type cells --infile emcaldigits.root --disable-root-output --subspecificationOut 1 --configKeyValues \"HBFUtils.orbitFirstSampled=175761246;HBFUtils.nHBFPerTF=32;HBFUtils.orbitFirst=161875806;HBFUtils.runNumber=536757;HBFUtils.startTime=1684649621162\" | ${O2_ROOT}/bin/o2-emcal-cell-recalibrator-workflow --input-subspec 1 --output-subspec 0 --no-timecalib --no-gaincalib --configKeyValues \"HBFUtils.orbitFirstSampled=175761246;HBFUtils.nHBFPerTF=32;HBFUtils.orbitFirst=161875806;HBFUtils.runNumber=536757;HBFUtils.startTime=1684649621162\" --isMC | ${O2_ROOT}/bin/o2-emcal-cell-writer-workflow --subspec 0 -b --run --condition-not-after 3385078236000 &> emcalreco_1.log &\ncommand ${O2_ROOT}/bin/o2-sim-digitizer-workflow -b --run --condition-not-after 3385078236000 -n 1000 --sims sgn_1 --interactionRate 675881 --incontext collisioncontext.root --disable-write-ini --configKeyValues \"HBFUtils.orbitFirstSampled=175761246;HBFUtils.nHBFPerTF=32;HBFUtils.orbitFirst=161875806;HBFUtils.runNumber=536757;HBFUtils.startTime=1684649621162;DigiParams.seed=504627853;MCHDigitizer.seed=504627853\" --onlyDet ITS,TOF,FDD,MCH,MID,MFT,HMP,PHS,CPV,ZDC --ccdb-tof-sa --forceSelectedDets --combine-devices  had nonzero exit code 128\nStop on failure  True\nsetting up ROOT system\nrestdigi_1 failed ... checking retry\n``` \nAnd I am using the usual script with the addition of the new features for splitting of the HepMC files (attached), with the command:\n``` \n ${O2DPG_ROOT}/GRID/utils/grid_submit.sh --script run_anchored_prod_roman_pp_all.sh --jobname testRoman --outputspec \"*.log@disk=1\",\"*.root,tf*/o2*.root@disk=2\" --packagespec \"VO_ALICE@O2sim::v20240610-1\" --prodsplit 10 --wait --fetch-output\n``` \nWould you be able to tell me how to save these intermediate files in case? So that I can have a better look on why it failed? Thanks in advance",
+        "question": "How can I save intermediate files in case the job fails so that I can better understand why it failed?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "49repbc99jfwbdxjyf1znzkdpy",
+        "create_at": 1718280577277,
+        "user_id": "eoxmbzf96brtdfd7rs9qm77tjr",
+        "message": "ok. Just cross-checked and they coincide with those reported in the pipeline_metric_ID files\nThanks\nHi @swenzel, is the tool for parallelization available also for generation? or is it working only for the transport? \nMy MC generator spends a lot of time in generating events (due to the specific configuration, nothing wrong with it) rather than in the GEANT part. Also, how can I monitor the CPU efficiency? The output test is here: https://alimonitor.cern.ch/catalogue/#/alice/cern.ch/user/a/alcaliva/selfjobs/strangeness_in_jets_test01-20240611-121616/001",
+        "question": "Is the tool for parallelization available also for generation or is it working only for the transport?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "fps84ias9tbymde6oywb3ttp3c",
+        "create_at": 1718635666443,
+        "user_id": "c97m9narciy19xj7e9sg8ucfma",
+        "message": "Dear @swenzel,\nI have tried now to use different tags with and without your suggested solution, but it seems that my jobs on the grid still do not run properly.\nI had a look at their outputs and log files but I did not find any obvious errors or issues. They seem to run very long compared to the tests before the bug. (used to be within 20-30 min)\nSome of them now just run in to TTL Error and some complete with a very small AO2D file, seemingly not created/filled correctly.\nCould I ask you to have another look?\nI'm puzzled and can't figure out what might go wrong.\n\nYou can find the latests tests I have ran here:\nhttps://alimonitor.cern.ch/agent/jobs/details.jsp?pid=3099482856&details=1\nhttps://alimonitor.cern.ch/agent/jobs/details.jsp?pid=3099521177&details=1&input=0\nhttps://alimonitor.cern.ch/agent/jobs/details.jsp?pid=3099520910&details=1&input=0\nhttps://alimonitor.cern.ch/agent/jobs/details.jsp?pid=3099520206&details=1&input=0\nhttps://alimonitor.cern.ch/agent/jobs/details.jsp?pid=3099544419&details=1",
+        "question": "Could you have another look at my recent grid jobs as they are running longer than before and some are encountering TTL errors or producing small and seemingly incorrect AO2D files?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "hd4cywjt378tfbc6nd8gpz4kdw",
+        "create_at": 1718704790409,
+        "user_id": "1ws47bhqkfrbfe35f6ebziqrfh",
+        "message": "Just checking on lxplus: The following command `${O2_ROOT}/bin/o2-sim --noGeant -j 1 --field ccdb --vertexMode kCCDB --run 526641 --configKeyValues \"MFTBase.buildAlignment=true;\" -g external --configFile /cvmfs/alice.cern.ch/el9-x86_64/Packages/O2DPG/daily-20240617-0200-1/MC/config/PWGEM/ini/GeneratorHFGapTriggered_BeautyNoForcedDecay_Gap3.ini -o genevents --timestamp 1664862656927 --seed 513514879 -n 200 --fromCollContext collisioncontext.root:sgn_1 &> sgngen_1.log &` (which is running event generation) only produced 2 events within 30minutes runtime. So 200 events will need 30 00 minutes ---> which would explain going out of TTL. ",
+        "question": "Why is the command only producing 2 events in 30 minutes, and how long will it take to produce 200 events?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "h97dcqzu4bfnf8zrpehn6dx4zw",
+        "create_at": 1718708832097,
+        "user_id": "d1emreg7tiypzd4xqx564b54qc",
+        "message": "Thank you for having a look and helping out here. Just for me to understand. Would this mean, that in all cases the generator gets the \"default\" flag and then an additional one, or would line 5 overwrite line 4?",
+        "question": "Would line 5 overwrite line 4, or would both the \"default\" flag and an additional one be used in all cases?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "uwronser4igutn7dpyes88t6sw",
+        "create_at": 1718803645201,
+        "user_id": "c97m9narciy19xj7e9sg8ucfma",
+        "message": "Thank you, for your help. The fix from yesterday works and the runtime and output seem to be normal again.\nI just have a last question. When using the addSubGenerator function, the information should be stored in the AO2D file, right? I have not found the a corresponding tree or branch.",
+        "question": "When using the addSubGenerator function, the information should be stored in the AO2D file, right? I have not found the corresponding tree or branch."
+    },
+    {
+        "source": "mattermost",
+        "post_id": "wcatbu4sk3nupfg6pze8ttkgzo",
+        "create_at": 1718983372358,
+        "user_id": "ojamyqznoidf8yen67drwoxnsy",
+        "message": "Dear experts, I am trying to run an anchored PbPb simulation locally but I am facing some issues. In particular, the script I am using (`run_anchored_mc.sh`, attached below) gets stuck at this command:\n`o2-grp-simgrp-tool createGRPs --timestamp 1696470629787 --run 544013 --publishto ${ALICEO2_CCDB_LOCALCACHE:-.ccdb} -o grp --hbfpertf 32 --field ccdb --readoutDets ITS CPV FV0 TPC TRD FDD FT0 CTP TOF HMP MFT PHS MCH MID --print --lhcif-CCDB &> grpcreate.log &`\nand continues filling a `pipeline_metric.log` file with this kind of information: `2024-06-20 23:18:19,261 INFO {'iter': 4491, 'name': 'grpcreate', 'cpu': 0.0, 'uss': 272.4609375, 'pss': 273.4990234375, 'nice': 0, 'swap': 0.0, 'label': []}` but it does not pass this step. Do you have any idea what could be causing it being stuck? Or am I missing some information in the .sh script?\nThanks a lot in advance for your assistance!\nDear experts, I am trying to run an anchored PbPb simulation locally but I am facing some issues. In particular, the script I am using (`run_anchored_mc.sh`, attached below) gets stuck at this command:\n`o2-grp-simgrp-tool createGRPs --timestamp 1696470629787 --run 544013 --publishto ${ALICEO2_CCDB_LOCALCACHE:-.ccdb} -o grp --hbfpertf 32 --field ccdb --readoutDets ITS CPV FV0 TPC TRD FDD FT0 CTP TOF HMP MFT PHS MCH MID --print --lhcif-CCDB &> grpcreate.log &`\nand continues filling a `pipeline_metric.log` file with this kind of information: `2024-06-20 23:18:19,261 INFO {'iter': 4491, 'name': 'grpcreate', 'cpu': 0.0, 'uss': 272.4609375, 'pss': 273.4990234375, 'nice': 0, 'swap': 0.0, 'label': []}` but it does not pass this step. Do you have any idea what could be causing it being stuck? Or am I missing some information in the .sh script?\nThanks a lot in advance for your assistance!",
+        "question": "What could be causing the `o2-grp-simgrp-tool createGRPs` command to get stuck and continue filling the `pipeline_metric.log` file without completing the step?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "nbt8y43wpt8wpqz3i5yssazqjh",
+        "create_at": 1719214141497,
+        "user_id": "919mo57ehi889km811xqgxwzwr",
+        "message": "Hi Sandro, Benedikt, I need (again!) your help. For my EMCAL simulations I need to be able to tell apart low interaction rates runs from high rate runs. To do this, I was suggested to look to the `GRP` classes, but I don't see any instance of interaction rate relevant code in either `GRPObject` or `GRPLHCIF`. Afterwards I found out that in your anchoring script for `o2dpg` (i.e. `o2dpg_sim_workflow_anchored.py`) that you manually compute the interaction rate from the `CTP scalers`. Is this the only (currently available) way of doing so?",
+        "question": "Is manually computing the interaction rate from the CTP scalers the only (currently available) way to distinguish between low and high interaction rate runs in ALICE O2 simulations?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "38d8gob1i3rnpj1ngjhsunkq9r",
+        "create_at": 1719215976276,
+        "user_id": "ojamyqznoidf8yen67drwoxnsy",
+        "message": "Hi @swenzel ! Apologise for the late response, removing the `sem` file worked! The simulation ends, and produces and merges the AO2Ds. Right now I am trying to simulate with an external generator enabling the embedding option (like in `run_anchored_mc_hf.sh`), but the simulation appears not to be producing the `workflow.json` and  immediately stops. Do you have any idea what could be causing this? Thanks a lot (again) in advance!\nHi @swenzel ! Apologise for the late response, removing the `sem` file worked! The simulation ends, and produces and merges the AO2Ds. Right now I am trying to simulate with an external generator enabling the embedding option (like in `run_anchored_mc_hf.sh`), but the simulation appears not to be producing the `workflow.json` and  immediately stops. Do you have any idea what could be causing this? Thanks a lot (again) in advance!",
+        "question": "What could be causing the simulation to immediately stop without producing the `workflow.json` when using an external generator with the embedding option?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "b85oh7ecnj81iek1z58diy7joo",
+        "create_at": 1719556997310,
+        "user_id": "1uiqyb17bbyemb9j8gqi7ncqdy",
+        "message": "Dear experts,\n\nI have generated MC using the powheg+pythia8 package. I have mu+ and mu- pairs from the powheg as input into pythia8 during shower. These muon pairs must be considered as primaries. I would like to separate these muons coming from powheg from the muons from pythia8.\nAs suggested by @swenzel , one could use the Generator status code for these particles. But, we do not know whether the powheg particles are tagged with specific generator status codes?\nLet me know if anyone knows this fact.\nThanks.",
+        "question": "Do particles from POWHEG have specific generator status codes?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "3et4z6yq9ty5tq8wgbad9hffkr",
+        "create_at": 1719908559826,
+        "user_id": "ojamyqznoidf8yen67drwoxnsy",
+        "message": "Dear experts, I am running some simulation for the HF group on the grid. Even though among the log file there are all the correct files, AO2D included (https://alimonitor.cern.ch/jobs/output.jsp?pid=3111504506&id=3111504507), the output directory remains empty (https://alimonitor.cern.ch/catalogue/?path=%2Falice%2Fcern.ch%2Fuser%2Fs%2Fspolitan%2Fselfjobs%2Ftest_anchor_NoPregenFromScript3_newtag-20240701-190454#/alice/cern.ch/user/s/spolitan/selfjobs/test_anchor_NoPregenFromScript3_newtag-20240701-190454/output). Do you have any idea why is this happening? Thanks a lot in advance for your support! ",
+        "question": "Why is the output directory empty even though the log files indicate that all files, including AO2D, were processed?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "nrqm9nifj38p3xskenuoha53xw",
+        "create_at": 1720181277356,
+        "user_id": "919mo57ehi889km811xqgxwzwr",
+        "message": "Just out of curiosity, I can see in my small productions that the reconstruction efficiency, for example, let's say that for exclusive Jpsi->pp events, with close to 22k events injected, only 3 events are reconstructed (using pp settings instead of PbPb due to filling schemes limitations), while in Run 2 the efficiency was at the level of 5% about? I was wondering could be the reason for such a difference... The production was carried out using the fix above `--run` for `anchorMC.sh`.\nSince anyway, I have only about 100 such Jpsis in my UPC datasets, I guess I could in principle submit about 40 jobs...\nBut I would not be able to use this AxE to measure a cross section",
+        "question": "What could be the reason for the low reconstruction efficiency of Jpsi->pp events in my small production compared to Run 2?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "u5jkuo94s3bozj5j418tqehx1r",
+        "create_at": 1720368810146,
+        "user_id": "1uiqyb17bbyemb9j8gqi7ncqdy",
+        "message": "Hi, I am trying to run the QED background simulations using the QEDLoader.C\nThis is the command that I am using:\n```\no2-sim -e TGeant4 -m PIPE ITS MFT FT0 FV0 FDD -n 10 -g external --configKeyValues \"GeneratorExternal.fileName=$path_to_o2/O2/Generators/share/external/QEDLoader.C ; Diamond.width[2]=6.\"\n```\nIt is crashing again and again, but I do not understand why. Am I doing something wrong?\nThis is the output:\n```\n[INFO] This is o2-sim version 1.2.0 (bdb541f5d2)\n[INFO] Built by ALIBUILD:1.17.7+jammy, ALIDIST-REV:94acc9094f464f7bdb11c946f1d3a6dae5039b79 on OS:Linux-6.5.0-41-generic\n[INFO] BINDING TO ADDRESS ipc:///tmp/o2sim-notifications-36848 type pub\n[INFO] Running with official detector version 'ALICE2'\n[INFO] Running with official detector version 'ALICE2'\n[INFO] Running with official detector version 'ALICE2'\n[INFO] Running with official detector version 'ALICE2'\n[INFO] Running with 4 sim workers \n[INFO] CREATING SIM SHARED MEM SEGMENT FOR 4 WORKERS\nSpawning particle server on PID 36851; Redirect output to o2sim_serverlog\nSpawning sim worker 0 on PID 37079; Redirect output to o2sim_workerlog0\nSpawning hit merger on PID 37080; Redirect output to o2sim_mergerlog\n[INFO] Process 37079 EXITED WITH CODE 1 SIGNALED 0 SIGNAL 0\n[INFO] Problem detected (or child received termination signal) ... shutting down whole system \n[INFO] TERMINATING 36851\n[INFO] TERMINATING 37079\n[INFO] TERMINATING 37080\n[ERROR] SHUTTING DOWN DUE TO SIGNALED EXIT IN COMPONENT 37079\n[INFO] Merger process 37080 returned\n[INFO] Simulation process took 86.2011 s\n\n```",
+        "question": "Why is the QED background simulation crashing and how can I fix it?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "hskot1hy57yi5crsmhkhxt8mth",
+        "create_at": 1721288657766,
+        "user_id": "pfqn8z49t7drmg9w8aqxi1brir",
+        "message": "Hi all, I want to run some events on the grid using a new simulation configuration ( [AliceO2Group/O2DPG#1704](https://github.com/AliceO2Group/O2DPG/pull/1704) ) . Is there a way to run tests (and maybe change some configuration parameters) with custom configurations, without having to have them pushed to the O2DPG repository?",
+        "question": "Can I run tests with custom simulation configurations without pushing them to the O2DPG repository?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "p69j4w9fr3ncmxwny8mkjmb4br",
+        "create_at": 1721298134393,
+        "user_id": "ucw6b4xzb38ttegxfbobupjujr",
+        "message": "Dear experts, \nI have just started to run some MC simulation tests on my LXplus home directory, but they haven't succeeded so far. Is the GRID certificate already activated in LXplus? I am now trying to activate a certificate with the same procedure as on a PC, but it didn't work\nThis was the printout after the failed MC test run:\n```\n[INFO] This is o2-sim version 1.2.0 (99756dc7)\n[INFO] Built by ALIBUILD:1.17.7, ALIDIST-REV:ab578c1e6dbceb7a6c5739643c7a7522dd924607 on OS:Linux-5.14.0-362.24.2.el9_3.x86_64\n[INFO] BINDING TO ADDRESS ipc:///tmp/o2sim-notifications-2129881 type pub\n[INFO] Running with official detector version 'ALICE2'\n[INFO] Running with official detector version 'ALICE2'\n[INFO] Running with official detector version 'ALICE2'\n[INFO] Running with official detector version 'ALICE2'\n[INFO] Running with 2 sim workers \n[INFO] CREATING SIM SHARED MEM SEGMENT FOR 2 WORKERS\nSpawning particle server on PID 2129984; Redirect output to o2sim_serverlog\nSpawning sim worker 0 on PID 2130109; Redirect output to o2sim_workerlog0\nSpawning hit merger on PID 2130110; Redirect output to o2sim_mergerlog\n[INFO] Process 2130109 EXITED WITH CODE 134 SIGNALED 0 SIGNAL 0\n[INFO] Problem detected (or child received termination signal) ... shutting down whole system \n[INFO] TERMINATING 2129984\n[INFO] TERMINATING 2130109\n[INFO] TERMINATING 2130110\n[ERROR] SHUTTING DOWN DUE TO SIGNALED EXIT IN COMPONENT 2130109\n[INFO] Merger process 2130110 returned\n[INFO] Simulation process took 59.7318 s\n```\nThe run command was:\n```o2-sim -e TGeant4 -g pythia8pp -n 10 -j 2```",
+        "question": "What could be the reason for the simulation run failing with the error code 134 and how can I activate the GRID certificate in LXplus?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "3fjf5r8rrb83ujfeacbsigfjar",
+        "create_at": 1722430235846,
+        "user_id": "8gj5de5ehjgmpkrab47ts3saoe",
+        "message": "The \"-m\" flag to specify which modules to load still works as before then?",
+        "question": "Does the \"-m\" flag to specify which modules to load still work as before in ALICE O2 simulations?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "iawkkfuo1fykdrzqd7h4t954fw",
+        "create_at": 1722951803611,
+        "user_id": "919mo57ehi889km811xqgxwzwr",
+        "message": "Hi @swenzel , @pbuhler @mbroz and I wanted to ask you on behalf of the PWGUD if there were standard values of the following parameters: \n```c++\n# the following are example values\nexport NTIMEFRAMES=2\nexport NSIGEVENTS=50\nexport SPLITID=100\nexport PRODSPLIT=153\nexport CYCLE=0\n``` \nto ensure a very good reconstruction efficiency, or if these are automatically set by the system if unset\nSeparate thread instead for EMCAL, if the PR for the interaction rate can be merged so that I can run my tests...",
+        "question": "Are there standard values for the parameters NTIMEFRAMES, NSIGEVENTS, SPLITID, PRODSPLIT, and CYCLE to ensure good reconstruction efficiency, or are they automatically set by the system if unset?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "ia55wot8fpb69nau9e3isg14ac",
+        "create_at": 1722954010561,
+        "user_id": "919mo57ehi889km811xqgxwzwr",
+        "message": "Thanks a lot for both this and the merge! Yes, we are all following this documentation. If you would let me rephrase the question, would you expect large changes in reconstruction efficiencies by changing these parameters? Or it should be somewhat stable regardless of them?",
+        "question": "Would you expect large changes in reconstruction efficiencies by changing these parameters, or should it be somewhat stable regardless of them?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "dt8mh3477t85zxuizbwqyn1bbr",
+        "create_at": 1723555529403,
+        "user_id": "n87pwhqdcpbhifomoihzirqwrr",
+        "message": "If I want to know how many resources a simulation test spends, what log file should I look at?",
+        "question": "If I want to know how many resources a simulation test spends, what log file should I look at?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "1oymjencxp8a9bkr86ehkw4twe",
+        "create_at": 1723640865371,
+        "user_id": "n87pwhqdcpbhifomoihzirqwrr",
+        "message": "is there line that shows the total cpu and memory used? or should I add them myself?",
+        "question": "Is there a line in the output that shows the total CPU and memory used, or should I add them myself?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "15nkpu74sbyppp3tj4ch69kb8a",
+        "create_at": 1723649203794,
+        "user_id": "1ws47bhqkfrbfe35f6ebziqrfh",
+        "message": "Hi @alandou : Could you be slightly more specific? What are you after here exactly and **why**?  (Do you need CPU efficiency? overall CPU time? overall walltime? mean memory used? max memory used?). The total runtime of the jobs are already printed by the pipeline runner. Everything else can be calculated from the `pipeline_metrics` files.",
+        "question": "What specific metrics are needed and why? Options include CPU efficiency, overall CPU time, overall walltime, mean memory used, and max memory used."
+    },
+    {
+        "source": "mattermost",
+        "post_id": "crbqo3zbnp888pku5jpj6s1tbw",
+        "create_at": 1723821890565,
+        "user_id": "eoxmbzf96brtdfd7rs9qm77tjr",
+        "message": "Hi @swenzel, many thanks! One question: why my local test produces 3 different pipeline_metric files? ",
+        "question": "Why does my local test produce 3 different pipeline_metric files?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "36fyoadsrirhdmqbgxnzpkw44y",
+        "create_at": 1724054201226,
+        "user_id": "ffcgsbfzijfsbj1p14w6w7nz9e",
+        "message": "Dear experts,\n\nI am using following script to produce injected L* with gap with embedding. But, I find the reconstruction rate of the produced collisions is very less around 4 out of 50. How could I increase the reconstruction efficiency? ",
+        "question": "How can I increase the reconstruction efficiency of the produced collisions in the ALICE O2 simulations?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "mg41m1qpjp89uxm8io4hxhozer",
+        "create_at": 1724060216504,
+        "user_id": "1ws47bhqkfrbfe35f6ebziqrfh",
+        "message": "What is the software tag used? Did you try with latest O2 on CVFMS?",
+        "question": "What is the software tag used, and did you try with the latest O2 on CVFMS?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "1uxp6drbdiyez8nyoppk9gx8qc",
+        "create_at": 1724146951257,
+        "user_id": "9wmacn4dwjyr7j56du7q3zh6ah",
+        "message": "Dear Experts, I am currently trying to run sim workflows with pythia8powheg with a custom config to include my own powheg.lhe input. I have run this both locally and on lxplus and have noticed that it always seems to include the default config file, no matter how I pass my own. Currently I just pass it as `-confKey \"GeneratorPythia8.config=/my_conf_path/pythia8_powheg.cfg\"`. When I look in the genevents_serverlog it does seem like it finds my config and sets GeneratorPythia8.config correctly, but then loads pythia with the default config. I have also ran a pythiahf sim with a default config in the same way and experienced the same issue - in this case the sim workflow successfully finishes with the default config. I am not sure where I am going wrong, any feedback is appreciated.",
+        "question": "Why does the simulation workflow always seem to include the default config file instead of the custom config file specified through `-confKey`?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "bx6nzw6a83ddpc8uasy84shygh",
+        "create_at": 1725871757676,
+        "user_id": "irbenxbcdf8bzbm4kh18cijr7w",
+        "message": "Hi @swenzel, Is the workflow with QED background included by default in standalone user tests (for all HepMC simulations) or only in the central framework?  ",
+        "question": "Is the workflow with QED background included by default in standalone user tests (for all HepMC simulations) or only in the central framework?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "m9bbz7rnytdkjxn7zt149mftqc",
+        "create_at": 1725891010002,
+        "user_id": "bznhtse8pprufp5eogr84qhmxa",
+        "message": "Dear experts, I would like to work on AEGIS. I did `aliBuild init AEGIS`. This command gave me:\n```\nGit fetch for repository for AEGIS...\nDone git fetch for repository for AEGIS\nTraceback (most recent call last):\n  File \"/usr/bin/aliBuild\", line 133, in <module>\n    doMain(args, parser)\n  File \"/usr/bin/aliBuild\", line 80, in doMain\n    doInit(args)\n  File \"/usr/lib/python3.6/site-packages/alibuild_helpers/init.py\", line 87, in doInit\n    git(cmd)\n  File \"/usr/lib/python3.6/site-packages/alibuild_helpers/git.py\", line 68, in git\n    raise RuntimeError(\"Error {} from git {}: {}\".format(err, \" \".join(args), output))\nRuntimeError: Error 128 from git clone --origin upstream https://github.com/AliceO2Group/AEGIS.git --reference /home/dsekihat/alice/sw/MIRROR/aegis -b v1.5.3-alice2 ./AEGIS: Cloning into './AEGIS'...\n```\nHow can I install AEGIS?",
+        "question": "How can I install AEGIS?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "3ui747jor3d1dyc9abtrtzyzsh",
+        "create_at": 1725897219544,
+        "user_id": "349mzxje5pbz9fes49wk6cz9xc",
+        "message": "May be you can have a look here: https://alice-talk.web.cern.ch/t/missing-tvirtualmc-h/1418/2?u=slokos",
+        "question": "May be you can have a look here: https://alice-talk.web.cern.ch/t/missing-tvirtualmc-h/1418/2?u=slokos\n\nWhat is the issue with the missing TVirtualMC.h file?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "pyfsz6mocjyzdcw3apty6kbr7y",
+        "create_at": 1725898358346,
+        "user_id": "bznhtse8pprufp5eogr84qhmxa",
+        "message": "Dear experts, I am sorry to disturb you. Where and how can I modify source codes of AEGIS after `aliBuild build AEGIS`? Thank you.",
+        "question": "Where and how can I modify source codes of AEGIS after `aliBuild build AEGIS`?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "tzxaeuayg3dcffwjj6569cyrde",
+        "create_at": 1727181611265,
+        "user_id": "9wmacn4dwjyr7j56du7q3zh6ah",
+        "message": "Dear experts, I am attempting to run my workflow as a grid job to test with more events. I have run it on lxplus for 5 events, which worked fine. For my workflow I pass my own custom config, ini and trigger files, as well as my own powheg.lhe input. When it runs the grid job, it seems to copy the workflow script and run it within the grid environment. The job immediately fails, which I assume is due to none of my custom files being available within the grid environment. Is there a way to run a job with custom input files? Will I need to manually upload the custom files to my '/alice/cern.ch/user/...' directory and refer to their path there in the workflow script? Any advice will be appreciated.",
+        "question": "Is there a way to run a job with custom input files in the grid environment, or do I need to manually upload them to my '/alice/cern.ch/user/...' directory and refer to their path there in the workflow script?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "akxnj9yzkpb9tedqpfxyczzorr",
+        "create_at": 1729688667558,
+        "user_id": "tchrdk7jtibcbbempsxh5bg8uc",
+        "message": "Dear experts (especially maybe @swenzel),\n\nIs `TVirtualMC::TrackPosition(Double_t &x, Double_t &y, Double_t &z)` (https://github.com/vmc-project/vmc/blob/master/source/include/TVirtualMC.h#L686) also returning coordinates relative to the global origin (i.e. IP = (0,0,0)) or is some physics collision vertex also considered?\n\nMany thanks\n\n(cc @afurs)\nConfirmed by Ruben that this is ideed relative to the global origin, i.e. the VMC don't know about the collision vertex (@afurs)",
+        "question": "Is `TVirtualMC::TrackPosition(Double_t &x, Double_t &y, Double_t &z)` returning coordinates relative to the global origin (i.e. IP = (0,0,0)) or is some physics collision vertex also considered?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "3zbpp957c7bc7jf536w9x5ta8o",
+        "create_at": 1730723127048,
+        "user_id": "n87pwhqdcpbhifomoihzirqwrr",
+        "message": "Dear experts,\ncan the `PhaseSpace:bias2Selection` pythia option for 2->2 processes be activated for heavy ion simulations in pythia? or is it only for pp collisions",
+        "question": "Can the `PhaseSpace:bias2Selection` pythia option for 2->2 processes be activated for heavy ion simulations in pythia, or is it only for pp collisions?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "ugymqs5j1tn17q4ph4q5zubfiy",
+        "create_at": 1739529950186,
+        "user_id": "1ws47bhqkfrbfe35f6ebziqrfh",
+        "message": "@ihrivnac : Would you have an idea here ?",
+        "question": "Would you have an idea here?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "3wb6rehfkjnqpdywkbiz484u7o",
+        "create_at": 1742399869699,
+        "user_id": "d1emreg7tiypzd4xqx564b54qc",
+        "message": "Hi,\nI want to run a small local simulation in which I inject a particle in a pythia event. For this I wanted to use a cocktail generator as definded in the attached json file.\nI would now also like to force the decay of the particle. Here I am not really sure how to do it. What decayer is actually used in the case of this hybrid/cocktail approach? Could I just use a costume pythia configuration and add a line like:\n`553:oneChannel = 1 1.0 0 -11 11`?",
+        "question": "What decayer is used in the case of a hybrid/cocktail approach, and can I force the decay of a particle by adding a line to a custom Pythia configuration?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "nizganzpq7njtqtrxpffkpofwa",
+        "create_at": 1743990743386,
+        "user_id": "m7gcuh797jdhtjznffpdranw6a",
+        "message": "Dear experts,\nI want to run a simulation using Grid computing. However, my quota is only 9 GB and I would like to increase it. Could you tell me how to increase it ? \nBest regards",
+        "question": "How can I increase my quota to run simulations using Grid computing?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "b7zjtzme5pbi8b535nka3sqycr",
+        "create_at": 1744183968609,
+        "user_id": "ojamyqznoidf8yen67drwoxnsy",
+        "message": "Hi @swenzel ! Ok, thanks ;)\nDear experts, I am encountering some problems in the simulation, and I am not quite sure where the problem lies from the logs. Here's the link to the [script](https://alimonitor.cern.ch/users/download.jsp?view=true&path=/alice/cern.ch/user/s/spolitan/selfjobs/test_anchor_corrBkg_pp-20250409-123057/alien_jobscript.sh) I am currently using to simulate,  and attached here are the trace I get from running on grid, and the stdoout file. Thanks in advance for your support! :)\nDear experts, I am encountering some problems in the simulation, and I am not quite sure where the problem lies from the logs. Here's the link to the [script](https://alimonitor.cern.ch/users/download.jsp?view=true&path=/alice/cern.ch/user/s/spolitan/selfjobs/test_anchor_corrBkg_pp-20250409-123057/alien_jobscript.sh) I am currently using to simulate,  and attached here are the trace I get from running on grid, and the stdoout file. Thanks in advance for your support! :)",
+        "question": "What are the problems you are encountering in the simulation and where do they lie from the logs?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "9wnt96daefyqzfo71bi1hp6hqw",
+        "create_at": 1744623844515,
+        "user_id": "1uiqyb17bbyemb9j8gqi7ncqdy",
+        "message": "Dear Experts,\nHow do I access `isPhysicalPrimary()` boolean at the generator level (`o2sim_Kine.root`)\nI see that for AO2D level, it can be accessed from `o2::aod::mcparticle::IsPhysicalPrimary`\nBut I cannot find the correct class to access it on the generator level.",
+        "question": "How do I access the `isPhysicalPrimary()` boolean at the generator level in ALICE O2 simulations?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "wk7zqbeitjgmdc6aikubbfpeoc",
+        "create_at": 1745228579339,
+        "user_id": "ffcgsbfzijfsbj1p14w6w7nz9e",
+        "message": "Dear Experts, I am trying to generate L* injected anchored MC using latest O2Sim tag. But, it says in sgngen_1.log that\n```\nRunning: TIME=\"#walltime %e\\n#systime %S\\n#usertime %U\\n#maxmem %M\\n#CPU %P\" /usr/bin/time --output=sgngen_1.log_time ./sgngen_1.log_tmp.sh\n[INFO] This is o2-sim version 1.2.0 (6963217343)\n[INFO] Built by ALIBUILD:1.17.15+noble, ALIDIST-REV:3a178e8f9deb62029aae320268c532f7b717e4f7 on OS:Linux-6.11.0-21-generic\n[INFO] BINDING TO ADDRESS ipc:///tmp/o2sim-notifications-921618 type pub\n[INFO] Running with official detector version 'ALICE2'\n[INFO] Running with official detector version 'ALICE2'\nError in <TFile::TFile>: file /home/hirak/alice/MCtest/L1520/tf1/collisioncontext.root does not exist\n[FATAL] Could not open collision context file collisioncontext.root\nFor later analysis we write a core dump to core_dump_921618\n./sgngen_1.log_tmp.sh: line 4: 921618 Aborted                 (core dumped) ${O2_ROOT}/bin/o2-sim --noGeant -j 1 --field ccdb --vertexMode kCollContext --run 526641 --configKeyValues \"MFTBase.buildAlignment=true;\" -g external --configFile /home/hirak/alice/MCtest/L1520/run.ini -o genevents --embedIntoFile ../bkg_MCHeader.root --timestamp 1664862745505 --seed 504627853 -n 200 --fromCollContext collisioncontext.root:sgn\nTASK-EXIT-CODE: 134\n```\n\nThe script is attached. Earlier this script worked well. How to solve this issue, now? Thanks in advance.",
+        "question": "The script is failing due to a missing file \"collisioncontext.root\". How can this issue be resolved?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "63zq3wp9hibxdr8h88649dhwih",
+        "create_at": 1747409653828,
+        "user_id": "18pm5mzp4fdwixkmabpboxhoty",
+        "message": "Hi,\nI am generating Pythia HI events and injecting them into an analysis framework. This is the example I am running. https://github.com/AliceO2Group/AliceO2/blob/dev/run/SimExamples/McTracksToAOD/run_Pythia8.sh\n \nI wish to access information like the number of neutron and proton spectators in HI collisions. Such information can be found in the table called o2::aod::HepMCHeavyIon.\n\nWhat additional workflow do I need to include to generate such a table?",
+        "question": "What additional workflow do I need to include to generate the o2::aod::HepMCHeavyIon table with information like the number of neutron and proton spectators in HI collisions?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "jwom9baqgpgn9jwnqn6cmgecjw",
+        "create_at": 1747574620498,
+        "user_id": "z3tj8hbhxib68rioh8xzijd6mo",
+        "message": "Hello, just a small question, what is a correct way to set the range of impact parameter for heavy ion collisions? I have used file pythia8_hi.cfg and tried to set \nHeavyIon:bWidth 1.0              \nand \nHeavyIon:bMax 1.0\n\nbut none was helpful\n",
+        "question": "What is the correct way to set the range of impact parameter for heavy ion collisions in ALICE O2 simulations?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "yfuq3sfmf3fojpwf3kc931zo6o",
+        "create_at": 1747662589346,
+        "user_id": "3p9eksxi9fy5tnfitymam8z76c",
+        "message": "Hello, do we have a macro that can give the material distribution in radiation or interaction length for certain eta/phi at certain R, or something similar?",
+        "question": "Do we have a macro that can give the material distribution in radiation or interaction length for certain eta/phi at certain R?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "wdwdw8atqi815cep8f3uore7jy",
+        "create_at": 1747831102399,
+        "user_id": "3p9eksxi9fy5tnfitymam8z76c",
+        "message": "Hey, does someone know if the material changed between the MC LHC24f3c and LHC24f3d? Specifically around 50 cm radius?",
+        "question": "Does the material change between MC LHC24f3c and LHC24f3d specifically around a 50 cm radius?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "4gr891feej8jjxp9qzwe1b473r",
+        "create_at": 1748941982557,
+        "user_id": "n87pwhqdcpbhifomoihzirqwrr",
+        "message": "Dear experts,\nI'm trying to find the PYTHIA tune used in general purpose Run3 pp simulations.\nLooking at O2DPG for \"tune\" (in particular in the o2dpg_sim_workflow `externalPythia8Config == None` case, or in .cfg files or mkpy8cfg.py) , I do not see any setting for it except for some PWG specific configs. So can I safely assume that the tune used is the default PYTHIA tune? (Monash 2013 if I understand the PYTHIA documentation correctly)\n",
+        "question": "Can I safely assume that the default PYTHIA tune used in general purpose Run3 pp simulations is Monash 2013?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "x1af9abka38emxbz6cbikoxejy",
+        "create_at": 1749579551875,
+        "user_id": "gi6dw66sw3r47qmbsa6dgaatio",
+        "message": "Dear experts, I am trying to run test simulations on the Grid in order to request a MC production. I have a few questions:\n- I want to use pre-generated event pools for this MC production. As far as I understand, I need to pass  a separate json-file in `ALIEN_JDL_ANCHOR_SIM_OPTIONS` in order to specify the event pool and another generator for the minimum-bias gap events. I uploaded this `generator_conf.json` to my personal directory in MonALISA and specified the path accordingly. Is this correct?\n- If I open the log files by clicking on the job `PID` in the `My jobs` page on MonALISA, I get the following error message in stdout:\n> ERROR [anchorMC]: Problem during anchor timestamp sampling and workflow creation. Exiting.\n\nDo you know what this means? Is there a way to get more detailed output and error messages from the tasks that are run?\n- I tried storing the logs and stdout/stderr files by specifying them in the --outputspec and --erroroutputspec options respectively. The argument passed to --erroroutputspec is however not recognized, but the option is apparently needed so that the commands are correctly interpreted. How can I also make sure that stdout and stderr are stored permanently?\nFrom the error message above I would deduce that the workflow creation fails and that therefore all the other log-files are not produced, but without them it's difficult for me to figure out what the problem is.\nMany thanks in advance!",
+        "question": "- Do you know why I am getting an \"ERROR [anchorMC]: Problem during anchor timestamp sampling and workflow creation. Exiting.\" message when trying to run ALICE O2 simulations on the Grid, and how can I get more detailed error messages?\n- How can I ensure that stdout and stderr are stored permanently when running ALICE O2 simulations on the Grid?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "48qy6ajinfny3b8y5har356c7w",
+        "create_at": 1749634216935,
+        "user_id": "oyh35b7cytdcjbpbqb7ytq1gpc",
+        "message": "Hi @pstahlhu could you please redirect me to the masterjob you launched so that I can check the full configuration? ",
+        "question": "Could you please redirect me to the masterjob you launched so that I can check the full configuration?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "qgscby6ihbfciftwc4fd9rgj5o",
+        "create_at": 1750171179757,
+        "user_id": "1ws47bhqkfrbfe35f6ebziqrfh",
+        "message": "I general, we do not have full support for this kind of modularity (I think the AOD converter can not fully handle missing TPC inputs ... but to be verified). However, it depends what you would like to study: (a) Do you need AO2D.root --> then I think this is not easily possible. (b) Do you merely need say MID reconstruction objects? Then you could simply specify `o2dpg_workflow_runner.py -tt midreco` and the MC workflow would only execute the path on the grap needed for MIDreco. In this case, it will likely skip TPC digitization and reconstruction. If you are using anchorMC.sh then this can be achieved with setting env variable `export ALIEN_JDL_O2DPGWORKFLOWTARGET=midreco` before launching anchorMC.",
+        "question": "Can I run the MC workflow for only MID reconstruction objects and skip TPC digitization and reconstruction?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "8n1qheja7trh3dhstjk7ur4n6a",
+        "create_at": 1750174676840,
+        "user_id": "9wmacn4dwjyr7j56du7q3zh6ah",
+        "message": "In the case of option (b), when working on the MID cluster size, I have simply run 'o2-sim' directly to generate hits and then run the MID reconstruction manually - which worked fine for that context. For the current task I would probably need to access AOD, as I want to generate training data for W->muon events, where I want to access global forward tracks - as I want to access parameters such as the kinematics, matching chi-squared and probably DCA etc. - most of the quantities contained in the AOD forward-tracks table. Will it be possible to also access these quantities by similarly running 'o2-sim' directly and then doing the full reconstruction up until 'o2-globalfwd-matcher-workflow'? Which I can then process with a ROOT script. Or is my best bet to run the full O2DPG workflow script and generate the AOD to be analyzed by O2Physics? ",
+        "question": "Can I access global forward track parameters such as kinematics, matching chi-squared, and DCA by running 'o2-sim' and then doing full reconstruction up to 'o2-globalfwd-matcher-workflow', or should I run the full O2DPG workflow to generate AOD?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "6pusqg6xhbdaxpb7zt39woihwa",
+        "create_at": 1750412488324,
+        "user_id": "mrz4qi4dm7gm8gxycg9qt8qmbr",
+        "message": "Dear Marco, all,\nCould you advise what would be the easiest way to generate some events with this new Pythia version (for pp collisions) locally? The output can be just simple hep-mc files, or the AO2D.root files. \nI wanted to check if baryon angular correlations have improved...\nI have O2sim installed.",
+        "question": "What is the easiest way to generate events with the new Pythia version for pp collisions locally, and can the output be in hep-mc files or AO2D.root files to check if baryon angular correlations have improved?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "8iwmq1fsjjnm5py3xwh8nqt73o",
+        "create_at": 1750682762743,
+        "user_id": "mrz4qi4dm7gm8gxycg9qt8qmbr",
+        "message": "Is there a way to run this without ALICE reconstruction? Just pure MC truth?",
+        "question": "Is there a way to run simulations without ALICE reconstruction, just using pure MC truth?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "uptpzwwtbb8fzqbkffw3exijhe",
+        "create_at": 1750686543767,
+        "user_id": "n87pwhqdcpbhifomoihzirqwrr",
+        "message": "Dear experts,\nI am looking at the tracking efficiency in pp, in MC anchored to the 2022 13.6 TeV data (LHC22o) and to the 2024 5.36 TeV pp ref data (LHC24ap).\nI am finding very different behaviours in pt, eta and phi between those two datasets, and do not understand why the difference is so big. Does anyone have an idea as to what might be the reason I am seeing such differences?",
+        "question": "What might be the reason for seeing such large differences in tracking efficiency between the 2022 13.6 TeV data and the 2024 5.36 TeV pp ref data in terms of pt, eta, and phi?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "g9h58qqhtpnduk5pdqwgqci5qo",
+        "create_at": 1750938151261,
+        "user_id": "1ws47bhqkfrbfe35f6ebziqrfh",
+        "message": "I cannot comment too much on reco efficiency. Running this script on a larger sample (full timeframe) with about 1400 events at 500kHz yields ~700 primary vertices found. It does seem a bit low. Maybe @shahoian can comment. (Settings in unanchored MC non-optimal, ...)?",
+        "question": "What is the expected primary vertex count for 1400 events at 500kHz, and is the current count of 700 primary vertices permissive?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "gz1jedw9w38kx8y5g8hca7z1he",
+        "create_at": 1750940307912,
+        "user_id": "uz3jj8r7ffgcdxwhbs3grc5n1e",
+        "message": "@jpotgiet could you show your exact simulation settings, so that I could reproduce it?",
+        "question": "Could you show your exact simulation settings so that I could reproduce it?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "orhsreoar7djfbpiu9cmfphz7c",
+        "create_at": 1751375053029,
+        "user_id": "kpfmky1pz7rideeof1wictw5io",
+        "message": "Dear expert, Is there a Pb–Pb MC AO2D for LHC23zzh pass4, and under which tag? I was trying to locate it under /sim folder in MonALISE Repository, but without luck. Thank you in advance for your help and advise.",
+        "question": "Is there a Pb–Pb MC AO2D for LHC23zzh pass4, and under which tag?"
+    },
+    {
+        "source": "mattermost",
+        "post_id": "4sjuyy5a8pnzdjzq9cazc7tugw",
+        "create_at": 1752238476594,
+        "user_id": "kpfmky1pz7rideeof1wictw5io",
+        "message": "Thank you, David. I have found it. Now I am looking for matching MC Simulated Data; any help would be appreciated. Thank you in advance\nDear Experts,\nI am looking for Monte Carlo simulated/generated datasets (AO2D). Is the alice/sim/ folder in MonALISA the correct place to find these data?",
+        "question": "Is the alice/sim/ folder in MonALISA the correct place to find Monte Carlo simulated/generated datasets (AO2D)?"
+    }
+]
