@@ -1,7 +1,8 @@
 resources:
   - type: git
     url: https://github.com/AliceO2Group/simulation
-    include: ["docs/**/*.md", "**/*.py", "**/*.sh", "**/*.pdf"]
+    include: ["docs/**/*.md", "**/*.py", "**/*.sh", "**/*.pdf",
+              "additional_resources/**/*.md"]
     exclude: ["_sass/**"]
     branch: main
 
