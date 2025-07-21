@@ -176,19 +176,28 @@ Chatbot evaluation:
 - _Human-in-the-loop_ can provide feedback on the generated responses, such as helpfulness.
 
 
-## Question extraction
+## Knowledge base
 
-### Mattermost
+### Mattermost question extraction
 
 To create a dataset of frequent questions about ALICE O2 simulations requiring support from experts, we scraped the [O2 Simulation Mattermost channel](https://mattermost.web.cern.ch/alice/channels/o2-simulation).
 We filtered out system messages, bug reports and answers from the experts. Then used the LLM to extract the actual questions which took around 10 minutes.
 Result is ~110 straightforward questions in stored in the file `src/scraper/questions_v2.json`.
 
+### Expert dataset collection
+
+For evaluation purposes O2 simulation experts provided some frequently asked questions and answers (FAQs). They were unorganized and given in a markdown file.
+To generate a structured JSON dataset we used GPT-4.1-mini with enabled reasoning and the following prompt:
+
+_I will provide you with text that contains questions and answers. Your task is to return a list of JSON objects with fields "author", "question", "answer". If there is no answer: set the field to None. If there are multiple questions but only one answer: restructure it into multiple parts. Do not introduce any new questions or information. Return only a list of JSON objects._
+
+The process is demonstrated in [this chat](https://chatgpt.com/share/687e3d47-3f54-8013-916b-d15158683e78). 
+The extracted knowledge / qa pairs are stored in the file `eval/qa_dataset_gpt.json`.
+
 
 ## TODOs and improvements
 
 - Enable LLM reasoning (Qwen3?)
-- Build an evaluation question-answer dataset
 - Benchmark the base LLM and RAG chatbot using answer correctness metrics
 - _Scrape Jira issues from O2 (filters general, production request)_
 - Implement the environment variable collection and script generating capability
