@@ -3,6 +3,7 @@ import asyncio
 from mattermostdriver import Driver
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 from langfuse import get_client
+import src.chatbot.simulation_chatbot_prompts as prompts
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -39,10 +40,11 @@ def get_thread_messages(thread_id):
         sorted_posts = sorted(posts.values(), key=lambda p: p["create_at"])
         messages = []
         for post in sorted_posts:
+            message = post.get("message").replace(prompts.user_feedback_suffix, "") # remove user feedback suffix
             if post.get("user_id") == BOT_ID:
-                messages.append(AIMessage(content=post.get("message")))
+                messages.append(AIMessage(content=message))
             else:
-                messages.append(HumanMessage(content=post.get("message")))
+                messages.append(HumanMessage(content=message))
         return messages
 
     except Exception as error:

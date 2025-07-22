@@ -1,7 +1,6 @@
 import json
 import asyncio
 from basic_rag_qa import qa_pipeline
-import src.chatbot.simulation_chatbot_prompts as prompts
 from src.chatbot.mattermost_utils import MATTERMOST_DRIVER, BOT_ID, get_thread_messages, delayed_score_message
 from dotenv import load_dotenv
 
@@ -35,8 +34,6 @@ async def handle_post(event_data):
         }
 
         # generate chatbot response
-        if len(thread_messages) == 0:
-            thread_messages = prompts.default_message_history
         asyncio.create_task(
             qa_pipeline(post_message, thread_messages, feedback=False, mattermost_context=mattermost_context)
         )

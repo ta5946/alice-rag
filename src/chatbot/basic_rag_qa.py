@@ -124,8 +124,10 @@ async def rag_response(prompt, message_history, mattermost_context):
     return assistant_text
 
 
-async def qa_pipeline(question, message_history, feedback=True, mattermost_context=None):
+async def qa_pipeline(question, message_history=None, feedback=True, mattermost_context=None):
     answer = ""
+    if not message_history:
+        message_history = prompts.default_message_history
     try:
         with TRACING_CLIENT.start_as_current_span(
                 name="basic_rag_qa",
@@ -138,10 +140,12 @@ async def qa_pipeline(question, message_history, feedback=True, mattermost_conte
                 answer = await basic_response(question, message_history, mattermost_context)
             elif question_category == 2:
                 answer = await rag_response(question, message_history, mattermost_context)
+
+            tags = [mattermost_context.get("post_id")] if mattermost_context else None
             qa_trace.update_trace(
                 output={"answer": answer},
                 # metadata={"mattermost_context": mattermost_context},
-                tags=[mattermost_context.get("post_id")]
+                tags=tags
             )
 
             if feedback:
@@ -177,10 +181,7 @@ async def main():
             if question.lower() in ["q", "quit"]:
                 print("Bye!")
                 break
-            if len(conversation_history) == 0:
-                answer = await qa_pipeline(question, prompts.default_message_history)
-            else:
-                answer = await qa_pipeline(question, conversation_history)
+            answer = await qa_pipeline(question, conversation_history)
             conversation_history.extend([HumanMessage(content=question), AIMessage(content=answer)])
             print()
 
