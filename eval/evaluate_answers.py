@@ -6,7 +6,7 @@ from eval.metrics import *
 
 # evaluation configuration
 ANSWER_PATH = "eval/answers/rag_qwen_answers.json"
-RESULTS_PATH = "eval/results/rag_qwen_results.json"
+RESULT_PATH = "eval/results/rag_qwen_results.json"
 
 def calculate_results():
     # load answers
@@ -41,10 +41,10 @@ def calculate_results():
     print(f"Average scores for {ANSWER_PATH}:\n{average_scores}")
 
     # save results
-    os.makedirs(os.path.dirname(RESULTS_PATH), exist_ok=True)
-    print(f"Saving results to {RESULTS_PATH}")
-    with open(RESULTS_PATH, "w") as results_file:
-        json.dump(results, results_file, indent=4)
+    os.makedirs(os.path.dirname(RESULT_PATH), exist_ok=True)
+    print(f"Saving results to {RESULT_PATH}")
+    with open(RESULT_PATH, "w") as result_file:
+        json.dump(results, result_file, indent=4)
 
 
 if __name__ == "__main__":
