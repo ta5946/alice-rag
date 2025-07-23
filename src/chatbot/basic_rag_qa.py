@@ -74,8 +74,9 @@ async def basic_response(prompt, message_history, mattermost_context):
     assistant_text = await stream_response(messages, mattermost_context)
     return assistant_text
 
-async def rag_response(prompt, message_history, mattermost_context):
+async def rag_response(prompt, message_history=None, mattermost_context=None):
     await async_update_post(mattermost_context, "📄 _Searching for documents..._")
+    message_history = message_history or prompts.default_message_history # evaluation script workaround
 
     system_message = prompts.querier_system_message
     user_text = PromptTemplate.from_template("""(

@@ -1,6 +1,7 @@
 import os
 from chromadb import PersistentClient
 from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_chroma import Chroma
 from langchain_community.cross_encoders import HuggingFaceCrossEncoder
@@ -19,6 +20,11 @@ LLM = ChatOpenAI(
     base_url=os.getenv("LLM_BASE_URL"),
     api_key=os.getenv("LLM_API_KEY")
 ) # v1 endpoint with no authentication for now
+
+GEMINI = ChatGoogleGenerativeAI(
+    model=os.getenv("GEMINI_MODEL"),
+    api_key=os.getenv("GEMINI_API_KEY"),
+) # free api key with a rate limit
 
 EMBEDDINGS = HuggingFaceEmbeddings(
     model_name=os.getenv("HF_EMBEDDINGS_REPO"),

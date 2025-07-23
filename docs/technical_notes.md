@@ -175,6 +175,28 @@ Response evaluation:
 Chatbot evaluation:
 - _Human-in-the-loop_ can provide feedback on the generated responses, such as helpfulness.
 
+### Correctness results
+
+First we evaluated 3 different models on the expert labeled question-answer dataset. It consisted of 25 pairs.
+- **Qwen2.5-7B-Instruct** is the base local LLM,
+- **Qwen-RAG** is a RAG chatbot using this model and O2 simulation documentation,
+- **Gemini-2.5-flash** is a state-of-the-art API model from Google: https://ai.google.dev/gemini-api/docs/models#gemini-2.5-flash.
+
+> Google offers a free tier API key with a rate limit depending on the model https://ai.google.dev/gemini-api/docs/rate-limits#free-tier.
+
+Current results indicate that RAG pipeline introduces **new information**, that was not present in the general pretraining:
+
+| Chatbot model       | BLEU score | ROUGE-L score | Semantic similarity | LLM judge score | Inference time (s / question) |
+|---------------------|------------|---------------|---------------------|-----------------|-------------------------------|
+| Qwen2.5-7B-Instruct | 0.0100     | 0.0599        | 0.734               | 2.68            | 16.6                          |
+| Gemini-2.5-flash    | 0.00610    | 0.0380        | 0.737               | 2.76            | 19.1                          |
+| Qwen-RAG            | 0.0701     | 0.159         | 0.797               | 3.16            | 14.7                          |
+
+This table _should be updated_ with:
+- More expert questions,
+- More models,
+- Different RAG parameters (configurations).
+
 
 ## Knowledge base
 
@@ -192,13 +214,12 @@ To generate a structured JSON dataset we used GPT-4.1-mini with enabled reasonin
 _I will provide you with text that contains questions and answers. Your task is to return a list of JSON objects with fields "author", "question", "answer". If there is no answer: set the field to None. If there are multiple questions but only one answer: restructure it into multiple parts. Do not introduce any new questions or information. Return only a list of JSON objects._
 
 The process is demonstrated in [this chat](https://chatgpt.com/share/687e3d47-3f54-8013-916b-d15158683e78). 
-The extracted knowledge / qa pairs are stored in the file `eval/qa_dataset_gpt.json`.
+The extracted knowledge / qa pairs are stored in the file `eval/datasets/qa_dataset_gpt.json`.
 
 
 ## TODOs and improvements
 
 - Enable LLM reasoning (Qwen3?)
-- Benchmark the base LLM and RAG chatbot using answer correctness metrics
 - _Scrape Jira issues from O2 (filters general, production request)_
 - Implement the environment variable collection and script generating capability
 - Chatbot in Mattermost channel could tell the user to submit a Jira ticket
