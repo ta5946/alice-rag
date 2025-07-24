@@ -18,3 +18,11 @@ services:
         reservations:
           devices:
             - capabilities: [gpu]
+
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:v0.6.18 # latest
+    network_mode: "host"
+    environment:
+      - PORT=8081
+      - OPENAI_API_BASE_URLS=${LLM_BASE_URL}
+      - OPENAI_API_KEYS=${LLM_API_KEY}
