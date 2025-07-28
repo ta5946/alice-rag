@@ -38,7 +38,7 @@ def llm_judge_score(question, correct_answer, generated_answer, llm=LLM, timeout
     {correct_answer}
     
     GENERATED ANSWER:
-    {generated_answer}""")
+    {generated_answer}""") # soft reasoning switch is \no_think
     user_message = user_text.format(question=question, correct_answer=correct_answer, generated_answer=generated_answer)
     messages = [llm_judge_system_prompt, user_message]
 
@@ -46,6 +46,7 @@ def llm_judge_score(question, correct_answer, generated_answer, llm=LLM, timeout
     llm.top_p = 1.0
     assistant_message = llm.invoke(messages)
     assistant_text = str(assistant_message.content)
+    assistant_text = assistant_text.split("</think>", 1)[1].strip() if "</think>" in assistant_text else assistant_text # parse reasoning content
     print(assistant_text)
     correctness_scores = re.findall(r"[1-5]", assistant_text)
     if len(correctness_scores) >= 1:

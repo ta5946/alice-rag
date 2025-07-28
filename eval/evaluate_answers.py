@@ -7,9 +7,9 @@ from eval.metrics import *
 
 # evaluation configuration
 ANSWER_PATH = "eval/answers/extended_rag_qwen_answers.json"
-RESULT_PATH = "eval/results/gemini_judge/extended_rag_qwen_results.json"
-JUDGE = GEMINI
-TIMEOUT = 3
+RESULT_PATH = "eval/results/gemma_judge/extended_rag_qwen_results.json"
+JUDGE = LLM
+TIMEOUT = 0
 
 def calculate_results(judge, timeout):
     # load answers
@@ -19,6 +19,12 @@ def calculate_results(judge, timeout):
     # get metrics for each answer
     results = []
     for item in tqdm(qa_dataset, desc="Calculating metrics", unit="question"):
+        try:
+            judge_score = llm_judge_score(item["question"], item["correct_answer"], item["generated_answer"], judge, timeout)
+        except Exception as error:
+            print("calculate_results():", error)
+            judge_score = 1
+
         item_scores = {
             "id": item["id"],
             "time": item["time"],
@@ -26,7 +32,7 @@ def calculate_results(judge, timeout):
             "rouge_1_score": rouge_score(item["correct_answer"], item["generated_answer"], "rouge1"),
             "rouge_l_score": rouge_score(item["correct_answer"], item["generated_answer"]),
             "semantic_similarity": semantic_similarity_score(item["correct_answer"], item["generated_answer"]),
-            "llm_judge_score": llm_judge_score(item["question"], item["correct_answer"], item["generated_answer"], judge, timeout)
+            "llm_judge_score": judge_score
         }
         results.append(item_scores)
 
