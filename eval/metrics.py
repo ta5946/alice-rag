@@ -1,4 +1,5 @@
 import re
+import time
 import evaluate
 from sklearn.metrics.pairwise import cosine_similarity
 from langchain_core.messages import SystemMessage
@@ -21,7 +22,9 @@ def semantic_similarity_score(correct_answer, generated_answer):
     similarity_scores = cosine_similarity([embeddings[0]], [embeddings[1]])
     return float(similarity_scores[0][0])
 
-def llm_judge_score(question, correct_answer, generated_answer):
+def llm_judge_score(question, correct_answer, generated_answer, llm=LLM, timeout=0):
+    time.sleep(timeout) # rate limit workaround
+
     llm_judge_system_prompt = SystemMessage(
         content="""You are a chatbot response evaluator.
         You are provided with a question, correct answer and a chatbot generated answer.
@@ -39,12 +42,16 @@ def llm_judge_score(question, correct_answer, generated_answer):
     user_message = user_text.format(question=question, correct_answer=correct_answer, generated_answer=generated_answer)
     messages = [llm_judge_system_prompt, user_message]
 
-    assistant_message = LLM.invoke(messages, temperature=0)
-    correctness_scores = re.findall(r"[1-5]", assistant_message.content)
-    if len(correctness_scores) == 1:
+    llm.temperature = 0.0 # deterministic inference
+    llm.top_p = 1.0
+    assistant_message = llm.invoke(messages)
+    assistant_text = str(assistant_message.content)
+    print(assistant_text)
+    correctness_scores = re.findall(r"[1-5]", assistant_text)
+    if len(correctness_scores) >= 1:
         return int(correctness_scores[0])
     else:
-        raise ValueError("Invalid correctness score:", assistant_message.content)
+        raise ValueError("Invalid correctness score:", assistant_text)
 
 
 if __name__ == "__main__":

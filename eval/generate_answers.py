@@ -8,19 +8,19 @@ from src.chatbot.basic_rag_qa import rag_response
 
 
 async def base_llm(question):
-    assistant_message = LLM.invoke(question)
+    assistant_message = await LLM.ainvoke(question)
     return assistant_message.content
 
 async def base_gemini(question):
-    # await asyncio.sleep(6) # wait for N seconds to avoid rate limit
-    assistant_message = GEMINI.invoke(question)
+    await asyncio.sleep(3) # wait for N seconds to avoid rate limit
+    assistant_message = await GEMINI.ainvoke(question)
     return assistant_message.content
 
 
 # evaluation configuration
 DATASET_PATH = "eval/datasets/qa_dataset_gpt.json"
-ANSWER_GENERATOR = base_gemini
-ANSWER_PATH = "eval/answers/base_gemini_answers.json"
+ANSWER_GENERATOR = rag_response
+ANSWER_PATH = "eval/answers/extended_rag_qwen_answers.json"
 
 async def generate_answers():
     # load dataset

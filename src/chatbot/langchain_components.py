@@ -23,14 +23,14 @@ LLM = ChatOpenAI(
 
 GEMINI = ChatGoogleGenerativeAI(
     model=os.getenv("GEMINI_MODEL"),
-    api_key=os.getenv("GEMINI_API_KEY"),
+    api_key=os.getenv("GEMINI_API_KEY")
 ) # free api key with a rate limit
 
 EMBEDDINGS = HuggingFaceEmbeddings(
     model_name=os.getenv("HF_EMBEDDINGS_REPO"),
     cache_folder=os.getenv("HF_CACHE_DIR"),
     model_kwargs={"device": "cuda"}, # cpu or cuda
-    encode_kwargs = {"batch_size": 10}  # normalize_embeddings=False by default
+    encode_kwargs={"batch_size": 10}  # normalize_embeddings=False by default
 ) # normalization not needed if we use cosine similarity
 
 CHROMA_CLIENT = PersistentClient(path=os.getenv("CHROMA_DIR")) # can switch to chromadb.HttpClient()

@@ -1,14 +1,17 @@
 import os
 import json
 from tqdm import tqdm
+from src.chatbot.langchain_components import LLM, GEMINI
 from eval.metrics import *
 
 
 # evaluation configuration
-ANSWER_PATH = "eval/answers/rag_qwen_answers.json"
-RESULT_PATH = "eval/results/rag_qwen_results.json"
+ANSWER_PATH = "eval/answers/extended_rag_qwen_answers.json"
+RESULT_PATH = "eval/results/gemini_judge/extended_rag_qwen_results.json"
+JUDGE = GEMINI
+TIMEOUT = 3
 
-def calculate_results():
+def calculate_results(judge, timeout):
     # load answers
     with open(ANSWER_PATH, "r") as answer_file:
         qa_dataset = json.load(answer_file)
@@ -23,7 +26,7 @@ def calculate_results():
             "rouge_1_score": rouge_score(item["correct_answer"], item["generated_answer"], "rouge1"),
             "rouge_l_score": rouge_score(item["correct_answer"], item["generated_answer"]),
             "semantic_similarity": semantic_similarity_score(item["correct_answer"], item["generated_answer"]),
-            "llm_judge_score": llm_judge_score(item["question"], item["correct_answer"], item["generated_answer"])
+            "llm_judge_score": llm_judge_score(item["question"], item["correct_answer"], item["generated_answer"], judge, timeout)
         }
         results.append(item_scores)
 
@@ -48,4 +51,4 @@ def calculate_results():
 
 
 if __name__ == "__main__":
-    calculate_results()
+    calculate_results(JUDGE, TIMEOUT)

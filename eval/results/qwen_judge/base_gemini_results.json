@@ -96,7 +96,7 @@
         "rouge_1_score": 0.05291723202170964,
         "rouge_l_score": 0.03934871099050204,
         "semantic_similarity": 0.7388739362295651,
-        "llm_judge_score": 4
+        "llm_judge_score": 3
     },
     {
         "id": 23,
@@ -231,6 +231,6 @@
         "rouge_1_score": 0.05750022574502826,
         "rouge_l_score": 0.03798712348240891,
         "semantic_similarity": 0.7365767483330586,
-        "llm_judge_score": 2.76
+        "llm_judge_score": 2.72
     }
 ]

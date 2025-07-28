@@ -186,16 +186,59 @@ First we evaluated 3 different models on the expert labeled question-answer data
 
 Current results indicate that RAG pipeline introduces **new information**, that was not present in the general pretraining:
 
-| Chatbot model       | BLEU score | ROUGE-L score | Semantic similarity | LLM judge score | Inference time (s / question) |
-|---------------------|------------|---------------|---------------------|-----------------|-------------------------------|
-| Qwen2.5-7B-Instruct | 0.0100     | 0.0599        | 0.734               | 2.68            | 16.6                          |
-| Gemini-2.5-Flash    | 0.00610    | 0.0380        | 0.737               | 2.76            | 19.1                          |
-| Qwen-RAG            | 0.0701     | 0.159         | 0.797               | 3.16            | 14.7                          |
+| **Chatbot model**   | **BLEU score** | **ROUGE-L score** | **Semantic similarity** | **LLM judge score** | **Inference time (s / question)** |
+|---------------------|----------------|-------------------|-------------------------|---------------------|-----------------------------------|
+| Qwen2.5-7B-Instruct | 0.0100         | 0.0599            | 0.734                   | 2.80                | 16.6                              |
+| Gemini-2.5-Flash    | 0.0061         | 0.0380            | 0.737                   | 2.72                | 19.1                              |
+| Qwen-RAG            | 0.0701         | 0.1594            | 0.797                   | 3.16                | 14.7                              |
+| Qwen-Extended-RAG   | 0.0664         | 0.1575            | 0.798                   | 3.44                | 44.4                              |
 
 This table _should be updated_ with:
 - More expert questions,
 - More models,
 - Different RAG parameters (configurations).
+
+### Initial evaluation
+
+For the first iteration of evaluation we used 3 similarity metrics and 2 different judges.
+Each chatbot model generated only one response to each question in the dataset and the generated answers were compared to correct ones.
+Extended RAG represents a configuration focused on high recall and no time constraints.
+
+1. BLEU score comparison:
+![BLEU score comparison](/img/plots/qwen_judge/bleu_score_comparison.png)
+
+2. ROUGE-L score comparison:
+![ROUGE-L score comparison](/img/plots/qwen_judge/rouge_l_score_comparison.png)
+
+3. Semantic similarity comparison:
+![Semantic similarity comparison](/img/plots/qwen_judge/semantic_similarity_comparison.png)
+
+4. Qwen-as-judge comparison:
+![Qwen-as-Judge comparison](/img/plots/qwen_judge/llm_judge_score_comparison.png)
+
+5. Gemini-as-judge comparison:
+![Gemini-as-Judge comparison](/img/plots/gemini_judge/llm_judge_score_comparison.png)
+
+6. Average response time comparison:
+![Average_response time comparison](/img/plots/qwen_judge/time_comparison.png)
+
+#### Findings:
+- BLEU is the least relevant metric for our task,
+- A single answer (sample with `temperature = 0.7`) is not reliable enough,
+- Google Gemini API does not guarantee deterministic results (unfit for judge),
+- Gemini-2.5-Flash has a hard limit of 250 requests per day (Flash-Lite has 1000)
+- RAG parameters impact both the results and inference time.
+
+#### Propositions:
+- Focus on ROUGE-L, semantic similarity and LLM judge score.
+- Set a latency requirement (e.g. 30 seconds per question),
+- Find a capable open source LLM judge,
+- Sample `n >= 5` answers to increase the evaluation reliability,
+- Visualize the results with a **box plot** (instead of bar chart).
+
+Sources:
+- [How to get consistent results when using gemini api?](https://discuss.ai.google.dev/t/how-to-get-consistent-results-when-using-gemini-api/60826)
+- [Is a Zero Temperature Deterministic?](https://medium.com/google-cloud/is-a-zero-temperature-deterministic-c4a7faef4d20)
 
 
 ## Knowledge base
