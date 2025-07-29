@@ -7,9 +7,9 @@ from eval.metrics import *
 
 # evaluation configuration
 ANSWER_PATH = "eval/answers/extended_rag_qwen_answers.json"
-RESULT_PATH = "eval/results/gemma_judge/extended_rag_qwen_results.json"
-JUDGE = LLM
-TIMEOUT = 0
+RESULT_PATH = "eval/results/gemini_lite_judge/extended_rag_qwen_results.json"
+JUDGE = GEMINI
+TIMEOUT = 3
 
 def calculate_results(judge, timeout):
     # load answers

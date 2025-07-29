@@ -186,12 +186,12 @@ First we evaluated 3 different models on the expert labeled question-answer data
 
 Current results indicate that RAG pipeline introduces **new information**, that was not present in the general pretraining:
 
-| **Chatbot model**   | **BLEU score** | **ROUGE-L score** | **Semantic similarity** | **LLM judge score** | **Inference time (s / question)** |
-|---------------------|----------------|-------------------|-------------------------|---------------------|-----------------------------------|
-| Qwen2.5-7B-Instruct | 0.0100         | 0.0599            | 0.734                   | 2.80                | 16.6                              |
-| Gemini-2.5-Flash    | 0.0061         | 0.0380            | 0.737                   | 2.72                | 19.1                              |
-| Qwen-RAG            | 0.0701         | 0.1594            | 0.797                   | 3.16                | 14.7                              |
-| Qwen-Extended-RAG   | 0.0664         | 0.1575            | 0.798                   | 3.44                | 44.4                              |
+| **Chatbot model**   | **BLEU score** | **ROUGE-L score** | **Semantic similarity** | **Qwen judge score** | **Gemini judge score** | **Inference time (s / question)** |
+|---------------------|----------------|-------------------|-------------------------|----------------------|------------------------|-----------------------------------|
+| Qwen2.5-7B-Instruct | 0.010          | 0.060             | 0.734                   | 2.80                 | 1.44                   | 16.6                              |
+| Gemini-2.5-Flash    | 0.006          | 0.038             | 0.737                   | 2.72                 | 2.52                   | 19.1                              |
+| Qwen-RAG            | 0.070          | 0.159             | 0.797                   | 3.16                 | 3.12                   | 14.7                              |
+| Qwen-Extended-RAG   | 0.066          | 0.158             | 0.798                   | 3.44                 | 3.88                   | 44.4                              |
 
 This table _should be updated_ with:
 - More expert questions,
@@ -239,6 +239,24 @@ Extended RAG represents a configuration focused on high recall and no time const
 Sources:
 - [How to get consistent results when using gemini api?](https://discuss.ai.google.dev/t/how-to-get-consistent-results-when-using-gemini-api/60826)
 - [Is a Zero Temperature Deterministic?](https://medium.com/google-cloud/is-a-zero-temperature-deterministic-c4a7faef4d20)
+
+### Judge evaluation
+
+**Gemini-2.5-Flash** is the most capable free LLM, but it has a request limit.
+Idea: _Find the most similar open source judge by calculating correlation metrics based on a vector of answer scores._
+
+| **Rank** | **Judge model**            | **Pearson** | **Spearman** | **RMSE** |
+|----------|----------------------------|-------------|--------------|----------|
+| 1        | Gemini-2.5-Flash-Lite      | 0.766       | 0.768        | 0.684    |
+| 2        | Qwen3-8B (reasoning)       | 0.633       | 0.643        | 0.856    |
+| 3        | Gemma-2-9b-it              | 0.558       | 0.570        | 0.940    |
+| 4        | Mistral-7B-Instruct-v0.3   | 0.546       | 0.553        | 0.953    |
+| 5        | Qwen2.5-7B-Instruct        | 0.489       | 0.499        | 1.011    |
+| 6        | Meta-Llama-3.1-8B-Instruct | 0.315       | 0.298        | 1.171    |
+
+Findings: 
+- Qwen3-8B is the most reliable reasoning local LLM judge,
+- Gemma-2-9b-it is the best non-reasoning (efficient) judge.
 
 
 ## Knowledge base
