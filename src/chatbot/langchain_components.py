@@ -18,12 +18,14 @@ load_dotenv()
 LLM = ChatOpenAI(
     model=os.getenv("HF_LLM_REPO").split("/")[1].split("-GGUF")[0],
     base_url=os.getenv("LLM_BASE_URL"),
-    api_key=os.getenv("LLM_API_KEY")
+    api_key=os.getenv("LLM_API_KEY"),
+    max_tokens=int(os.getenv("LLM_MAX_TOKENS"))
 ) # v1 endpoint with no authentication for now
 
 GEMINI = ChatGoogleGenerativeAI(
     model=os.getenv("GEMINI_MODEL"),
-    api_key=os.getenv("GEMINI_API_KEY")
+    api_key=os.getenv("GEMINI_API_KEY"),
+    max_tokens=int(os.getenv("LLM_MAX_TOKENS"))
 ) # free api key with a rate limit
 
 EMBEDDINGS = HuggingFaceEmbeddings(
