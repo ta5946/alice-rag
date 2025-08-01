@@ -12,6 +12,7 @@ services:
       --n-gpu-layers ${N_GPU_LAYERS}
       --no-kv-offload
       --ctx-size ${CTX_LENGTH}
+      --n-predict ${LLM_MAX_TOKENS}
       --host 0.0.0.0
     deploy:
       resources:

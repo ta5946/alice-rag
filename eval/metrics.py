@@ -46,7 +46,8 @@ def llm_judge_score(question, correct_answer, generated_answer, llm=LLM, timeout
     llm.top_p = 1.0
     assistant_message = llm.invoke(messages)
     assistant_text = str(assistant_message.content)
-    assistant_text = assistant_text.split("</think>", 1)[1].strip() if "</think>" in assistant_text else assistant_text # parse reasoning content
+    assistant_text = assistant_text.split("</think>", 1)[1] if "</think>" in assistant_text else assistant_text # parse reasoning content
+    assistant_text = assistant_text.strip() # remove whitespace
     print(assistant_text)
     correctness_scores = re.findall(r"[1-5]", assistant_text)
     if len(correctness_scores) >= 1:
