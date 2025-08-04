@@ -7,8 +7,8 @@ from eval.metrics import *
 
 
 # evaluation configuration
-ANSWER_PATH = "eval/answers/5_shot/base_gemini_answers_2000.json"
-RESULT_PATH = "eval/results/5_shot/gemma_judge/base_gemini_results_2000.json"
+ANSWER_PATH = "eval/answers/5_sample/base_gemini_answers_2000.json"
+RESULT_PATH = "eval/results/5_sample/gemma_judge/base_gemini_results_2000.json"
 JUDGE = LLM
 TIMEOUT = 0
 

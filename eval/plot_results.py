@@ -2,8 +2,8 @@ import os
 import json
 import matplotlib.pyplot as plt
 
-RESULT_PATH = "eval/results/5_shot/gemma_judge"
-PLOT_PATH = "img/plots/5_shot/gemma_judge"
+RESULT_PATH = "eval/results/5_sample/gemma_judge"
+PLOT_PATH = "img/plots/5_sample/gemma_judge"
 
 
 # plot configuration

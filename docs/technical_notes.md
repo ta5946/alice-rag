@@ -105,6 +105,14 @@ The current retrieval parameters are:
 Compact language models do not perform better when flooded with context, so the number of chunks is limited to 5.
 When using a more capable generative model (LLM), the parameters can be increased within the limits of reasonable context length (32k tokens).
 
+### Search query
+
+Before invoking the vector database, the LLM takes in the conversation history and user message to **generate a search query**.
+The keyword based search proved to be less effective than using sentences or questions.
+We also try to **reduce noise** by avoiding frequent terms, such as "O2", "simulation", "o2-sim", "documentation", "ALICE".
+
+> For more details take a look at [this conversation](./chats/search_query_issue.md) about the search query generation issue.
+
 
 ## RAG pipeline
 
@@ -205,22 +213,22 @@ Each chatbot model generated only one response to each question in the dataset a
 Extended RAG represents a configuration focused on high recall and no time constraints.
 
 1. BLEU score comparison:
-![BLEU score comparison](/img/plots/1_shot/qwen_judge/bleu_score_comparison.png)
+![BLEU score comparison](/img/plots/1_sample/qwen_judge/bleu_score_comparison.png)
 
 2. ROUGE-L score comparison:
-![ROUGE-L score comparison](/img/plots/1_shot/qwen_judge/rouge_l_score_comparison.png)
+![ROUGE-L score comparison](/img/plots/1_sample/qwen_judge/rouge_l_score_comparison.png)
 
 3. Semantic similarity comparison:
-![Semantic similarity comparison](/img/plots/1_shot/qwen_judge/semantic_similarity_comparison.png)
+![Semantic similarity comparison](/img/plots/1_sample/qwen_judge/semantic_similarity_comparison.png)
 
 4. Qwen-as-judge comparison:
-![Qwen-as-Judge comparison](/img/plots/1_shot/qwen_judge/llm_judge_score_comparison.png)
+![Qwen-as-Judge comparison](/img/plots/1_sample/qwen_judge/llm_judge_score_comparison.png)
 
 5. Gemini-as-judge comparison:
-![Gemini-as-Judge comparison](/img/plots/1_shot/gemini_judge/llm_judge_score_comparison.png)
+![Gemini-as-Judge comparison](/img/plots/1_sample/gemini_judge/llm_judge_score_comparison.png)
 
 6. Average response time comparison:
-![Average_response time comparison](/img/plots/1_shot/qwen_judge/time_comparison.png)
+![Average_response time comparison](/img/plots/1_sample/qwen_judge/time_comparison.png)
 
 #### Findings:
 - BLEU is the least relevant metric for our task,
@@ -282,7 +290,17 @@ The extracted knowledge / qa pairs are stored in the file `eval/datasets/qa_data
 
 ## TODOs and improvements
 
-- Enable LLM reasoning (Qwen3?)
 - _Scrape Jira issues from O2 (filters general, production request)_
-- Implement the environment variable collection and script generating capability
-- Chatbot in Mattermost channel could tell the user to submit a Jira ticket
+- **Fix broken chatbot citations**
+
+### Code generation
+- https://aliceo2group.github.io/simulation/docs/o2dpgworkflow/anchored.html
+- Prototype script runner
+- Script generation chatbot state
+- Variable collection
+- Script correctness (static and dynamic)
+
+### Question answering
+- More question-answer pairs
+- Repeat question extraction process
+- Repeat chatbot evaluation (Mistral and other models)

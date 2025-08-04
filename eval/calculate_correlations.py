@@ -3,7 +3,7 @@ import json
 from sklearn.metrics import mean_squared_error
 from scipy.stats import zscore, pearsonr, spearmanr
 
-RESULTS_DIR = "eval/results/1_shot"
+RESULTS_DIR = "eval/results/1_sample"
 
 
 if __name__ == "__main__":

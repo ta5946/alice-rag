@@ -11,10 +11,10 @@ from src.chatbot.langchain_components import LLM, COMPRESSION_RETRIEVER, TRACING
 
 PROMPT_CATEGORY_MAP = {
     1: "General question",
-    2: "Requires context"
-    # TODO add more categories as chatbot states
+    2: "Requires context",
+    3: "Submit ticket",
+    4: "Generate script"
 }
-
 
 async def stream_response(messages, mattermost_context, update_interval=10):
     await async_update_post(mattermost_context, "🤖 _Generating response..._")
@@ -54,21 +54,22 @@ async def classify_prompt(prompt, message_history, mattermost_context):
         return 1
     elif "2" in assistant_message.content:
         return 2
+    elif "3" in assistant_message.content:
+        return 3
     else:
         raise ValueError("Invalid prompt classification:", assistant_message.content)
 
 async def basic_response(prompt, message_history, mattermost_context):
     system_message = prompts.basic_response_system_message
-    user_text = PromptTemplate.from_template("""(
-    CONVERSATION HISTORY:
-    {conversation_history}
-    )
-    
-    QUESTION:
-    {question}
-    
-    ANSWER:""")
-    user_message = HumanMessage(content=user_text.format(conversation_history=messages_to_string(message_history), question=prompt))
+    user_message = HumanMessage(content=prompts.basic_prompt_template.format(conversation_history=messages_to_string(message_history), question=prompt))
+    messages = [system_message, user_message]
+
+    assistant_text = await stream_response(messages, mattermost_context)
+    return assistant_text
+
+async def ticket_response(prompt, message_history, mattermost_context):
+    system_message = prompts.ticket_response_system_message
+    user_message = HumanMessage(content=prompts.basic_prompt_template.format(conversation_history=messages_to_string(message_history), question=prompt))
     messages = [system_message, user_message]
 
     assistant_text = await stream_response(messages, mattermost_context)
@@ -98,7 +99,7 @@ async def rag_response(prompt, message_history=None, mattermost_context=None):
     print("RETRIEVED DOCUMENTS:")
     retrieved_docs = await COMPRESSION_RETRIEVER.ainvoke(search_query, config={"callbacks": [TRACING_HANDLER]})
     if isinstance(retrieved_docs, list):
-        retrieved_docs = [Document(page_content=doc.page_content, metadata=doc.metadata) for doc in retrieved_docs]
+        retrieved_docs = [Document(page_content=doc.page_content, metadata={"link": doc.metadata.get("link")}) for doc in retrieved_docs]
     if len(retrieved_docs) == 0:
         retrieved_docs = "No relevant documents were retrieved."
     print(retrieved_docs)
@@ -124,6 +125,14 @@ async def rag_response(prompt, message_history=None, mattermost_context=None):
     assistant_text = await stream_response(messages, mattermost_context)
     return assistant_text
 
+# TODO script_response()
+
+
+RESPONSE_MAP = {
+    1: basic_response,
+    2: rag_response,
+    3: ticket_response,
+}
 
 async def qa_pipeline(question, message_history=None, feedback=True, mattermost_context=None):
     answer = ""
@@ -137,11 +146,7 @@ async def qa_pipeline(question, message_history=None, feedback=True, mattermost_
             question_category = await classify_prompt(question, message_history, mattermost_context)
             print("QUESTION CLASSIFICATION:", PROMPT_CATEGORY_MAP[question_category])
 
-            if question_category == 1:
-                answer = await basic_response(question, message_history, mattermost_context)
-            elif question_category == 2:
-                answer = await rag_response(question, message_history, mattermost_context)
-
+            answer = await RESPONSE_MAP[question_category](question, message_history, mattermost_context)
             tags = [mattermost_context.get("post_id")] if mattermost_context else None
             qa_trace.update_trace(
                 output={"answer": answer},

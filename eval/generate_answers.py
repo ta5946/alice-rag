@@ -21,7 +21,7 @@ async def base_gemini(question):
 # evaluation configuration
 DATASET_PATH = "eval/datasets/qa_dataset_gpt.json"
 ANSWER_GENERATOR = base_gemini
-ANSWER_PATH = "eval/answers/5_shot/base_gemini_answers_2000.json"
+ANSWER_PATH = "eval/answers/5_sample/base_gemini_answers_2000.json"
 N_ANSWERS = 5
 
 async def generate_answers():

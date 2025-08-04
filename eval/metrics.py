@@ -15,7 +15,7 @@ def bleu_score(correct_answer, generated_answer):
 def rouge_score(correct_answer, generated_answer, rouge_type="rougeL"):
     evaluator = evaluate.load("rouge")
     rouge_scores = evaluator.compute(predictions=[generated_answer], references=[correct_answer])
-    return float(rouge_scores[rouge_type]) # TODO try other rouge types
+    return float(rouge_scores[rouge_type])
 
 def semantic_similarity_score(correct_answer, generated_answer):
     embeddings = EMBEDDINGS.embed_documents([generated_answer, correct_answer])
