@@ -18,6 +18,11 @@ resources:
               "doc/**/*.md", "doc/**/*.sh"]
     branch: dev
 
+  - type: git
+    url: https://github.com/ta5946/alice-rag
+    include: ["data/knowledge_base/**/*.pdf", "data/knowledge_base/**/*.md"]
+    branch: master
+
   # focus on simulations for now
 #  - type: git
 #    url: https://github.com/AliceO2Group/analysis-framework
