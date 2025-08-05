@@ -288,6 +288,59 @@ The process is demonstrated in [this chat](https://chatgpt.com/share/687e3d47-3f
 The extracted knowledge / qa pairs are stored in the file `eval/datasets/qa_dataset_gpt.json`.
 
 
+## Code generation
+
+### Prototype script
+
+Below is a minimal prototype of anchoredMC simulation script described here: https://aliceo2group.github.io/simulation/docs/o2dpgworkflow/anchored.html
+For development purposes we only took a subset of all environment variables.
+
+```bash
+#!/usr/bin/env bash
+
+# Required variables
+export ALIEN_JDL_LPMRUNNUMBER=545312
+export ALIEN_JDL_LPMANCHORPASSNAME=apass4
+export ALIEN_JDL_LPMINTERACTIONTYPE=Pb-Pb
+export SPLITID=25
+export NTIMEFRAMES=3
+
+# Optional variables
+export ALIEN_JDL_CPULIMIT=12
+export ALIEN_JDL_SIMENGINE=TGeant4
+export ALIEN_JDL_ANCHOR_SIM_OPTIONS="-gen pythia8 --trigger-external"
+export NSIGEVENTS=8000
+export CYCLE=1
+
+# Start the workflow
+${O2DPG_ROOT}/MC/run/ANCHOR/anchorMC.sh
+```
+
+| Variable                       | Type     | Default | Values                        | Description                                                                                                  |
+|--------------------------------|----------|---------|-------------------------------|--------------------------------------------------------------------------------------------------------------|
+| **REQUIRED VARIABLES**         |
+| `ALIEN_JDL_LPMRUNNUMBER`       | Required | -       | Positive integer              | The ALICE run number to which this MC job anchors, defining the experimental conditions and detector setup   |
+| `ALIEN_JDL_LPMANCHORPASSNAME`  | Required | -       | String                        | The reconstruction pass/cycle identifier (e.g., apass4) that determines which reconstruction settings to use |
+| `ALIEN_JDL_LPMINTERACTIONTYPE` | Required | -       | ["pp", "Pb-Pb"]               | The collision system type, either proton-proton (pp) or lead-lead (Pb-Pb) interactions                       |
+| `SPLITID`                      | Required | -       | Positive integer <= 100       | Identifies which temporal split within the run to simulate, corresponding to specific timestamps             |
+| `NTIMEFRAMES`                  | Required | -       | Positive integer              | Number of consecutive timeframes to generate for this MC job, defining the data volume                       |
+| **OPTIONAL VARIABLES**         |
+| `ALIEN_JDL_CPULIMIT`           | Optional | 8       | Positive integer              | Expected CPU time limit in hours that the workflow runner will assume for resource allocation                |
+| `ALIEN_JDL_SIMENGINE`          | Optional | TGeant4 | ["TGeant3", "TGeant4", "VMC"] | Monte Carlo particle transport engine used for simulating detector interactions                              |
+| `ALIEN_JDL_ANCHOR_SIM_OPTIONS` | Optional | ""      | String flags                  | Additional simulation parameters and event generator configuration (e.g., "-gen pythia8pp")                  |
+| `NSIGEVENTS`                   | Optional | 10000   | Positive integer              | Maximum number of signal events per timeframe, actual count may be lower based on interaction rates          |
+| `CYCLE`                        | Optional | 0       | Non-negative integer          | Cycle number within the production to simulate, allowing multiple iterations over the same time period       |
+
+This subset covers the core anchoring parameters, job splitting configuration, and key customization options that would be most relevant for a demonstration.
+
+### Script evaluation
+
+The evaluation process works in 3 steps, from low to high level checking:
+1. The **required variables** are collected from the generated script (static analysis). The missing optional variables are set to default values.
+2. The environment **variable values** are checked against the expected values (static validation).
+3. The mock `anchoredMC.sh` **script is run**. The parameters have to be set correctly (just like real simulation) and the script has to run without errors (dynamic validation).
+
+
 ## TODOs and improvements
 
 - _Scrape Jira issues from O2 (filters general, production request)_
