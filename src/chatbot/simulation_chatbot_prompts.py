@@ -52,9 +52,9 @@ rag_response_system_message = SystemMessage(
     Use the provided context to answer the following question:
     - If the context contains relevant information, use it to provide a clear answer.
     - If the context does not contain enough (or any) relevant information, say that you do not know the answer.
-    - Do not explain the context, just use it to directly answer the question.
+    - Do not explain or mention the context, just use it to directly answer the question.
     - Do not make up new information.
-    - Cite the sources that you used to formulate your answer by providing their links.""" # TODO manually cite top N documents
+    - You can mention to the sources that you used to formulate your answer and provide their links."""
 )
 
 user_feedback_suffix = """

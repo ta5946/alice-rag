@@ -16,7 +16,7 @@ PROMPT_CATEGORY_MAP = {
     4: "Generate script"
 }
 
-async def stream_response(messages, mattermost_context, update_interval=10):
+async def stream_response(messages, mattermost_context, update_interval=10, links=None):
     await async_update_post(mattermost_context, "🤖 _Generating response..._")
 
     print("CHATBOT ANSWER:")
@@ -29,8 +29,16 @@ async def stream_response(messages, mattermost_context, update_interval=10):
         if token_count % update_interval == 0:
             await async_update_post(mattermost_context, assistant_text)
 
-    print()
-    await async_update_post(mattermost_context, assistant_text + prompts.user_feedback_suffix)
+    # manually cite sources
+    if links:
+        sources_suffix = "\n\n**Sources:**\n"
+        sources_suffix += "\n".join(f"{i + 1}. {link}" for i, link in enumerate(links))
+        print(sources_suffix)
+        assistant_text += sources_suffix
+    else:
+        print()
+
+    await async_update_post(mattermost_context, assistant_text + prompts.user_feedback_suffix) # ask for feedback
     return assistant_text
 
 async def classify_prompt(prompt, message_history, mattermost_context):
@@ -98,8 +106,10 @@ async def rag_response(prompt, message_history=None, mattermost_context=None):
 
     print("RETRIEVED DOCUMENTS:")
     retrieved_docs = await COMPRESSION_RETRIEVER.ainvoke(search_query, config={"callbacks": [TRACING_HANDLER]})
+    links = None
     if isinstance(retrieved_docs, list):
         retrieved_docs = [Document(page_content=doc.page_content, metadata={"link": doc.metadata.get("link")}) for doc in retrieved_docs]
+        links = [doc.metadata.get("link") for doc in retrieved_docs]
     if len(retrieved_docs) == 0:
         retrieved_docs = "No relevant documents were retrieved."
     print(retrieved_docs)
@@ -117,12 +127,10 @@ async def rag_response(prompt, message_history=None, mattermost_context=None):
     {context}
     
     ANSWER:""")
-    user_message = HumanMessage(
-        content=user_text.format(conversation_history=messages_to_string(message_history), question=prompt, context=retrieved_docs)
-    )
+    user_message = HumanMessage(content=user_text.format(conversation_history=messages_to_string(message_history), question=prompt, context=retrieved_docs))
     messages = [system_message, user_message]
 
-    assistant_text = await stream_response(messages, mattermost_context)
+    assistant_text = await stream_response(messages, mattermost_context, links=links)
     return assistant_text
 
 # TODO script_response()
