@@ -268,6 +268,24 @@ _Find the most similar open source judge by calculating correlation metrics base
 - Qwen3-8B is the most reliable reasoning local LLM judge,
 - Gemma-2-9b-it is the best non-reasoning (efficient) judge.
 
+### Second evaluation
+
+For the second iteration of chatbot evaluation we sampled `n = 5` answers and used Gemma-2-9b-it as judge.
+The plots contain an error bar of +- 1 standard deviation calculated as mean standard deviation across all questions (per metric).
+We also defined low, medium and high recall RAG configurations to observe the performance to response time trade-off.
+
+1. ROUGE-L score comparison:
+![ROUGE-L score comparison](/img/plots/5_sample/gemma_judge/rouge_l_score_comparison.png)
+
+2. Semantic similarity comparison:
+![Semantic similarity comparison](/img/plots/5_sample/gemma_judge/semantic_similarity_comparison.png)
+
+3. Gemma-as-judge comparison:
+![Gemma-as-Judge comparison](/img/plots/5_sample/gemma_judge/llm_judge_score_comparison.png)
+
+4. Average response time comparison:
+![Average_response time comparison](/img/plots/5_sample/gemma_judge/time_comparison.png)
+
 
 ## Knowledge base
 
@@ -292,7 +310,7 @@ The extracted knowledge / qa pairs are stored in the file `eval/datasets/qa_data
 
 ### Prototype script
 
-Below is a minimal prototype of anchoredMC simulation script described here: https://aliceo2group.github.io/simulation/docs/o2dpgworkflow/anchored.html
+Below is a minimal prototype of anchoredMC simulation script described here: https://aliceo2group.github.io/simulation/docs/o2dpgworkflow/anchored.html.
 For development purposes we only took a subset of all environment variables.
 
 ```bash
@@ -332,6 +350,15 @@ ${O2DPG_ROOT}/MC/run/ANCHOR/anchorMC.sh
 | `CYCLE`                        | Optional | 0       | Non-negative integer          | Cycle number within the production to simulate, allowing multiple iterations over the same time period       |
 
 This subset covers the core anchoring parameters, job splitting configuration, and key customization options that would be most relevant for a demonstration.
+The goal is to design a chatbot state that can generate such scripts in a multi-turn conversation with the user.
+One technique to achieve this is slot filling. Example workflow:
+```text
+Step 1: User says “Run it with fast mode.”
+Step 2: LLM infers B = fast, A = ?
+Step 3: LLM asks “Which environment would you like to run in? (e.g., production, staging)”
+Step 4: User replies “Production.”
+Step 5: LLM returns final:
+```
 
 ### Script evaluation
 
@@ -344,16 +371,14 @@ The evaluation process works in 3 steps, from low to high level checking:
 ## TODOs and improvements
 
 - _Scrape Jira issues from O2 (filters general, production request)_
-- **Fix broken chatbot citations**
+- Label Mattermost messages as either questions or bug reports
+- _Cluster Mattermost questions by similarity / topic_
 
 ### Code generation
-- https://aliceo2group.github.io/simulation/docs/o2dpgworkflow/anchored.html
-- Prototype script runner
 - Script generation chatbot state
-- Variable collection
-- Script correctness (static and dynamic)
+- Environment variable collection
 
 ### Question answering
 - More question-answer pairs
-- Repeat question extraction process
+- Repeat answer extraction process (with GPT)
 - Repeat chatbot evaluation (Mistral and other models)
