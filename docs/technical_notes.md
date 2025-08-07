@@ -334,20 +334,20 @@ export CYCLE=1
 ${O2DPG_ROOT}/MC/run/ANCHOR/anchorMC.sh
 ```
 
-| Variable                       | Type     | Default | Values                        | Description                                                                                                  |
-|--------------------------------|----------|---------|-------------------------------|--------------------------------------------------------------------------------------------------------------|
+| Variable                       | Type     | Default | Values                        | Description                                                                                                          |
+|--------------------------------|----------|---------|-------------------------------|----------------------------------------------------------------------------------------------------------------------|
 | **REQUIRED VARIABLES**         |
-| `ALIEN_JDL_LPMRUNNUMBER`       | Required | -       | Positive integer              | The ALICE run number to which this MC job anchors, defining the experimental conditions and detector setup   |
-| `ALIEN_JDL_LPMANCHORPASSNAME`  | Required | -       | String                        | The reconstruction pass/cycle identifier (e.g., apass4) that determines which reconstruction settings to use |
-| `ALIEN_JDL_LPMINTERACTIONTYPE` | Required | -       | ["pp", "Pb-Pb"]               | The collision system type, either proton-proton (pp) or lead-lead (Pb-Pb) interactions                       |
-| `SPLITID`                      | Required | -       | Positive integer <= 100       | Identifies which temporal split within the run to simulate, corresponding to specific timestamps             |
-| `NTIMEFRAMES`                  | Required | -       | Positive integer              | Number of consecutive timeframes to generate for this MC job, defining the data volume                       |
+| `ALIEN_JDL_LPMRUNNUMBER`       | Required | -       | Positive integer              | The ALICE run number to which this MC job anchors, defining the experimental conditions and detector setup           |
+| `ALIEN_JDL_LPMANCHORPASSNAME`  | Required | -       | Any string                    | The reconstruction pass/cycle identifier (for example "apass4") that determines which reconstruction settings to use |
+| `ALIEN_JDL_LPMINTERACTIONTYPE` | Required | -       | ["pp", "Pb-Pb"]               | The collision system type, either proton-proton (pp) or lead-lead (Pb-Pb) interactions                               |
+| `SPLITID`                      | Required | -       | Positive integer <= 100       | Identifies which temporal split within the run to simulate, corresponding to specific timestamps                     |
+| `NTIMEFRAMES`                  | Required | -       | Positive integer              | Number of consecutive timeframes to generate for this MC job, defining the data volume                               |
 | **OPTIONAL VARIABLES**         |
-| `ALIEN_JDL_CPULIMIT`           | Optional | 8       | Positive integer              | Expected CPU time limit in hours that the workflow runner will assume for resource allocation                |
-| `ALIEN_JDL_SIMENGINE`          | Optional | TGeant4 | ["TGeant3", "TGeant4", "VMC"] | Monte Carlo particle transport engine used for simulating detector interactions                              |
-| `ALIEN_JDL_ANCHOR_SIM_OPTIONS` | Optional | ""      | String flags                  | Additional simulation parameters and event generator configuration (e.g., "-gen pythia8pp")                  |
-| `NSIGEVENTS`                   | Optional | 10000   | Positive integer              | Maximum number of signal events per timeframe, actual count may be lower based on interaction rates          |
-| `CYCLE`                        | Optional | 0       | Non-negative integer          | Cycle number within the production to simulate, allowing multiple iterations over the same time period       |
+| `ALIEN_JDL_CPULIMIT`           | Optional | 8       | Positive integer              | Expected CPU time limit in hours that the workflow runner will assume for resource allocation                        |
+| `ALIEN_JDL_SIMENGINE`          | Optional | TGeant4 | ["TGeant3", "TGeant4", "VMC"] | Monte Carlo particle transport engine used for simulating detector interactions                                      |
+| `ALIEN_JDL_ANCHOR_SIM_OPTIONS` | Optional | ""      | String flags                  | Additional simulation parameters and event generator configuration (for example "-gen pythia8pp")                    |
+| `NSIGEVENTS`                   | Optional | 10000   | Positive integer              | Maximum number of signal events per timeframe, actual count may be lower based on interaction rates                  |
+| `CYCLE`                        | Optional | 0       | Non-negative integer          | Cycle number within the production to simulate, allowing multiple iterations over the same time period               |
 
 This subset covers the core anchoring parameters, job splitting configuration, and key customization options that would be most relevant for a demonstration.
 The goal is to design a chatbot state that can generate such scripts in a multi-turn conversation with the user.

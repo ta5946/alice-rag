@@ -58,14 +58,10 @@ async def classify_prompt(prompt, message_history, mattermost_context):
     messages = [system_message, user_message]
 
     assistant_message = await LLM.ainvoke(messages, config={"callbacks": [TRACING_HANDLER]})
-    if "1" in assistant_message.content:
-        return 1
-    elif "2" in assistant_message.content:
-        return 2
-    elif "3" in assistant_message.content:
-        return 3
-    else:
-        raise ValueError("Invalid prompt classification:", assistant_message.content)
+    for state in PROMPT_CATEGORY_MAP.keys():
+        if str(state) in assistant_message.content:
+            return state
+    raise ValueError("Invalid prompt classification:", assistant_message.content)
 
 async def basic_response(prompt, message_history, mattermost_context):
     system_message = prompts.basic_response_system_message
@@ -133,13 +129,51 @@ async def rag_response(prompt, message_history=None, mattermost_context=None):
     assistant_text = await stream_response(messages, mattermost_context, links=links)
     return assistant_text
 
-# TODO script_response()
+
+async def check_variables(prompt, message_history, mattermost_context):
+    system_message = prompts.variable_checker_system_message
+    user_text = prompts.variable_prompt_template.format(conversation_history=messages_to_string(message_history), user_message=prompt, variable_definitions=prompts.prototype_variable_definitions)
+    messages = [system_message, user_text]
+
+    assistant_message = await LLM.ainvoke(messages, config={"callbacks": [TRACING_HANDLER]})
+    if "1" in assistant_message.content:
+        return True
+    else:
+        return False
+
+async def collect_variables(prompt, message_history, mattermost_context):
+    system_message = prompts.variable_collector_system_message
+    user_text = prompts.variable_prompt_template.format(conversation_history=messages_to_string(message_history), user_message=prompt, variable_definitions=prompts.prototype_variable_definitions)
+    messages = [system_message, user_text]
+
+    assistant_text = await stream_response(messages, mattermost_context)
+    return assistant_text
+
+async def generate_script(prompt, message_history, mattermost_context):
+    await async_update_post(mattermost_context, "💻 _Generating script..._")
+
+    system_message = prompts.script_generator_system_message
+    user_text = prompts.script_prompt_template.format(conversation_history=messages_to_string(message_history), user_message=prompt, script_template=prompts.prototype_script_template)
+    messages = [system_message, user_text]
+
+    assistant_message = await LLM.ainvoke(messages, config={"callbacks": [TRACING_HANDLER]})
+    assistant_text = assistant_message.content
+    await async_update_post(mattermost_context, assistant_text + prompts.user_feedback_suffix)
+    return assistant_text
+
+async def script_response(prompt, message_history, mattermost_context):
+    variables_provided = await check_variables(prompt, message_history, mattermost_context)
+    if variables_provided:
+        return await generate_script(prompt, message_history, mattermost_context)
+    else:
+        return await collect_variables(prompt, message_history, mattermost_context)
 
 
 RESPONSE_MAP = {
     1: basic_response,
     2: rag_response,
     3: ticket_response,
+    4: script_response,
 }
 
 async def qa_pipeline(question, message_history=None, feedback=True, mattermost_context=None):

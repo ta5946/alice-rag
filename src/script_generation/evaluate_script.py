@@ -3,7 +3,7 @@
 # evaluate_script.py
 # Validation stub for Anchored MC workflows
 # This script evaluates a shell script by parsing its environment variables, validating them, and simulating its execution
-# It returns a JSON object with a summary of variable checks and a list of detailed errors
+# It returns a JSON object with scores of variable checks and a list of detailed errors
 
 import os, sys, re, subprocess, tempfile, shutil, stat
 import json
@@ -35,8 +35,12 @@ def parse_exports(script_text):
 
 # Helper function to simulate script execution
 def can_run(script_text):
-    stub_src = os.path.join(os.getcwd(), "anchorMC.sh")
-    if not os.path.isfile(stub_src):
+    stub_paths = [
+        os.path.join(os.getcwd(), "src/script_generation/anchorMC.sh"),
+        os.path.join(os.getcwd(), "./anchorMC.sh"),
+    ]
+    stub_src = next((p for p in stub_paths if os.path.isfile(p)), None)
+    if stub_src is None:
         return 1, "Error: Required stub 'anchorMC.sh' not found."
 
     with tempfile.TemporaryDirectory() as d:
@@ -52,8 +56,7 @@ def can_run(script_text):
             f.write(wrapped_text)
         os.chmod(wrapper_path, stat.S_IRWXU)
 
-        result = subprocess.run(["bash", wrapper_path], cwd=d,
-                                stderr=subprocess.PIPE, text=True)
+        result = subprocess.run(["bash", wrapper_path], cwd=d, stderr=subprocess.PIPE, text=True)
         return result.returncode, result.stderr
 
 # Main function to evaluate the script
