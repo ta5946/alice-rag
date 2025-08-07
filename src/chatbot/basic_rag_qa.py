@@ -2,7 +2,6 @@
 
 import asyncio
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
-from langchain_core.prompts import PromptTemplate
 from langchain_core.documents import Document
 import src.chatbot.simulation_chatbot_prompts as prompts
 from src.chatbot.mattermost_utils import async_update_post
@@ -45,15 +44,7 @@ async def classify_prompt(prompt, message_history, mattermost_context):
     await async_update_post(mattermost_context, "🔍 _Analyzing question..._")
 
     system_message = prompts.classifier_system_message
-    user_text = PromptTemplate.from_template("""(
-    CONVERSATION HISTORY:
-    {conversation_history}
-    )
-    
-    QUESTION:
-    {question}
-    
-    CATEGORY:""") # TODO maybe summarize the conversation history to make it shorter
+    user_text = prompts.classifier_prompt_template # TODO maybe summarize the conversation history to make it shorter
     user_message = HumanMessage(content=user_text.format(conversation_history=messages_to_string(message_history), question=prompt))
     messages = [system_message, user_message]
 
@@ -84,15 +75,7 @@ async def rag_response(prompt, message_history=None, mattermost_context=None):
     message_history = message_history or prompts.default_message_history # evaluation script workaround
 
     system_message = prompts.querier_system_message
-    user_text = PromptTemplate.from_template("""(
-    CONVERSATION HISTORY:
-    {conversation_history}
-    )
-    
-    QUESTION:
-    {question}
-    
-    SEARCH QUERY:""")
+    user_text = prompts.querier_prompt_template
     user_message = HumanMessage(content=user_text.format(conversation_history=messages_to_string(message_history), question=prompt))
     messages = [system_message, user_message]
 
@@ -111,18 +94,7 @@ async def rag_response(prompt, message_history=None, mattermost_context=None):
     print(retrieved_docs)
 
     system_message = prompts.rag_response_system_message
-    user_text = PromptTemplate.from_template("""(
-    CONVERSATION HISTORY:
-    {conversation_history}
-    )
-    
-    QUESTION:
-    {question}
-    
-    CONTEXT:
-    {context}
-    
-    ANSWER:""")
+    user_text = prompts.rag_prompt_template
     user_message = HumanMessage(content=user_text.format(conversation_history=messages_to_string(message_history), question=prompt, context=retrieved_docs))
     messages = [system_message, user_message]
 

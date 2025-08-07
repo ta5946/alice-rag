@@ -1,19 +1,32 @@
 from langchain_core.messages import SystemMessage
 from langchain_core.prompts import PromptTemplate
 
+
 default_message_history = [
     SystemMessage(content="This is the start of a new conversation. There is no message history yet.")
 ]
+
 
 classifier_system_message = SystemMessage(
     content="""You are a question classifier.
     Your task is to classify the following user message into one of the categories:
     1. Very simple question or part of general conversation - can be answered without any additional context.
     2. Technical question or any inquiry about running ALICE O2 simulations - requires context from the internal documentation.
-    3. Bug report, issue or feature request related to ALICE O2 simulations - requires submitting a JIRA ticket.
+    3. Error, bug report, issue or feature request related to ALICE O2 simulations - requires submitting a JIRA ticket.
     4. Request for help with writing / running an anchored Monte Carlo simulation - requires anchorMC script generation.
     Respond only with the category number (1, 2, 3 or 4) and nothing else."""
 )
+
+classifier_prompt_template = PromptTemplate.from_template("""(
+    CONVERSATION HISTORY:
+    {conversation_history}
+    )
+    
+    QUESTION:
+    {question}
+    
+    CATEGORY:""")
+
 
 basic_response_system_message = SystemMessage(
     content="""You are a helpful and kind assistant."""
@@ -27,17 +40,14 @@ basic_prompt_template = PromptTemplate.from_template("""(
     QUESTION:
     {question}
     
-    ANSWER:"""
-)
+    ANSWER:""")
 
-ticket_response_system_message = SystemMessage(
-    content="""You are a ticket assistant.
-    Your task is to instruct the user to submit a JIRA ticket for a bug report or feature request related to ALICE O2 simulations.
-    Use the following guidelines:
-    ## JIRA bug tracking
-    - Bug reports or feature requests are followed up with tickets in our [JIRA system](https://alice.its.cern.ch/jira/projects/O2) (With simulation as component).
-    - Opening tickets is preferred over private email contact.""" # TODO tune prompt
-)
+user_feedback_suffix = """
+
+---
+
+_Help us improve the askALICE chatbot by providing your feedback. React to this message with 👍 if the answer was helpful or 👎 if it was not._"""
+
 
 querier_system_message = SystemMessage(
     content="""You are a search query generator.
@@ -48,6 +58,16 @@ querier_system_message = SystemMessage(
     Respond only with the query sentences and nothing else."""
 )
 
+querier_prompt_template = PromptTemplate.from_template("""(
+    CONVERSATION HISTORY:
+    {conversation_history}
+    )
+    
+    QUESTION:
+    {question}
+    
+    SEARCH QUERY:""")
+
 rag_response_system_message = SystemMessage(
     content="""You are a chatbot designed to assist users with O2 simulation documentation.
     Use the provided context to answer the following question:
@@ -55,33 +75,56 @@ rag_response_system_message = SystemMessage(
     - If the context does not contain enough (or any) relevant information, say that you do not know the answer.
     - Do not explain or mention the context, just use it to directly answer the question.
     - Do not make up new information.
-    - You can refer to the sources that you used to formulate your answer and provide their links."""
+    - You can mention the documents that you used to formulate your answer and provide their links."""
 )
 
-user_feedback_suffix = """
+rag_prompt_template = PromptTemplate.from_template("""(
+    CONVERSATION HISTORY:
+    {conversation_history}
+    )
+    
+    QUESTION:
+    {question}
+    
+    CONTEXT:
+    {context}
+    
+    ANSWER:""")
 
----
 
-_Help us improve the askALICE chatbot by providing your feedback. React to this message with 👍 if the answer was helpful or 👎 if it was not._"""
+ticket_response_system_message = SystemMessage(
+    content="""You are a ticket assistant.
+    Your task is to instruct the user to submit a JIRA ticket for a bug report or feature request related to ALICE O2 simulations.
+    Use the following guidelines:
+    ## JIRA bug tracking
+    - Bug reports or feature requests are followed up with tickets in our [JIRA system](https://alice.its.cern.ch/jira/projects/O2) (With simulation as component).
+    - Opening tickets is preferred over private email contact.""" # TODO tune prompt
+)
+
 
 variable_checker_system_message = SystemMessage(
     content="""You are an environment variable checker for anchored MC simulation.
-    You are provided with a table of variable definitions, conversation history and user message.
+    You are provided with a table of variable definitions and previous messages.
     Your task is to determine if:
     - The user provided all the required variables.
-    - The provided values are valid.
-    Return either 0 (if the check failed) or 1 (if the check passed)."""
+    - The values provided by the user are the right type / valid.
+    Return either 0 if the check failed, or 1 if the check passed and nothing else."""
 )
 
 variable_collector_system_message = SystemMessage(
     content="""You are an environment variable collector for anchored MC simulation.
-    You are provided with a table of variable definitions, conversation history and user message.
-    The variable check did not pass due to missing required variables or invalid values.
-    Your task is to ask the user to:
-    - Provide the missing required variables.
-    - Change invalid values.
-    Be specific abot the expected variables and value types.
-    If this is the start of a new conversation, walk the user through all the required and optional variables."""
+    You are provided with a table of variable definitions and previous messages.
+    The variable check failed meaning that:
+    - The user did not provide all the required variables.
+    - The values provided by the user are not the right type / invalid.
+    Your task is to ask the user to provide the missing required variables and change the invalid values.
+    Be specific about the expected variables and value types.
+    Do not generate the final bash script, just collect the variables.
+    
+    If this is the start of a new conversation:
+    - Tell the user that running an anchored MC simulation requires setting certain environment variables.
+    - Present the required variables from the table.
+    - Present the optional variables from the table."""
 )
 
 variable_prompt_template = PromptTemplate.from_template("""(
@@ -117,10 +160,12 @@ prototype_variable_definitions = """
 
 script_generator_system_message = SystemMessage(
     content="""You are a script generator for anchored MC simulation.
-    You are provided with a script template, conversation history and user message.
-    The variable check passed which indicates that all required variables are present in the conversation.
-    Your task is to fill the template with variable values provided by the user.
-    Return only the generated bash script and nothing else."""
+    You are provided with a script template and previous messages.
+    The variable check passed meaning that:
+    - The user provided all the required variables.
+    - The values provided by the user are the right type / valid.
+    Your task is to insert variable values provided by the user into the script template.
+    Return only a code block with the generated bash script and nothing else."""
 )
 
 script_prompt_template = PromptTemplate.from_template("""(
@@ -141,20 +186,20 @@ prototype_script_template = """```bash
 #!/usr/bin/env bash
 
 # === Required variables ===
-export ALIEN_JDL_LPMRUNNUMBER={LPMRUNNUMBER}
+export ALIEN_JDL_LPMRUNNUMBER={RUNNUMBER}
 export ALIEN_JDL_LPMANCHORPASSNAME={ANCHORPASSNAME}
 export ALIEN_JDL_LPMINTERACTIONTYPE={INTERACTIONTYPE}
 export SPLITID={SPLITID}
 export NTIMEFRAMES={NTIMEFRAMES}
 
 # === Optional variables ===
-# export ALIEN_JDL_CPULIMIT={CPULIMIT}
-# export ALIEN_JDL_SIMENGINE={SIMENGINE}
-# export ALIEN_JDL_ANCHOR_SIM_OPTIONS="{ANCHOR_SIM_OPTIONS}"
-# export NSIGEVENTS={NSIGEVENTS}
-# export CYCLE={CYCLE}
+export ALIEN_JDL_CPULIMIT={CPULIMIT:8}
+export ALIEN_JDL_SIMENGINE={SIMENGINE:"TGeant4"}
+export ALIEN_JDL_ANCHOR_SIM_OPTIONS={SIM_OPTIONS:""}
+export NSIGEVENTS={NSIGEVENTS:10000}
+export CYCLE={CYCLE:0}
 
 # === Start the workflow ===
-${{O2DPG_ROOT}}/MC/run/ANCHOR/anchorMC.sh
+${O2DPG_ROOT}/MC/run/ANCHOR/anchorMC.sh
 ```
 """
