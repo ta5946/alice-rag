@@ -1,5 +1,3 @@
-# TODO Replace prints with logging
-
 import asyncio
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 from langchain_core.documents import Document
@@ -9,12 +7,13 @@ from src.chatbot.langchain_components import LLM, COMPRESSION_RETRIEVER, TRACING
 
 
 PROMPT_CATEGORY_MAP = {
-    1: "General question",
-    2: "Requires context",
-    3: "Submit ticket",
-    4: "Generate script"
+    1: "basic_question",
+    2: "rag_question",
+    3: "bug_report",
+    4: "script_request"
 }
 
+# response streaming helper
 async def stream_response(messages, mattermost_context, update_interval=10, links=None, status="🤖 _Generating response..._"):
     await async_update_post(mattermost_context, status)
 
@@ -28,7 +27,7 @@ async def stream_response(messages, mattermost_context, update_interval=10, link
         if token_count % update_interval == 0:
             await async_update_post(mattermost_context, assistant_text)
 
-    # manually cite sources
+    # manual source citation
     if links:
         sources_suffix = "\n\n**Sources:**\n"
         sources_suffix += "\n".join(f"{i + 1}. {link}" for i, link in enumerate(links))
@@ -40,20 +39,25 @@ async def stream_response(messages, mattermost_context, update_interval=10, link
     await async_update_post(mattermost_context, assistant_text + prompts.user_feedback_suffix) # ask for feedback
     return assistant_text
 
+# MESSAGE CLASSIFICATION
 async def classify_prompt(prompt, message_history, mattermost_context):
     await async_update_post(mattermost_context, "🔍 _Analyzing question..._")
 
     system_message = prompts.classifier_system_message
-    user_text = prompts.classifier_prompt_template # TODO maybe summarize the conversation history to make it shorter
+    user_text = prompts.classifier_prompt_template
     user_message = HumanMessage(content=user_text.format(conversation_history=messages_to_string(message_history), question=prompt))
     messages = [system_message, user_message]
 
+    old_temperature = LLM.temperature
+    LLM.temperature = 0.0
     assistant_message = await LLM.ainvoke(messages, config={"callbacks": [TRACING_HANDLER]})
+    LLM.temperature = old_temperature  # restore original temperature
     for state in PROMPT_CATEGORY_MAP.keys():
         if str(state) in assistant_message.content:
             return state
     raise ValueError("Invalid prompt classification:", assistant_message.content)
 
+# BASIC QUESTION
 async def basic_response(prompt, message_history, mattermost_context):
     system_message = prompts.basic_response_system_message
     user_message = HumanMessage(content=prompts.basic_prompt_template.format(conversation_history=messages_to_string(message_history), question=prompt))
@@ -62,6 +66,7 @@ async def basic_response(prompt, message_history, mattermost_context):
     assistant_text = await stream_response(messages, mattermost_context)
     return assistant_text
 
+# BUG REPORT
 async def ticket_response(prompt, message_history, mattermost_context):
     system_message = prompts.ticket_response_system_message
     user_message = HumanMessage(content=prompts.basic_prompt_template.format(conversation_history=messages_to_string(message_history), question=prompt))
@@ -70,10 +75,9 @@ async def ticket_response(prompt, message_history, mattermost_context):
     assistant_text = await stream_response(messages, mattermost_context)
     return assistant_text
 
-async def rag_response(prompt, message_history=None, mattermost_context=None):
-    await async_update_post(mattermost_context, "📄 _Searching for documents..._")
-    message_history = message_history or prompts.default_message_history # evaluation script workaround
-
+# RAG QUESTION
+async def generate_search_query(prompt, message_history, mattermost_context):
+    await async_update_post(mattermost_context, "🔍 _Generating search query..._")
     system_message = prompts.querier_system_message
     user_text = prompts.querier_prompt_template
     user_message = HumanMessage(content=user_text.format(conversation_history=messages_to_string(message_history), question=prompt))
@@ -82,16 +86,24 @@ async def rag_response(prompt, message_history=None, mattermost_context=None):
     assistant_message = await LLM.ainvoke(messages, config={"callbacks": [TRACING_HANDLER]})
     search_query = assistant_message.content
     print("SEARCH QUERY:", search_query)
+    return search_query
 
-    print("RETRIEVED DOCUMENTS:")
+async def retrieve_documents(search_query, mattermost_context):
+    await async_update_post(mattermost_context, "📄 _Searching for documents..._")
     retrieved_docs = await COMPRESSION_RETRIEVER.ainvoke(search_query, config={"callbacks": [TRACING_HANDLER]})
-    links = None
     if isinstance(retrieved_docs, list):
         retrieved_docs = [Document(page_content=doc.page_content, metadata={"link": doc.metadata.get("link")}) for doc in retrieved_docs]
-        links = [doc.metadata.get("link") for doc in retrieved_docs]
     if len(retrieved_docs) == 0:
         retrieved_docs = "No relevant documents were retrieved."
+    print("RETRIEVED DOCUMENTS:")
     print(retrieved_docs)
+    return retrieved_docs
+
+async def rag_response(prompt, message_history=None, mattermost_context=None):
+    message_history = message_history or prompts.default_message_history # evaluation script workaround
+    search_query = await generate_search_query(prompt, message_history, mattermost_context)
+    retrieved_docs = await retrieve_documents(search_query, mattermost_context)
+    links = [doc.metadata.get("link") for doc in retrieved_docs] if isinstance(retrieved_docs, list) else None
 
     system_message = prompts.rag_response_system_message
     user_text = prompts.rag_prompt_template
@@ -101,6 +113,7 @@ async def rag_response(prompt, message_history=None, mattermost_context=None):
     assistant_text = await stream_response(messages, mattermost_context, links=links)
     return assistant_text
 
+# SCRIPT REQUEST
 async def script_response(prompt, message_history, mattermost_context):
     system_message = prompts.script_generator_system_message
     user_text = prompts.script_prompt_template.format(conversation_history=messages_to_string(message_history), user_message=prompt, script_template=prompts.prototype_script_template, variable_definitions=prompts.prototype_variable_definitions)
@@ -133,11 +146,8 @@ async def qa_pipeline(question, message_history=None, feedback=True, mattermost_
             tags = []
             tags.append(f"mode:{'dev' if dev_mode else 'prod'}")
             tags.append(f"model:{LLM.model_name}")
-            tags.append(mattermost_context.get("post_id")) if mattermost_context else None
-            qa_trace.update_trace(
-                output={"answer": answer},
-                tags=tags
-            )
+            tags.append(f"post_id:{mattermost_context.get('post_id')}") if mattermost_context else None
+            qa_trace.update_trace(output={"answer": answer}, tags=tags)
 
             if feedback:
                 await create_feedback(qa_trace.trace_id)
@@ -151,6 +161,7 @@ async def qa_pipeline(question, message_history=None, feedback=True, mattermost_
         print("qa_pipeline():", error)
         return answer
 
+# USER FEEDBACK
 async def create_feedback(trace_id):
     user_feedback = input("WAS THE ANSWER HELPFUL? (Y/N): ").lower()
     score = 0 # neutral feedback
@@ -177,7 +188,7 @@ async def main():
             print()
 
         except Exception as error:
-            print(error)
+            print("main():", error)
 
 
 if __name__ == "__main__":

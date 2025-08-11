@@ -1,9 +1,4 @@
-import os
 from src.chatbot.langchain_components import LLM
-from dotenv import load_dotenv
-
-load_dotenv()
-os.environ["LANGCHAIN_TRACING_V2"] = "false"
 
 
 def test_llm():

@@ -3,7 +3,6 @@ from src.chatbot.langchain_components import VECTORSTORE, VECTORSTORE_RETRIEVER,
 from dotenv import load_dotenv
 
 load_dotenv()
-os.environ["LANGCHAIN_TRACING_V2"] = "false"
 
 
 def test_vectorstore():

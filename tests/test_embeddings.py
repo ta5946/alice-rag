@@ -1,12 +1,8 @@
-import os
 from sklearn.metrics.pairwise import cosine_similarity # or alternative similarity function
 from src.chatbot.langchain_components import EMBEDDINGS
-from dotenv import load_dotenv
-
-load_dotenv()
-os.environ["LANGCHAIN_TRACING_V2"] = "false"
 
 
+# resolve indexer conflict with: rm -rf data/indexed/alice-rag
 def test_embeddings():
     sentences = [
         "Roses are red.",

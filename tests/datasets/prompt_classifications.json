@@ -1,0 +1,66 @@
+[
+  {
+    "prompt": "What is the weather like today?",
+    "label": "basic_question"
+  },
+  {
+    "prompt": "How to install Linux on my desktop?",
+    "label": "basic_question"
+  },
+  {
+    "prompt": "Hello world!",
+    "label": "basic_question"
+  },
+  {
+    "prompt": "What is the capital of France?",
+    "label": "basic_question"
+  },
+  {
+    "prompt": "How can I create a valid token for running o2 simulations?",
+    "label": "rag_question"
+  },
+  {
+    "prompt": "How to increase the number of threads in o2 sims?",
+    "label": "rag_question"
+  },
+  {
+    "prompt": "How can I change the material density in O2?",
+    "label": "rag_question"
+  },
+  {
+    "prompt": "What are the generators I can use for simulations?",
+    "label": "rag_question"
+  },
+  {
+    "prompt": "Where can I submit a bug report?",
+    "label": "bug_report"
+  },
+  {
+    "prompt": "I have a feature request for O2 simulations!",
+    "label": "bug_report"
+  },
+  {
+    "prompt": "The Geant4 generator is not working as stated in the documentation.",
+    "label": "bug_report"
+  },
+  {
+    "prompt": "I get a library mismatch error, but I installed them from the official o2 simulation documentation repository.",
+    "label": "bug_report"
+  },
+  {
+    "prompt": "Can you generate a script for running a monte carlo simulation?",
+    "label": "script_request"
+  },
+  {
+    "prompt": "How can I run an anchored MC simulation in O2 framework?",
+    "label": "script_request"
+  },
+  {
+    "prompt": "I want to run a mc simulation with the following parameters: run number 123, name 'mypass' and PP collisions only",
+    "label": "script_request"
+  },
+  {
+    "prompt": "Create a configurable template script for running Monte Carlo simulations.",
+    "label": "script_request"
+  }
+]

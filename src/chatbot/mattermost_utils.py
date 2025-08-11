@@ -70,7 +70,7 @@ async def async_update_post(mattermost_context, message):
 
 def score_message(post_id, score_context):
     try:
-        trace_list = TRACING_CLIENT.api.trace.list(tags=[post_id])
+        trace_list = TRACING_CLIENT.api.trace.list(tags=[f"post_id:{post_id}"])
         trace = trace_list.data[0]
         TRACING_CLIENT.create_score(
             trace_id=trace.id,
