@@ -148,7 +148,7 @@ RESPONSE_MAP = {
     4: script_response,
 }
 
-async def qa_pipeline(question, message_history=None, feedback=True, mattermost_context=None):
+async def qa_pipeline(question, message_history=None, feedback=True, mattermost_context=None, dev_mode=False):
     answer = ""
     if not message_history:
         message_history = prompts.default_message_history
@@ -162,6 +162,7 @@ async def qa_pipeline(question, message_history=None, feedback=True, mattermost_
 
             answer = await RESPONSE_MAP[question_category](question, message_history, mattermost_context)
             tags = [mattermost_context.get("post_id")] if mattermost_context else None
+            tags.append("dev") if dev_mode else None
             qa_trace.update_trace(
                 output={"answer": answer},
                 # metadata={"mattermost_context": mattermost_context},

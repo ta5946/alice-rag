@@ -1,3 +1,4 @@
+import os
 import json
 import asyncio
 from basic_rag_qa import qa_pipeline
@@ -32,10 +33,11 @@ async def handle_post(event_data):
             "post_id": bot_post.get("id"),
             "user_id": post_data.get("user_id"),
         }
+        dev_mode = mattermost_context.get("user_id") == os.getenv("MATTERMOST_DEV_USER_ID")
 
         # generate chatbot response
         asyncio.create_task(
-            qa_pipeline(post_message, thread_messages, feedback=False, mattermost_context=mattermost_context)
+            qa_pipeline(post_message, thread_messages, feedback=False, mattermost_context=mattermost_context, dev_mode=dev_mode)
         )
 
     except Exception as error:
