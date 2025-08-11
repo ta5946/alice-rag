@@ -15,8 +15,8 @@ PROMPT_CATEGORY_MAP = {
     4: "Generate script"
 }
 
-async def stream_response(messages, mattermost_context, update_interval=10, links=None):
-    await async_update_post(mattermost_context, "🤖 _Generating response..._")
+async def stream_response(messages, mattermost_context, update_interval=10, links=None, status="🤖 _Generating response..._"):
+    await async_update_post(mattermost_context, status)
 
     print("CHATBOT ANSWER:")
     assistant_text = ""
@@ -101,44 +101,13 @@ async def rag_response(prompt, message_history=None, mattermost_context=None):
     assistant_text = await stream_response(messages, mattermost_context, links=links)
     return assistant_text
 
-
-async def check_variables(prompt, message_history, mattermost_context):
-    system_message = prompts.variable_checker_system_message
-    user_text = prompts.variable_prompt_template.format(conversation_history=messages_to_string(message_history), user_message=prompt, variable_definitions=prompts.prototype_variable_definitions)
-    messages = [system_message, user_text]
-
-    assistant_message = await LLM.ainvoke(messages, config={"callbacks": [TRACING_HANDLER]})
-    if "1" in assistant_message.content:
-        return True
-    else:
-        return False
-
-async def collect_variables(prompt, message_history, mattermost_context):
-    system_message = prompts.variable_collector_system_message
-    user_text = prompts.variable_prompt_template.format(conversation_history=messages_to_string(message_history), user_message=prompt, variable_definitions=prompts.prototype_variable_definitions)
-    messages = [system_message, user_text]
-
-    assistant_text = await stream_response(messages, mattermost_context)
-    return assistant_text
-
-async def generate_script(prompt, message_history, mattermost_context):
-    await async_update_post(mattermost_context, "💻 _Generating script..._")
-
-    system_message = prompts.script_generator_system_message
-    user_text = prompts.script_prompt_template.format(conversation_history=messages_to_string(message_history), user_message=prompt, script_template=prompts.prototype_script_template)
-    messages = [system_message, user_text]
-
-    assistant_message = await LLM.ainvoke(messages, config={"callbacks": [TRACING_HANDLER]})
-    assistant_text = assistant_message.content
-    await async_update_post(mattermost_context, assistant_text + prompts.user_feedback_suffix)
-    return assistant_text
-
 async def script_response(prompt, message_history, mattermost_context):
-    variables_provided = await check_variables(prompt, message_history, mattermost_context)
-    if variables_provided:
-        return await generate_script(prompt, message_history, mattermost_context)
-    else:
-        return await collect_variables(prompt, message_history, mattermost_context)
+    system_message = prompts.script_generator_system_message
+    user_text = prompts.script_prompt_template.format(conversation_history=messages_to_string(message_history), user_message=prompt, script_template=prompts.prototype_script_template, variable_definitions=prompts.prototype_variable_definitions)
+    messages = [system_message, user_text]
+
+    assistant_text = await stream_response(messages, mattermost_context, status="💻 _Generating script..._") # custom status
+    return assistant_text
 
 
 RESPONSE_MAP = {
@@ -161,11 +130,12 @@ async def qa_pipeline(question, message_history=None, feedback=True, mattermost_
             print("QUESTION CLASSIFICATION:", PROMPT_CATEGORY_MAP[question_category])
 
             answer = await RESPONSE_MAP[question_category](question, message_history, mattermost_context)
-            tags = [mattermost_context.get("post_id")] if mattermost_context else None
-            tags.append("dev") if dev_mode else None
+            tags = []
+            tags.append(f"mode:{'dev' if dev_mode else 'prod'}")
+            tags.append(f"model:{LLM.model_name}")
+            tags.append(mattermost_context.get("post_id")) if mattermost_context else None
             qa_trace.update_trace(
                 output={"answer": answer},
-                # metadata={"mattermost_context": mattermost_context},
                 tags=tags
             )
 

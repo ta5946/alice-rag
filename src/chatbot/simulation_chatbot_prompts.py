@@ -98,48 +98,9 @@ ticket_response_system_message = SystemMessage(
     Use the following guidelines:
     ## JIRA bug tracking
     - Bug reports or feature requests are followed up with tickets in our [JIRA system](https://alice.its.cern.ch/jira/projects/O2) (With simulation as component).
-    - Opening tickets is preferred over private email contact.""" # TODO tune prompt
+    - Opening tickets is preferred over private email contact."""
 )
 
-
-variable_checker_system_message = SystemMessage(
-    content="""You are an environment variable checker for anchored MC simulation.
-    You are provided with a table of variable definitions and previous messages.
-    Your task is to determine if:
-    - The user provided all the required variables.
-    - The values provided by the user are the right type / valid.
-    Return either 0 if the check failed, or 1 if the check passed and nothing else."""
-)
-
-variable_collector_system_message = SystemMessage(
-    content="""You are an environment variable collector for anchored MC simulation.
-    You are provided with a table of variable definitions and previous messages.
-    The variable check failed meaning that:
-    - The user did not provide all the required variables.
-    - The values provided by the user are not the right type / invalid.
-    Your task is to ask the user to provide the missing required variables and change the invalid values.
-    Be specific about the expected variables and value types.
-    Do not generate the final bash script, just collect the variables.
-    
-    If this is the start of a new conversation:
-    - Tell the user that running an anchored MC simulation requires setting certain environment variables.
-    - Present the required variables from the table.
-    - Present the optional variables from the table."""
-)
-
-variable_prompt_template = PromptTemplate.from_template("""(
-    CONVERSATION HISTORY:
-    {conversation_history}
-    )
-    
-    USER MESSAGE:
-    {user_message}
-    
-    VARIABLE DEFINITIONS:
-    {variable_definitions}
-    
-    ANSWER:"""
-)
 
 prototype_variable_definitions = """
 | Variable                       | Type     | Default | Values                        | Description                                                                                                          |
@@ -158,30 +119,6 @@ prototype_variable_definitions = """
 | `CYCLE`                        | Optional | 0       | Non-negative integer          | Cycle number within the production to simulate, allowing multiple iterations over the same time period               |
 """
 
-script_generator_system_message = SystemMessage(
-    content="""You are a script generator for anchored MC simulation.
-    You are provided with a script template and previous messages.
-    The variable check passed meaning that:
-    - The user provided all the required variables.
-    - The values provided by the user are the right type / valid.
-    Your task is to insert variable values provided by the user into the script template.
-    Return only a code block with the generated bash script and nothing else."""
-)
-
-script_prompt_template = PromptTemplate.from_template("""(
-    CONVERSATION HISTORY:
-    {conversation_history}
-    )
-    
-    USER MESSAGE:
-    {user_message}
-    
-    SCRIPT TEMPLATE:
-    {script_template}
-    
-    GENERATED SCRIPT:"""
-)
-
 prototype_script_template = """```bash
 #!/usr/bin/env bash
 
@@ -193,13 +130,46 @@ export SPLITID={SPLITID}
 export NTIMEFRAMES={NTIMEFRAMES}
 
 # === Optional variables ===
-export ALIEN_JDL_CPULIMIT={CPULIMIT:8}
-export ALIEN_JDL_SIMENGINE={SIMENGINE:"TGeant4"}
-export ALIEN_JDL_ANCHOR_SIM_OPTIONS={SIM_OPTIONS:""}
-export NSIGEVENTS={NSIGEVENTS:10000}
-export CYCLE={CYCLE:0}
+# export ALIEN_JDL_CPULIMIT={CPULIMIT:8}
+# export ALIEN_JDL_SIMENGINE={SIMENGINE:"TGeant4"}
+# export ALIEN_JDL_ANCHOR_SIM_OPTIONS={SIM_OPTIONS:""}
+# export NSIGEVENTS={NSIGEVENTS:10000}
+# export CYCLE={CYCLE:0}
 
 # === Start the workflow ===
 ${O2DPG_ROOT}/MC/run/ANCHOR/anchorMC.sh
 ```
 """
+
+script_generator_system_message = SystemMessage(
+    content="""You are a script generator for anchored MC simulation.
+    You are provided with a script template, table of variable definitions and previous messages.
+    The user requested help with writing / running a simulation.
+    
+    If this is the start of a new conversation:
+    - First generate a script template for the user.
+    - Describe both the required and optional environment variables.
+    - Specify the expected range of values for each variable.
+    - Ask the user to either copy the script template or provide some variable values.
+    
+    If this is a continuation of the conversation:
+    - Fill in the script template with variable values provided by the user.
+    - Answer any other questions related to the script.
+    """
+)
+
+script_prompt_template = PromptTemplate.from_template("""(
+    CONVERSATION HISTORY:
+    {conversation_history}
+    )
+    
+    USER MESSAGE:
+    {user_message}
+    
+    VARIABLE DEFINITIONS:
+    {variable_definitions}
+    
+    SCRIPT TEMPLATE:
+    {script_template}
+    
+    RESPONSE:""")
