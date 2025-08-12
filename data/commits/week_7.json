@@ -1,0 +1,30 @@
+{
+  "start_date": "2025-08-04",
+  "end_date": "2025-08-10",
+  "commit_messages": [
+    "DPL: improve error message",
+    "Fix TimingInfo.timeslice vs DPH.startTime mismatch",
+    "ITS: GPU: resolve added TODOs",
+    "ITS: GPU: simplify stream synchronization",
+    "ITS: GPU: use external allocator for temp storage",
+    "ITS: GPU: put cell neighbour finding on different streams",
+    "ITS: GPU: put cell finding on different streams",
+    "ITS: GPU: put trackleting properly on different streams",
+    "DPL Analysis: add support for BinaryView columns",
+    "Allow filters to be set in init(); Add ability to set a filter from string directly",
+    "move unnecessary statics to .cxx",
+    "DPL Analysis: add parsing of expressions from strings",
+    "DPL Analysis: fix hash calculation for the string_views",
+    "DPL CCDB: move helper initialisation to a separate function",
+    "DPL: drop more boost_test usage",
+    "DPL tests: drop unneeded includes",
+    "Get rid of C++ extension warning",
+    "DPL: add component for Arrow Acero Streaming Engine",
+    "DPL: move to std::pmr where possible",
+    "added socket communication (#14529)",
+    "ITS: GPU: fix deltaROF tracking",
+    "ITS: make trackleting compatible with GPU (partial revert)",
+    "ITS: format time for TF",
+    "ITS: Tracklet add print compatible on GPU"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "start_date": "2025-07-28",
+  "end_date": "2025-08-03",
+  "commit_messages": [
+    "ITS: allow to Individually set kernel parameters",
+    "TOF Param container: move to header only",
+    "Bug-fix for memory allocation (#14554)",
+    "ITS: if TF dropped clear tracks (#14553)",
+    "dpl-workflow: simple serialization mitigation seems not to work on MI100 in async, have to use full serialization workaround",
+    "Add track hash to TrackStudy output",
+    "Add hash method to the TrackParam",
+    "GPU: GPUd --> GPUdii Force Inline, Code did not break",
+    "Account for TPC clusters non-monotonous sorting",
+    "DataFormats: Add V0Type (#14547)",
+    "Make max Xiu for pre-propagation settable (#14544)",
+    "NN clusterizer: Bug-fixes and adding deterministic mode (#14530)",
+    "Add Lambda1405 to TDatabasePdg and O2MCApplication (#14506)"
+  ]
+}

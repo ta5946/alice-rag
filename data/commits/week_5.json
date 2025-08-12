@@ -1,0 +1,19 @@
+{
+  "start_date": "2025-07-21",
+  "end_date": "2025-07-27",
+  "commit_messages": [
+    "Fix coding rule violation",
+    "ITSMFT: FST opt. rerun clusterizer",
+    "ITS: GPU: fix perVtx + upc iteration + atomic level update",
+    "[MFT] read track covariances from AO2Ds",
+    "Fix alignment so that jemalloc / address sanitizer do no complain",
+    "ITS: last mod. for deltaROF and perVertex (#14538)",
+    "Added Lambda1520 PDG code to PhysicsConstants.h (#14377)",
+    "Eov for orbitreset (#14534)",
+    "ITS: fix opt. label output if firstOrbit!=0 (#14532)",
+    "ITS: add CheckDROF macro (#14533)",
+    "ITS: print deltaRof option (#14531)",
+    "IWYU: TimeDeadMap.h",
+    "ITS: cleanup lines and tracklet/clusterlines changes (#14511)"
+  ]
+}

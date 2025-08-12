@@ -1,0 +1,30 @@
+{
+  "start_date": "2025-07-14",
+  "end_date": "2025-07-20",
+  "commit_messages": [
+    "DPL: out of line metrics related methods",
+    "TPC: Avoid using deprecated fmt::localtime",
+    "Script cleanup: use -n instead of ! -z",
+    "Add fully qualified names for std::string and std::map",
+    "NN clusterizer: Improve filling kernel speed (#14510)",
+    "Propagating merged noise map to DCS (#14515)",
+    "DPL: move topological sort in a separate file",
+    "DPL: get rid of gsl::span.",
+    "ITS: fix CookedTracker due to memory refactor",
+    "TRD: fix missing include",
+    "ITS: cleanup unused classes",
+    "TPCFastTransformation: Resolve recursion at compile time with templates. (#14462)",
+    "GPU: Fix typo in getting default number of threads from env variables",
+    "GPU: Fix checking for dmaTransferType with GPU memory registration disabled",
+    "Extend run-time-span-file and invert-irframe-selection TF selections to raw-tf-reader",
+    "dpl-workflow: Fix logic to mlock shm segments",
+    "Add LIGHTNUCLEI flag, extend pp settings on BEAMTYPE leading to LIGHTNUCLEI=1",
+    "DPL: drop unneeded headers.",
+    "HepMC: Remove default backgrounding mode",
+    "Add missing TPCNClsPID dynamic columns (#14503)",
+    "ITS: disable reco via configParams",
+    "ITS: allow overriding number of iterations for tracker",
+    "ITS: opt. vertex cont. output (#14507)",
+    "ITS: Vertexer remove unused code (#14508)"
+  ]
+}

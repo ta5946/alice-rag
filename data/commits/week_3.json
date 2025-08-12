@@ -1,0 +1,30 @@
+{
+  "start_date": "2025-07-07",
+  "end_date": "2025-07-13",
+  "commit_messages": [
+    "ITS: add truth seeding",
+    "GPU QA: Make cluster cuts setable and adust defaults",
+    "GPU Display OpenGL Backend: Use nullptr instead of 0",
+    "ITS: fix TypedAllocator for cuda thrust",
+    "ITS: remove some printing",
+    "AOD: TrackQA use outer ITS ref. for residuals to TPC",
+    "TrackReference: possibility to have unknown DetectorID",
+    "ITS: prefer config params over cli",
+    "ITS: unify configuration of algorithms",
+    "ITS: Vertexer return early and only one arena",
+    "ITS: fix seeding vertex labels",
+    "GPU: Use warp barriers in ZS decoder.",
+    "explicit call to Sumw2 (cosmetic only)",
+    "keeping the previous logic that output-proxies should be last",
+    "DPL: fixes for dependency checks of devices with sporadic inputs in TopologyPolicy",
+    "Make O and Ne nuclei known to LHCIF processor (#14494)",
+    "Update AggregatedRunInfo.cxx",
+    "New methods to query AggregatedRunInfo for MC",
+    "Feat: add ratio plots to TrackClusters QA task",
+    "[ITS3] Fix Y position of ITS3 clusters and hits (#14483)",
+    "DPL: fix missing return true in ToologyPolicy",
+    "DPL: remove duplicate branch.",
+    "DPL: improve debug information in case of circular dependencies.",
+    "TPC QA: Separate normalized attached counts for non-fake and all tracks"
+  ]
+}
