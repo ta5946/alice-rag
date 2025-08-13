@@ -3,5 +3,9 @@
 max-line-length=160
 
 [MESSAGES CONTROL]
-# Disable missing-module-docstring (C0114) and missing-function-docstring (C0116)
-disable=C0114, C0116
+# Disable missing-module-docstring (C0114), missing-function-docstring (C0116) and not-context-manager (E1129)
+disable=C0114, C0116, E1129
+
+[REPORTS]
+# Fail if score is below 8.0
+fail-under=8.0

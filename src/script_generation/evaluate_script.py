@@ -7,6 +7,7 @@
 
 import os, sys, re, subprocess, tempfile, shutil, stat
 import json
+from typing import Callable, Any
 
 
 # Define all variables and their validation rules, error messages, and default values
@@ -84,6 +85,7 @@ def evaluate_script(path):
             final_env[var] = default
 
     for var, (is_req, validator, error_msg, _) in ENVIRONMENT_VARIABLES.items():
+        validator: Callable[[Any], bool] # type hint so pylint knows
         if is_req:
             if var in env:
                 req_set += 1

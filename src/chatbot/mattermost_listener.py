@@ -1,7 +1,7 @@
 import os
 import json
 import asyncio
-from basic_rag_qa import qa_pipeline
+from src.chatbot.basic_rag_qa import qa_pipeline
 from src.chatbot.mattermost_utils import MATTERMOST_DRIVER, BOT_ID, get_thread_messages, delayed_score_message
 from dotenv import load_dotenv
 

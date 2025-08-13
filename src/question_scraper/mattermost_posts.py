@@ -42,12 +42,12 @@ def group_consecutive_posts(posts):
     current_post = None
 
     for post in posts:
-        if current_post is None or current_post["user_id"] != post["user_id"]:
+        if current_post is None or current_post.user_id != post.user_id:
             if current_post:
                 grouped_posts.append(current_post)
             current_post = post
         else:
-            current_post["message"] += "\n" + post["message"] # extend message field
+            current_post.message += "\n" + post.message  # extend message field
 
     if current_post:
         grouped_posts.append(current_post)
