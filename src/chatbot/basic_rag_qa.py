@@ -95,15 +95,18 @@ async def retrieve_documents(search_query, mattermost_context):
         retrieved_docs = [Document(page_content=doc.page_content, metadata={"link": doc.metadata.get("link")}) for doc in retrieved_docs]
     if len(retrieved_docs) == 0:
         retrieved_docs = "No relevant documents were retrieved."
-    print("RETRIEVED DOCUMENTS:")
-    print(retrieved_docs)
+    # print("RETRIEVED DOCUMENTS:")
+    # print(retrieved_docs)
     return retrieved_docs
 
-async def rag_response(prompt, message_history=None, mattermost_context=None):
+async def rag_response(prompt, message_history=None, mattermost_context=None, include_links=True):
     message_history = message_history or prompts.default_message_history # evaluation script workaround
     search_query = await generate_search_query(prompt, message_history, mattermost_context)
     retrieved_docs = await retrieve_documents(search_query, mattermost_context)
-    links = [doc.metadata.get("link") for doc in retrieved_docs] if isinstance(retrieved_docs, list) else None
+    if include_links and isinstance(retrieved_docs, list):
+        links = [doc.metadata.get("link") for doc in retrieved_docs]
+    else:
+        links = None
 
     system_message = prompts.rag_response_system_message
     user_text = prompts.rag_prompt_template

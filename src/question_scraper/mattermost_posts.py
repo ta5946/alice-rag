@@ -4,7 +4,7 @@ import time
 from datetime import datetime
 from tqdm import tqdm
 from src.chatbot.mattermost_utils import MATTERMOST_DRIVER
-from src.scraper.question_extractor import qe_pipeline
+from src.question_scraper.question_extractor import qe_pipeline
 from dotenv import load_dotenv
 
 load_dotenv()

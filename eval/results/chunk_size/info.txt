@@ -1,0 +1,2 @@
+Also improved search query generation
+Chunk size of 1000 characters is better than 2000

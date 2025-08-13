@@ -4,7 +4,9 @@ from pathlib import Path
 from typing import Dict, Optional
 from chromadb import PersistentClient
 from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_experimental.text_splitter import SemanticChunker
 from langchain_community.document_loaders import TextLoader, PythonLoader, PDFMinerLoader, UnstructuredHTMLLoader
+from src.chatbot.langchain_components import EMBEDDINGS
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -23,10 +25,12 @@ LOADER_MAPPING = {
 chroma_client = PersistentClient(path=os.getenv("CHROMA_DIR"))
 CHROMA_COLLECTION = chroma_client.get_or_create_collection(name=os.getenv("CHROMA_COLLECTION_NAME"))
 
-TEXT_SPLITTER = RecursiveCharacterTextSplitter(
+CHARACTER_SPLITTER = RecursiveCharacterTextSplitter(
     chunk_size=int(os.getenv("CHROMA_CHUNK_SIZE")),
     chunk_overlap=int(os.getenv("CHROMA_CHUNK_SIZE")) // 10
-) # TODO try semantic text splitter
+)
+
+SEMANTIC_SPLITTER = SemanticChunker(EMBEDDINGS, breakpoint_threshold_amount=0.9)
 
 def load_previous_hashes(path: str) -> Dict[str, str]:
     """

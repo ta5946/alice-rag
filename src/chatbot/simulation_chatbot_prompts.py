@@ -75,7 +75,7 @@ rag_response_system_message = SystemMessage(
     - If the context does not contain enough (or any) relevant information, say that you do not know the answer.
     - Do not explain or mention the context, just use it to directly answer the question.
     - Do not make up new information.
-    - You can mention the documents that you used to formulate your answer and provide their links."""
+    - You can reference the documents you used to formulate your answer and provide their links."""
 )
 
 rag_prompt_template = PromptTemplate.from_template("""(

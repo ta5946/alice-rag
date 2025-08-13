@@ -36,6 +36,7 @@ EMBEDDINGS = HuggingFaceEmbeddings(
 ) # normalization not needed if we use cosine similarity
 
 CHROMA_CLIENT = PersistentClient(path=os.getenv("CHROMA_DIR")) # can switch to chromadb.HttpClient()
+CHROMA_COLLECTION = CHROMA_CLIENT.get_or_create_collection(name=os.getenv("CHROMA_COLLECTION_NAME"))
 
 VECTORSTORE = Chroma(
     collection_name=os.getenv("CHROMA_COLLECTION_NAME"),
@@ -65,7 +66,6 @@ COMPRESSION_RETRIEVER = ContextualCompressionRetriever(
 )
 
 TRACING_CLIENT = get_client()
-
 TRACING_HANDLER = CallbackHandler()
 
 

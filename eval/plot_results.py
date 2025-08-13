@@ -2,16 +2,21 @@ import os
 import json
 import matplotlib.pyplot as plt
 
-RESULT_PATH = "eval/results/5_sample/gemma_judge"
-PLOT_PATH = "img/plots/5_sample/gemma_judge"
+RESULT_PATH = "eval/results/chunk_size/gemma_judge"
+PLOT_PATH = "img/plots/chunk_size/gemma_judge"
 
 
 # plot configuration
 N_SAMPLES = 5
 PLOT_TITLE = f"Results of evaluation on 25 questions (with {N_SAMPLES} sampled answers per question)"
-MODEL_RESULTS = ["base_gemini_results_2000.json", "base_qwen_results.json", "low_rag_qwen_results.json", "med_rag_qwen_results.json", "high_rag_qwen_results.json"]
-MODEL_NAMES = ["Gemini-2.5-Flash", "Qwen2.5-7B", "Qwen2.5 + Low RAG", "Qwen2.5 + Medium RAG", "Qwen2.5 + High RAG"]
-MODEL_COLORS = ["royalblue", "darkviolet", "darkorange", "orangered", "firebrick"]
+MODEL_RESULTS = ["med_rag_qwen_500.json", "med_rag_qwen_1000.json", "med_rag_qwen_2000.json", "med_rag_qwen_semantic.json"]
+MODEL_NAMES = ["Qwen2.5 + 500 character chunks", "1000 character chunks", "2000 character chunks", "Semantic chunks"]
+MODEL_COLORS = [
+    "#aec7e8",  # light blue
+    "#1f77b4",  # medium blue
+    "#08306b",  # dark blue
+    "#ff7f0e",  # distinct orange
+]
 
 def plot_metric(metric, y_label, y_min=None, y_max=None):
     plt.figure(figsize=(12, 8))
@@ -37,4 +42,4 @@ if __name__ == "__main__":
     plot_metric("rouge_l_score", "ROUGE-L score ∈ [0, 1]", 0, 0.25)
     plot_metric("semantic_similarity", "Semantic similarity score ∈ [0, 1]", 0.5, 1)
     plot_metric("llm_judge_score", "LLM-as-judge score ∈ [1, 5]", 1, 5)
-    plot_metric("time", "Response time (seconds)", 0, 50)
+    plot_metric("time", "Response time (seconds)", 0, 80)

@@ -3,6 +3,7 @@ import json
 import time
 import asyncio
 from tqdm import tqdm
+from functools import partial
 from src.chatbot.langchain_components import LLM, GEMINI
 from src.chatbot.basic_rag_qa import rag_response
 
@@ -20,8 +21,8 @@ async def base_gemini(question):
 
 # evaluation configuration
 DATASET_PATH = "eval/datasets/qa_dataset_gpt.json"
-ANSWER_GENERATOR = base_gemini
-ANSWER_PATH = "eval/answers/5_sample/base_gemini_answers_2000.json"
+ANSWER_GENERATOR = partial(rag_response, include_links=False)
+ANSWER_PATH = "eval/answers/chunk_size/med_rag_qwen_500.json"
 N_ANSWERS = 5
 
 async def generate_answers():

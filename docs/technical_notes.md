@@ -92,7 +92,7 @@ To clean up the vector store use:
 rm -rf data/
 ```
 
-### Chunking
+### Text chunking
 
 Chunk size is defined in the `.env` file in characters. The number of tokens per chunk is approximately this / 4.
 The current retrieval parameters are:
@@ -104,6 +104,11 @@ The current retrieval parameters are:
 
 Compact language models do not perform better when flooded with context, so the number of chunks is limited to 5.
 When using a more capable generative model (LLM), the parameters can be increased within the limits of reasonable context length (32k tokens).
+
+Update: Evaluated different text chunking strategies, such as `RecursiveCharacterTextSplitter()` with different chunk sizes (500, 1000 and 2000) and `SemanticChunker()`.
+Semantic chunking did not improve chatbot performance. 1000 character chunks are the most effective with Qwen2.5-7B-Instruct and bge-base-en-v1.5.
+
+![Text chunking comparison](/img/plots/chunk_size/gemma_judge/llm_judge_score_comparison.png)
 
 ### Search query
 
@@ -228,7 +233,7 @@ Extended RAG represents a configuration focused on high recall and no time const
 ![Gemini-as-Judge comparison](/img/plots/1_sample/gemini_judge/llm_judge_score_comparison.png)
 
 6. Average response time comparison:
-![Average_response time comparison](/img/plots/1_sample/qwen_judge/time_comparison.png)
+![Average response time comparison](/img/plots/1_sample/qwen_judge/time_comparison.png)
 
 #### Findings:
 - BLEU is the least relevant metric for our task,

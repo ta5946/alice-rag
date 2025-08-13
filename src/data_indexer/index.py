@@ -10,7 +10,7 @@ import yaml
 import hashlib
 from pathlib import Path
 from src.chatbot.langchain_components import EMBEDDINGS
-from src.indexer.utils import LOADER_MAPPING, CHROMA_COLLECTION, TEXT_SPLITTER, load_previous_hashes, save_hashes
+from src.data_indexer.utils import LOADER_MAPPING, CHROMA_COLLECTION, CHARACTER_SPLITTER, SEMANTIC_SPLITTER, load_previous_hashes, save_hashes
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -20,6 +20,7 @@ RESOURCE_FILE = os.getenv("INDEXER_RESOURCE_FILE")
 HASHES_FILE = os.getenv("INDEXER_HASHES_FILE")
 DATA_PATH = Path(os.getenv("INDEXER_DATA_DIR"))
 BATCH_SIZE = int(os.getenv("INDEXER_BATCH_SIZE"))
+TEXT_SPLITTER = CHARACTER_SPLITTER
 
 def compute_hash(text: str, source: str = "", chunk_index: int = 0, embedder_name: str = "") -> str:
     combined = f"{source}|{chunk_index}|{embedder_name}|{text}"

@@ -1,7 +1,7 @@
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 from langchain_core.prompts import PromptTemplate
 from src.chatbot.langchain_components import LLM
-import src.scraper.mattermost_scraper_prompts as prompts
+import src.question_scraper.mattermost_scraper_prompts as prompts
 
 
 def classify_post(post):
