@@ -27,7 +27,7 @@ resources:
 #  - type: git
 #    url: https://github.com/AliceO2Group/analysis-framework
 #    include: ["docs/**/*.md", "**/*.py", "**/*.sh", "**/*.pdf"]
-#    exclude: ["_saas/**"] # TODO pwgTables.md are large
+#    exclude: ["_saas/**"] # NOTE pwgTables.md are large
 #    branch: master
 
 #  - type: google-slide
