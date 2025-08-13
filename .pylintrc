@@ -7,5 +7,5 @@ max-line-length=160
 disable=C0114, C0116, E1129
 
 [REPORTS]
-# Fail if score is below 8.0
+# Fail if code score is below 8.0
 fail-under=8.0

@@ -1,3 +1,4 @@
+# TODO reduce dependencies with a fresh venv
 absl-py==2.3.1
 aiohappyeyeballs==2.6.1
 aiohttp==3.12.13

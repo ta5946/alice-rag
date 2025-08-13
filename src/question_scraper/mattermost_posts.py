@@ -39,15 +39,15 @@ def get_channel_posts(channel_id, start_timestamp):
 
 def group_consecutive_posts(posts):
     grouped_posts = []
-    current_post = None
+    current_post = {}
 
     for post in posts:
-        if current_post is None or current_post.user_id != post.user_id:
+        if not current_post or current_post.get("user_id") != post.get("user_id"):
             if current_post:
                 grouped_posts.append(current_post)
-            current_post = post
+            current_post = post.copy()  # copy to avoid mutating original
         else:
-            current_post.message += "\n" + post.message  # extend message field
+            current_post["message"] = current_post.get("message", "") + "\n" + post.get("message", "")  # extend message field
 
     if current_post:
         grouped_posts.append(current_post)
@@ -67,12 +67,14 @@ if __name__ == "__main__":
 
 
     # load the existing question dataset
-    json_path = os.path.join(os.path.dirname(__file__), "questions.json")
+    json_path = "./data/scraped/mattermost_questions/questions.json"
 
     existing_questions = []
     if os.path.exists(json_path) and os.path.getsize(json_path) > 0:
         with open(json_path, "r", encoding="utf-8") as json_file:
             existing_questions = json.load(json_file)
+    else:
+        os.makedirs(os.path.dirname(json_path), exist_ok=True)
     existing_post_ids = {q["post_id"] for q in existing_questions}
 
     for post in tqdm(final_posts, desc="Extracting questions", unit="post"):
