@@ -490,8 +490,9 @@ The evaluation process works in 3 steps, from low to high level checking:
 TODO
 
 
-## TODOs and improvements
+## Future work
 
+### Knowledge base
 - _Scrape Jira issues from O2 (filters general, production request)_
 - Label Mattermost messages as either questions or bug reports
 - _Cluster Mattermost questions by similarity / topic_

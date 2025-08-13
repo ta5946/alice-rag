@@ -12,7 +12,7 @@ if ! command -v jq &> /dev/null; then
 fi
 
 # Create output directory
-OUTPUT_DIR="./data/o2_commits"
+OUTPUT_DIR="./data/scraped/o2_commits"
 mkdir -p "$OUTPUT_DIR"
 
 # Clone the repository and tags

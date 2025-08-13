@@ -1,0 +1,7 @@
+[FORMAT]
+# Increase allowed line length to 160 characters
+max-line-length=160
+
+[MESSAGES CONTROL]
+# Disable missing-module-docstring (C0114) and missing-function-docstring (C0116)
+disable=C0114, C0116
