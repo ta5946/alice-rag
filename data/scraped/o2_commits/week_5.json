@@ -1,19 +1,59 @@
 {
-  "start_date": "2025-07-21",
-  "end_date": "2025-07-27",
-  "commit_messages": [
-    "Fix coding rule violation",
-    "ITSMFT: FST opt. rerun clusterizer",
-    "ITS: GPU: fix perVtx + upc iteration + atomic level update",
-    "[MFT] read track covariances from AO2Ds",
-    "Fix alignment so that jemalloc / address sanitizer do no complain",
-    "ITS: last mod. for deltaROF and perVertex (#14538)",
-    "Added Lambda1520 PDG code to PhysicsConstants.h (#14377)",
-    "Eov for orbitreset (#14534)",
-    "ITS: fix opt. label output if firstOrbit!=0 (#14532)",
-    "ITS: add CheckDROF macro (#14533)",
-    "ITS: print deltaRof option (#14531)",
-    "IWYU: TimeDeadMap.h",
-    "ITS: cleanup lines and tracklet/clusterlines changes (#14511)"
-  ]
+    "start_date": "2025-07-21",
+    "end_date": "2025-07-27",
+    "commit_history": [
+        {
+            "message": "Fix coding rule violation",
+            "author": "David Rohr"
+        },
+        {
+            "message": "ITSMFT: FST opt. rerun clusterizer",
+            "author": "Felix Schlepper"
+        },
+        {
+            "message": "ITS: GPU: fix perVtx + upc iteration + atomic level update",
+            "author": "Felix Schlepper"
+        },
+        {
+            "message": "[MFT] read track covariances from AO2Ds",
+            "author": "aferrero2707"
+        },
+        {
+            "message": "Fix alignment so that jemalloc / address sanitizer do no complain",
+            "author": "Giulio Eulisse"
+        },
+        {
+            "message": "ITS: last mod. for deltaROF and perVertex (#14538)",
+            "author": "Felix Schlepper"
+        },
+        {
+            "message": "Added Lambda1520 PDG code to PhysicsConstants.h (#14377)",
+            "author": "Hirak Koley"
+        },
+        {
+            "message": "Eov for orbitreset (#14534)",
+            "author": "Roman Lietava"
+        },
+        {
+            "message": "ITS: fix opt. label output if firstOrbit!=0 (#14532)",
+            "author": "Felix Schlepper"
+        },
+        {
+            "message": "ITS: add CheckDROF macro (#14533)",
+            "author": "Felix Schlepper"
+        },
+        {
+            "message": "ITS: print deltaRof option (#14531)",
+            "author": "Felix Schlepper"
+        },
+        {
+            "message": "IWYU: TimeDeadMap.h",
+            "author": "V\u00edt Ku\u010dera"
+        },
+        {
+            "message": "ITS: cleanup lines and tracklet/clusterlines changes (#14511)",
+            "author": "Felix Schlepper"
+        }
+    ],
+    "generated_changelog": "## What's Changed\n- Fix coding rule violation by @David Rohr\n- ITSMFT: FST optimization rerun clusterizer and ITS: GPU: fix perVtx + upc iteration + atomic level update by @Felix Schlepper\n- ITS: last mod. for deltaROF and perVertex, add CheckDROF macro, print deltaRof option, and cleanup lines and tracklet/clusterlines changes by @Felix Schlepper\n- [MFT] read track covariances from AO2Ds by @aferrero2707\n- Fix alignment so that jemalloc / address sanitizer do no complain by @Giulio Eulisse\n- Added Lambda1520 PDG code to PhysicsConstants.h by @Hirak Koley\n- Eov for orbitreset by @Roman Lietava\n- IWYU: TimeDeadMap.h by @V\u00edt Ku\u010dera"
 }

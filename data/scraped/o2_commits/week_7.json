@@ -1,30 +1,103 @@
 {
-  "start_date": "2025-08-04",
-  "end_date": "2025-08-10",
-  "commit_messages": [
-    "DPL: improve error message",
-    "Fix TimingInfo.timeslice vs DPH.startTime mismatch",
-    "ITS: GPU: resolve added TODOs",
-    "ITS: GPU: simplify stream synchronization",
-    "ITS: GPU: use external allocator for temp storage",
-    "ITS: GPU: put cell neighbour finding on different streams",
-    "ITS: GPU: put cell finding on different streams",
-    "ITS: GPU: put trackleting properly on different streams",
-    "DPL Analysis: add support for BinaryView columns",
-    "Allow filters to be set in init(); Add ability to set a filter from string directly",
-    "move unnecessary statics to .cxx",
-    "DPL Analysis: add parsing of expressions from strings",
-    "DPL Analysis: fix hash calculation for the string_views",
-    "DPL CCDB: move helper initialisation to a separate function",
-    "DPL: drop more boost_test usage",
-    "DPL tests: drop unneeded includes",
-    "Get rid of C++ extension warning",
-    "DPL: add component for Arrow Acero Streaming Engine",
-    "DPL: move to std::pmr where possible",
-    "added socket communication (#14529)",
-    "ITS: GPU: fix deltaROF tracking",
-    "ITS: make trackleting compatible with GPU (partial revert)",
-    "ITS: format time for TF",
-    "ITS: Tracklet add print compatible on GPU"
-  ]
+    "start_date": "2025-08-04",
+    "end_date": "2025-08-10",
+    "commit_history": [
+        {
+            "message": "DPL: improve error message",
+            "author": "Giulio Eulisse"
+        },
+        {
+            "message": "Fix TimingInfo.timeslice vs DPH.startTime mismatch",
+            "author": "shahoian"
+        },
+        {
+            "message": "ITS: GPU: resolve added TODOs",
+            "author": "Felix Schlepper"
+        },
+        {
+            "message": "ITS: GPU: simplify stream synchronization",
+            "author": "Felix Schlepper"
+        },
+        {
+            "message": "ITS: GPU: use external allocator for temp storage",
+            "author": "Felix Schlepper"
+        },
+        {
+            "message": "ITS: GPU: put cell neighbour finding on different streams",
+            "author": "Felix Schlepper"
+        },
+        {
+            "message": "ITS: GPU: put cell finding on different streams",
+            "author": "Felix Schlepper"
+        },
+        {
+            "message": "ITS: GPU: put trackleting properly on different streams",
+            "author": "Felix Schlepper"
+        },
+        {
+            "message": "DPL Analysis: add support for BinaryView columns",
+            "author": "Giulio Eulisse"
+        },
+        {
+            "message": "Allow filters to be set in init(); Add ability to set a filter from string directly",
+            "author": "Anton Alkin"
+        },
+        {
+            "message": "move unnecessary statics to .cxx",
+            "author": "Anton Alkin"
+        },
+        {
+            "message": "DPL Analysis: add parsing of expressions from strings",
+            "author": "Anton Alkin"
+        },
+        {
+            "message": "DPL Analysis: fix hash calculation for the string_views",
+            "author": "Anton Alkin"
+        },
+        {
+            "message": "DPL CCDB: move helper initialisation to a separate function",
+            "author": "Giulio Eulisse"
+        },
+        {
+            "message": "DPL: drop more boost_test usage",
+            "author": "Giulio Eulisse"
+        },
+        {
+            "message": "DPL tests: drop unneeded includes",
+            "author": "Giulio Eulisse"
+        },
+        {
+            "message": "Get rid of C++ extension warning",
+            "author": "Giulio Eulisse"
+        },
+        {
+            "message": "DPL: add component for Arrow Acero Streaming Engine",
+            "author": "Giulio Eulisse"
+        },
+        {
+            "message": "DPL: move to std::pmr where possible",
+            "author": "Giulio Eulisse"
+        },
+        {
+            "message": "added socket communication (#14529)",
+            "author": "jmyrcha"
+        },
+        {
+            "message": "ITS: GPU: fix deltaROF tracking",
+            "author": "Felix Schlepper"
+        },
+        {
+            "message": "ITS: make trackleting compatible with GPU (partial revert)",
+            "author": "Felix Schlepper"
+        },
+        {
+            "message": "ITS: format time for TF",
+            "author": "Felix Schlepper"
+        },
+        {
+            "message": "ITS: Tracklet add print compatible on GPU",
+            "author": "Felix Schlepper"
+        }
+    ],
+    "generated_changelog": "## What's Changed\n- DPL: improve error message and drop more boost_test usage by @Giulio Eulisse\n- ITS: GPU: resolve added TODOs, simplify stream synchronization, use external allocator for temp storage, put cell neighbour finding, cell finding, and trackleting on different streams by @Felix Schlepper\n- DPL Analysis: add support for BinaryView columns, parsing of expressions from strings, and fix hash calculation for the string_views by @Anton Alkin\n- DPL CCDB: move helper initialisation to a separate function by @Giulio Eulisse\n- DPL: move to std::pmr where possible and add component for Arrow Acero Streaming Engine by @Giulio Eulisse\n- added socket communication by @jmyrcha"
 }

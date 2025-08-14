@@ -40,13 +40,13 @@ for week in $(echo "${!weeks[@]}" | tr ' ' '\n' | sort -n); do
 
     echo "Processing week $week ($start_date → $end_date)..."
 
-    # Get commit messages and create a JSON file
-    git log --since="$start_date 00:00:00" --until="$end_date 23:59:59" --pretty=format:"%s" | \
-        jq -R -s --arg start_date "$start_date" --arg end_date "$end_date" \
-        'split("\n") | map(select(length > 0)) | {start_date: $start_date, end_date: $end_date, commit_messages: .}' \
+    # Get commit messages with authors and create a JSON file
+    git log --since="$start_date 00:00:00" --until="$end_date 23:59:59" --pretty=format:'{"message": "%s", "author": "%an"}' | \
+        jq -s --arg start_date "$start_date" --arg end_date "$end_date" \
+        '{start_date: $start_date, end_date: $end_date, commit_history: .}' \
         > "../$OUTPUT_DIR/week_$week.json"
 
-    echo "  $(jq '.commit_messages | length' "../$OUTPUT_DIR/week_$week.json") commits"
+    echo "  $(jq '.commit_history | length' "../$OUTPUT_DIR/week_$week.json") commits"
 done
 
 # Cleanup

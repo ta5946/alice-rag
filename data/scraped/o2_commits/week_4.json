@@ -1,30 +1,103 @@
 {
-  "start_date": "2025-07-14",
-  "end_date": "2025-07-20",
-  "commit_messages": [
-    "DPL: out of line metrics related methods",
-    "TPC: Avoid using deprecated fmt::localtime",
-    "Script cleanup: use -n instead of ! -z",
-    "Add fully qualified names for std::string and std::map",
-    "NN clusterizer: Improve filling kernel speed (#14510)",
-    "Propagating merged noise map to DCS (#14515)",
-    "DPL: move topological sort in a separate file",
-    "DPL: get rid of gsl::span.",
-    "ITS: fix CookedTracker due to memory refactor",
-    "TRD: fix missing include",
-    "ITS: cleanup unused classes",
-    "TPCFastTransformation: Resolve recursion at compile time with templates. (#14462)",
-    "GPU: Fix typo in getting default number of threads from env variables",
-    "GPU: Fix checking for dmaTransferType with GPU memory registration disabled",
-    "Extend run-time-span-file and invert-irframe-selection TF selections to raw-tf-reader",
-    "dpl-workflow: Fix logic to mlock shm segments",
-    "Add LIGHTNUCLEI flag, extend pp settings on BEAMTYPE leading to LIGHTNUCLEI=1",
-    "DPL: drop unneeded headers.",
-    "HepMC: Remove default backgrounding mode",
-    "Add missing TPCNClsPID dynamic columns (#14503)",
-    "ITS: disable reco via configParams",
-    "ITS: allow overriding number of iterations for tracker",
-    "ITS: opt. vertex cont. output (#14507)",
-    "ITS: Vertexer remove unused code (#14508)"
-  ]
+    "start_date": "2025-07-14",
+    "end_date": "2025-07-20",
+    "commit_history": [
+        {
+            "message": "DPL: out of line metrics related methods",
+            "author": "Giulio Eulisse"
+        },
+        {
+            "message": "TPC: Avoid using deprecated fmt::localtime",
+            "author": "David Rohr"
+        },
+        {
+            "message": "Script cleanup: use -n instead of ! -z",
+            "author": "David Rohr"
+        },
+        {
+            "message": "Add fully qualified names for std::string and std::map",
+            "author": "Martin Eide"
+        },
+        {
+            "message": "NN clusterizer: Improve filling kernel speed (#14510)",
+            "author": "Christian Sonnabend"
+        },
+        {
+            "message": "Propagating merged noise map to DCS (#14515)",
+            "author": "nivram-phy"
+        },
+        {
+            "message": "DPL: move topological sort in a separate file",
+            "author": "Giulio Eulisse"
+        },
+        {
+            "message": "DPL: get rid of gsl::span.",
+            "author": "Giulio Eulisse"
+        },
+        {
+            "message": "ITS: fix CookedTracker due to memory refactor",
+            "author": "Felix Schlepper"
+        },
+        {
+            "message": "TRD: fix missing include",
+            "author": "Felix Schlepper"
+        },
+        {
+            "message": "ITS: cleanup unused classes",
+            "author": "Felix Schlepper"
+        },
+        {
+            "message": "TPCFastTransformation: Resolve recursion at compile time with templates. (#14462)",
+            "author": "Felix Weiglhofer"
+        },
+        {
+            "message": "GPU: Fix typo in getting default number of threads from env variables",
+            "author": "David Rohr"
+        },
+        {
+            "message": "GPU: Fix checking for dmaTransferType with GPU memory registration disabled",
+            "author": "David Rohr"
+        },
+        {
+            "message": "Extend run-time-span-file and invert-irframe-selection TF selections to raw-tf-reader",
+            "author": "shahoian"
+        },
+        {
+            "message": "dpl-workflow: Fix logic to mlock shm segments",
+            "author": "David Rohr"
+        },
+        {
+            "message": "Add LIGHTNUCLEI flag, extend pp settings on BEAMTYPE leading to LIGHTNUCLEI=1",
+            "author": "shahoian"
+        },
+        {
+            "message": "DPL: drop unneeded headers.",
+            "author": "Giulio Eulisse"
+        },
+        {
+            "message": "HepMC: Remove default backgrounding mode",
+            "author": "swenzel"
+        },
+        {
+            "message": "Add missing TPCNClsPID dynamic columns (#14503)",
+            "author": "Maximiliano Puccio"
+        },
+        {
+            "message": "ITS: disable reco via configParams",
+            "author": "Felix Schlepper"
+        },
+        {
+            "message": "ITS: allow overriding number of iterations for tracker",
+            "author": "Felix Schlepper"
+        },
+        {
+            "message": "ITS: opt. vertex cont. output (#14507)",
+            "author": "Felix Schlepper"
+        },
+        {
+            "message": "ITS: Vertexer remove unused code (#14508)",
+            "author": "Felix Schlepper"
+        }
+    ],
+    "generated_changelog": "## What's Changed\n- DPL: Refactor and clean up various methods and files by @Giulio Eulisse\n- TPC: Fix deprecated usage and improve kernel speed by @Christian Sonnabend and @Felix Weiglhofer\n- GPU: Correct memory registration and environment variable handling by @David Rohr\n- ITS: Enhance tracker and vertexer functionalities by @Felix Schlepper\n- HepMC: Update backgrounding mode and add TPCNClsPID columns by @swenzel and @Maximiliano Puccio"
 }

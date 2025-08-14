@@ -38,6 +38,15 @@ An example of a HuggingFace model repository is `TheBloke/Mistral-7B-Instruct-v0
 The current version of the LLM server is found in the `docker-compose.yml` file. Web interface for testing purposes is available [here](http://pc-alice-ph01:8080/).
 With CUDA support, the interface is about 5x faster (~55 tokens per second).
 
+### GitHub workflows
+
+So far we are installing all the dependencies and running Pylint on files and packages in this repository.
+You can run the Python linter locally with:
+```bash
+pip install pylint
+pylint $(git ls-files '*.py')
+```
+
 
 ## Models used
 
@@ -487,7 +496,179 @@ The evaluation process works in 3 steps, from low to high level checking:
 
 ## Commit summarization
 
-TODO
+### Commit messages
+
+Another use case of our LLM server is to use it for **automatic changelog generation** as part of the GitHub workflow.
+To test this functionality we scraped commits from the [AliceO2 repository](https://github.com/AliceO2Group/AliceO29) and grouped them by weeks.
+This is done in `scrape_commits.sh` script.
+Example commit history to be summarized:
+```json
+{
+  "start_date": "2025-06-23",
+  "end_date": "2025-06-29",
+  "commit_history": [
+    {
+      "message": "o2-sim: Fix for merger exit status analysis",
+      "author": "swenzel"
+    },
+    {
+      "message": "Fix vertex copying for last timeframe in collisioncontext",
+      "author": "swenzel"
+    },
+    {
+      "message": "Bump actions/checkout from 3 to 4",
+      "author": "dependabot[bot]"
+    },
+    {
+      "message": "Bump actions/stale from 1 to 9",
+      "author": "dependabot[bot]"
+    },
+    {
+      "message": "Bump actions/setup-python from 2 to 5 (#14299)",
+      "author": "dependabot[bot]"
+    },
+    {
+      "message": "Replace type name hash with a different string hash in preparation for string-based expressions (#14398)",
+      "author": "Anton Alkin"
+    },
+    {
+      "message": "DPL: avoid unintialised member (#14449)",
+      "author": "Giulio Eulisse"
+    },
+    {
+      "message": "A3: Add sensitive RICH layers to geometry (#14450)",
+      "author": "Nicol\u00f2 Jacazio"
+    },
+    {
+      "message": "jobutils: Sanitize return code treatment",
+      "author": "swenzel"
+    },
+    {
+      "message": "DPL: improve logs for new calibration scheme (#14030)",
+      "author": "Giulio Eulisse"
+    },
+    {
+      "message": "DPL Analysis: add `DefinesDelayed`",
+      "author": "Anton Alkin"
+    },
+    {
+      "message": "ITS: GPU add missing output to GPUWorkflowSpec",
+      "author": "Felix Schlepper"
+    },
+    {
+      "message": "ITS: cleanup unused GPU code",
+      "author": "Felix Schlepper"
+    },
+    {
+      "message": "Using only propagateMcLabels",
+      "author": "Christian Sonnabend"
+    },
+    {
+      "message": "Cleanup + handling of deconvolution",
+      "author": "Christian Sonnabend"
+    },
+    {
+      "message": "Fix for cluster flags",
+      "author": "Christian Sonnabend"
+    },
+    {
+      "message": "GPU/TPCClusterFinder: Fix out-of-bounds write.",
+      "author": "Felix Weiglhofer"
+    },
+    {
+      "message": "Move bulk of the code to cxx to not expose extra headers",
+      "author": "shahoian"
+    },
+    {
+      "message": "ITS: redefine seeding vertex label",
+      "author": "Felix Schlepper"
+    },
+    {
+      "message": "Avoid missing dictionary (#14443)",
+      "author": "Giulio Eulisse"
+    },
+    {
+      "message": "IWYU: BinningPolicy.h (#14323)",
+      "author": "V\u00edt Ku\u010dera"
+    },
+    {
+      "message": "Fix using namespace arrow, arrow::io (#14442)",
+      "author": "Giulio Eulisse"
+    },
+    {
+      "message": "DPL: make sure Lifetime::Sporadic is kept (#14434)",
+      "author": "Giulio Eulisse"
+    },
+    {
+      "message": "ITS: GPU report found neighbours (#14438)",
+      "author": "Felix Schlepper"
+    },
+    {
+      "message": "ITS3: move the energy deposition wrt. centre of response (#14415)",
+      "author": "Chunzheng Wang"
+    },
+    {
+      "message": "DigiContext: Bugfix for start of history effect",
+      "author": "swenzel"
+    },
+    {
+      "message": "DPL: enable new EoS by default and set data processing and exit transition timeouts (#14429)",
+      "author": "ehellbar"
+    },
+    {
+      "message": "ITS: GPU add needed synchronization (#14439)",
+      "author": "Felix Schlepper"
+    },
+    {
+      "message": "EPNstderrMonitor: remove static declaration of InfoLoggerMessageOption when sending messages to IL",
+      "author": "Ernst Hellbar"
+    },
+    {
+      "message": "ITS3: fix tracking after refactor (#14433)",
+      "author": "Felix Schlepper"
+    }
+  ]
+}
+```
+
+### Changelog generation
+
+In `generate_changelogs.py` file we demonstrated requesting the LLM server with the `curl` command.
+We use the _system prompt for prompt engineering_ and the user prompt to provide the commit history (between 2 dates or tags).
+Current changelog generator prompt is:
+```text
+You are a changelog / release notes generator.
+You are provided with a list of commit messages and their authors.
+Your task is to summarize the commits and generate a short changelog like:
+
+## What's Changed
+- FST: Fix running TPC at P2 online without GPUs by @davidrohr
+- ITS Calibration: always reset chipDone counter independently on hits by @iravasen in #13386
+- Simplify builder holders by @ktf
+- Add support for bitmap in ROFRecords by @mconcas in #13385
+- Avoid doing one iteration when the tree has no entries by @ktf
+
+Try to group together similar commits and changes from the same author.
+The final list should contain 5 to 10 items.
+Return only the generated changelog in markdown format and nothing else.
+```
+
+Example of a generated changelog:
+
+---
+## What's Changed
+- o2-sim: Fix for merger exit status analysis by @swenzel
+- Fix vertex copying for last timeframe in collisioncontext by @swenzel
+- Sanitize return code treatment in jobutils by @swenzel
+- Avoid unintialised member in DPL by @Giulio Eulisse
+- Improve logs for new calibration scheme in DPL by @Giulio Eulisse
+- Add `DefinesDelayed` to DPL Analysis by @Anton Alkin
+- Fix out-of-bounds write in GPU/TPCClusterFinder by @Felix Weiglhofer
+- Redefine seeding vertex label in ITS by @Felix Schlepper
+- Add needed synchronization in ITS by @Felix Schlepper
+- Fix using namespace arrow, arrow::io by @Giulio Eulisse
+- Enable new EoS by default and set data processing and exit transition timeouts in DPL by @ehellbar
+---
 
 
 ## Future work

@@ -1,36 +1,127 @@
 {
-  "start_date": "2025-06-23",
-  "end_date": "2025-06-29",
-  "commit_messages": [
-    "o2-sim: Fix for merger exit status analysis",
-    "Fix vertex copying for last timeframe in collisioncontext",
-    "Bump actions/checkout from 3 to 4",
-    "Bump actions/stale from 1 to 9",
-    "Bump actions/setup-python from 2 to 5 (#14299)",
-    "Replace type name hash with a different string hash in preparation for string-based expressions (#14398)",
-    "DPL: avoid unintialised member (#14449)",
-    "A3: Add sensitive RICH layers to geometry (#14450)",
-    "jobutils: Sanitize return code treatment",
-    "DPL: improve logs for new calibration scheme (#14030)",
-    "DPL Analysis: add `DefinesDelayed`",
-    "ITS: GPU add missing output to GPUWorkflowSpec",
-    "ITS: cleanup unused GPU code",
-    "Using only propagateMcLabels",
-    "Cleanup + handling of deconvolution",
-    "Fix for cluster flags",
-    "GPU/TPCClusterFinder: Fix out-of-bounds write.",
-    "Move bulk of the code to cxx to not expose extra headers",
-    "ITS: redefine seeding vertex label",
-    "Avoid missing dictionary (#14443)",
-    "IWYU: BinningPolicy.h (#14323)",
-    "Fix using namespace arrow, arrow::io (#14442)",
-    "DPL: make sure Lifetime::Sporadic is kept (#14434)",
-    "ITS: GPU report found neighbours (#14438)",
-    "ITS3: move the energy deposition wrt. centre of response (#14415)",
-    "DigiContext: Bugfix for start of history effect",
-    "DPL: enable new EoS by default and set data processing and exit transition timeouts (#14429)",
-    "ITS: GPU add needed synchronization (#14439)",
-    "EPNstderrMonitor: remove static declaration of InfoLoggerMessageOption when sending messages to IL",
-    "ITS3: fix tracking after refactor (#14433)"
-  ]
+    "start_date": "2025-06-23",
+    "end_date": "2025-06-29",
+    "commit_history": [
+        {
+            "message": "o2-sim: Fix for merger exit status analysis",
+            "author": "swenzel"
+        },
+        {
+            "message": "Fix vertex copying for last timeframe in collisioncontext",
+            "author": "swenzel"
+        },
+        {
+            "message": "Bump actions/checkout from 3 to 4",
+            "author": "dependabot[bot]"
+        },
+        {
+            "message": "Bump actions/stale from 1 to 9",
+            "author": "dependabot[bot]"
+        },
+        {
+            "message": "Bump actions/setup-python from 2 to 5 (#14299)",
+            "author": "dependabot[bot]"
+        },
+        {
+            "message": "Replace type name hash with a different string hash in preparation for string-based expressions (#14398)",
+            "author": "Anton Alkin"
+        },
+        {
+            "message": "DPL: avoid unintialised member (#14449)",
+            "author": "Giulio Eulisse"
+        },
+        {
+            "message": "A3: Add sensitive RICH layers to geometry (#14450)",
+            "author": "Nicol\u00f2 Jacazio"
+        },
+        {
+            "message": "jobutils: Sanitize return code treatment",
+            "author": "swenzel"
+        },
+        {
+            "message": "DPL: improve logs for new calibration scheme (#14030)",
+            "author": "Giulio Eulisse"
+        },
+        {
+            "message": "DPL Analysis: add `DefinesDelayed`",
+            "author": "Anton Alkin"
+        },
+        {
+            "message": "ITS: GPU add missing output to GPUWorkflowSpec",
+            "author": "Felix Schlepper"
+        },
+        {
+            "message": "ITS: cleanup unused GPU code",
+            "author": "Felix Schlepper"
+        },
+        {
+            "message": "Using only propagateMcLabels",
+            "author": "Christian Sonnabend"
+        },
+        {
+            "message": "Cleanup + handling of deconvolution",
+            "author": "Christian Sonnabend"
+        },
+        {
+            "message": "Fix for cluster flags",
+            "author": "Christian Sonnabend"
+        },
+        {
+            "message": "GPU/TPCClusterFinder: Fix out-of-bounds write.",
+            "author": "Felix Weiglhofer"
+        },
+        {
+            "message": "Move bulk of the code to cxx to not expose extra headers",
+            "author": "shahoian"
+        },
+        {
+            "message": "ITS: redefine seeding vertex label",
+            "author": "Felix Schlepper"
+        },
+        {
+            "message": "Avoid missing dictionary (#14443)",
+            "author": "Giulio Eulisse"
+        },
+        {
+            "message": "IWYU: BinningPolicy.h (#14323)",
+            "author": "V\u00edt Ku\u010dera"
+        },
+        {
+            "message": "Fix using namespace arrow, arrow::io (#14442)",
+            "author": "Giulio Eulisse"
+        },
+        {
+            "message": "DPL: make sure Lifetime::Sporadic is kept (#14434)",
+            "author": "Giulio Eulisse"
+        },
+        {
+            "message": "ITS: GPU report found neighbours (#14438)",
+            "author": "Felix Schlepper"
+        },
+        {
+            "message": "ITS3: move the energy deposition wrt. centre of response (#14415)",
+            "author": "Chunzheng Wang"
+        },
+        {
+            "message": "DigiContext: Bugfix for start of history effect",
+            "author": "swenzel"
+        },
+        {
+            "message": "DPL: enable new EoS by default and set data processing and exit transition timeouts (#14429)",
+            "author": "ehellbar"
+        },
+        {
+            "message": "ITS: GPU add needed synchronization (#14439)",
+            "author": "Felix Schlepper"
+        },
+        {
+            "message": "EPNstderrMonitor: remove static declaration of InfoLoggerMessageOption when sending messages to IL",
+            "author": "Ernst Hellbar"
+        },
+        {
+            "message": "ITS3: fix tracking after refactor (#14433)",
+            "author": "Felix Schlepper"
+        }
+    ],
+    "generated_changelog": "## What's Changed\n- o2-sim: Fix for merger exit status analysis by @swenzel\n- Fix vertex copying for last timeframe in collisioncontext by @swenzel\n- Sanitize return code treatment in jobutils by @swenzel\n- Avoid unintialised member in DPL by @Giulio Eulisse\n- Improve logs for new calibration scheme in DPL by @Giulio Eulisse\n- Add `DefinesDelayed` to DPL Analysis by @Anton Alkin\n- Fix out-of-bounds write in GPU/TPCClusterFinder by @Felix Weiglhofer\n- Redefine seeding vertex label in ITS by @Felix Schlepper\n- Add needed synchronization in ITS by @Felix Schlepper\n- Fix using namespace arrow, arrow::io by @Giulio Eulisse\n- Enable new EoS by default and set data processing and exit transition timeouts in DPL by @ehellbar"
 }

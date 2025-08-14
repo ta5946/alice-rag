@@ -1,30 +1,103 @@
 {
-  "start_date": "2025-07-07",
-  "end_date": "2025-07-13",
-  "commit_messages": [
-    "ITS: add truth seeding",
-    "GPU QA: Make cluster cuts setable and adust defaults",
-    "GPU Display OpenGL Backend: Use nullptr instead of 0",
-    "ITS: fix TypedAllocator for cuda thrust",
-    "ITS: remove some printing",
-    "AOD: TrackQA use outer ITS ref. for residuals to TPC",
-    "TrackReference: possibility to have unknown DetectorID",
-    "ITS: prefer config params over cli",
-    "ITS: unify configuration of algorithms",
-    "ITS: Vertexer return early and only one arena",
-    "ITS: fix seeding vertex labels",
-    "GPU: Use warp barriers in ZS decoder.",
-    "explicit call to Sumw2 (cosmetic only)",
-    "keeping the previous logic that output-proxies should be last",
-    "DPL: fixes for dependency checks of devices with sporadic inputs in TopologyPolicy",
-    "Make O and Ne nuclei known to LHCIF processor (#14494)",
-    "Update AggregatedRunInfo.cxx",
-    "New methods to query AggregatedRunInfo for MC",
-    "Feat: add ratio plots to TrackClusters QA task",
-    "[ITS3] Fix Y position of ITS3 clusters and hits (#14483)",
-    "DPL: fix missing return true in ToologyPolicy",
-    "DPL: remove duplicate branch.",
-    "DPL: improve debug information in case of circular dependencies.",
-    "TPC QA: Separate normalized attached counts for non-fake and all tracks"
-  ]
+    "start_date": "2025-07-07",
+    "end_date": "2025-07-13",
+    "commit_history": [
+        {
+            "message": "ITS: add truth seeding",
+            "author": "Felix Schlepper"
+        },
+        {
+            "message": "GPU QA: Make cluster cuts setable and adust defaults",
+            "author": "David Rohr"
+        },
+        {
+            "message": "GPU Display OpenGL Backend: Use nullptr instead of 0",
+            "author": "David Rohr"
+        },
+        {
+            "message": "ITS: fix TypedAllocator for cuda thrust",
+            "author": "Felix Schlepper"
+        },
+        {
+            "message": "ITS: remove some printing",
+            "author": "Felix Schlepper"
+        },
+        {
+            "message": "AOD: TrackQA use outer ITS ref. for residuals to TPC",
+            "author": "Felix Schlepper"
+        },
+        {
+            "message": "TrackReference: possibility to have unknown DetectorID",
+            "author": "swenzel"
+        },
+        {
+            "message": "ITS: prefer config params over cli",
+            "author": "Felix Schlepper"
+        },
+        {
+            "message": "ITS: unify configuration of algorithms",
+            "author": "Felix Schlepper"
+        },
+        {
+            "message": "ITS: Vertexer return early and only one arena",
+            "author": "Felix Schlepper"
+        },
+        {
+            "message": "ITS: fix seeding vertex labels",
+            "author": "Felix Schlepper"
+        },
+        {
+            "message": "GPU: Use warp barriers in ZS decoder.",
+            "author": "Felix Weiglhofer"
+        },
+        {
+            "message": "explicit call to Sumw2 (cosmetic only)",
+            "author": "Jan Fiete"
+        },
+        {
+            "message": "keeping the previous logic that output-proxies should be last",
+            "author": "Ernst Hellbar"
+        },
+        {
+            "message": "DPL: fixes for dependency checks of devices with sporadic inputs in TopologyPolicy",
+            "author": "Ernst Hellbar"
+        },
+        {
+            "message": "Make O and Ne nuclei known to LHCIF processor (#14494)",
+            "author": "shahor02"
+        },
+        {
+            "message": "Update AggregatedRunInfo.cxx",
+            "author": "Sandro Wenzel"
+        },
+        {
+            "message": "New methods to query AggregatedRunInfo for MC",
+            "author": "swenzel"
+        },
+        {
+            "message": "Feat: add ratio plots to TrackClusters QA task",
+            "author": "Anton Riedel"
+        },
+        {
+            "message": "[ITS3] Fix Y position of ITS3 clusters and hits (#14483)",
+            "author": "Fabrizio"
+        },
+        {
+            "message": "DPL: fix missing return true in ToologyPolicy",
+            "author": "Giulio Eulisse"
+        },
+        {
+            "message": "DPL: remove duplicate branch.",
+            "author": "Giulio Eulisse"
+        },
+        {
+            "message": "DPL: improve debug information in case of circular dependencies.",
+            "author": "Giulio Eulisse"
+        },
+        {
+            "message": "TPC QA: Separate normalized attached counts for non-fake and all tracks",
+            "author": "David Rohr"
+        }
+    ],
+    "generated_changelog": "## What's Changed\n- ITS: series of fixes and improvements including truth seeding, configuration unification, and vertexer optimizations by @FelixSchlepper\n- GPU: enhancements in cluster cuts, ZS decoder, and OpenGL backend by @DavidRohr\n- TrackQA and AOD: updates to track reference handling and TPC QA by @FelixSchlepper and @swenzel\n- DPL: fixes for device dependency checks and circular dependencies by @ErnstHellbar and @GiulioEulisse\n- TPC QA: new normalized attached counts for non-fake and all tracks by @DavidRohr\n- Miscellaneous: ratio plots added to TrackClusters QA task by @AntonRiedel and position fixes for ITS3 clusters by @Fabrizio"
 }

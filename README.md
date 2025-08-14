@@ -1,4 +1,4 @@
-## ALICE chatbot
+# ALICE chatbot
 
 A set of prototype scripts for hosting a minimal RAG chatbot for ALICE, more specifically the O2 simulation documentation.
 
@@ -18,6 +18,7 @@ A set of prototype scripts for hosting a minimal RAG chatbot for ALICE, more spe
     - `script_generation`: Examples and checkers for chatbot code generation feature (anchoredMC scripts).
 - `tests` Short scripts for testing the functionality of individual components, such as LLM and embedding models.
 - `.env.example`: Configurable environment to be copied into `.env` and modified for local use.
+- `.pylintrc`: Configuration file for the Python linter.
 - `docker-compose.yml`: Docker compose file to run the LLM server (and other services) as a container.
 - `run.py`: Starts the chatbot service and connects it to Mattermost.
 

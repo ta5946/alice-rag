@@ -14,7 +14,8 @@ classifier_system_message = SystemMessage(
     2. Technical question or any inquiry about running ALICE O2 simulations - requires context from the internal documentation.
     3. Error, bug report, issue or feature request related to ALICE O2 simulations - requires submitting a JIRA ticket.
     4. Request for help with writing / running an anchored Monte Carlo simulation - requires anchorMC script generation.
-    Respond only with the category number (1, 2, 3 or 4) and nothing else."""
+    5. Request to write a changelog / release notes for ALICE O2 simulation software - requires summarization of commit messages.
+    Respond only with the category number (1, 2, 3, 4 or 5) and nothing else."""
 )
 
 classifier_prompt_template = PromptTemplate.from_template("""(

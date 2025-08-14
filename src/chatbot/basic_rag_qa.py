@@ -10,7 +10,8 @@ PROMPT_CATEGORY_MAP = {
     1: "basic_question",
     2: "rag_question",
     3: "bug_report",
-    4: "script_request"
+    4: "script_request",
+    5: "changelog_request"
 }
 
 # response streaming helper
@@ -131,6 +132,7 @@ RESPONSE_MAP = {
     2: rag_response,
     3: ticket_response,
     4: script_response,
+    5: basic_response
 }
 
 async def qa_pipeline(question, message_history=None, feedback=True, mattermost_context=None, dev_mode=False):

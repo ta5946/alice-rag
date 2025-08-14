@@ -1,19 +1,59 @@
 {
-  "start_date": "2025-07-28",
-  "end_date": "2025-08-03",
-  "commit_messages": [
-    "ITS: allow to Individually set kernel parameters",
-    "TOF Param container: move to header only",
-    "Bug-fix for memory allocation (#14554)",
-    "ITS: if TF dropped clear tracks (#14553)",
-    "dpl-workflow: simple serialization mitigation seems not to work on MI100 in async, have to use full serialization workaround",
-    "Add track hash to TrackStudy output",
-    "Add hash method to the TrackParam",
-    "GPU: GPUd --> GPUdii Force Inline, Code did not break",
-    "Account for TPC clusters non-monotonous sorting",
-    "DataFormats: Add V0Type (#14547)",
-    "Make max Xiu for pre-propagation settable (#14544)",
-    "NN clusterizer: Bug-fixes and adding deterministic mode (#14530)",
-    "Add Lambda1405 to TDatabasePdg and O2MCApplication (#14506)"
-  ]
+    "start_date": "2025-07-28",
+    "end_date": "2025-08-03",
+    "commit_history": [
+        {
+            "message": "ITS: allow to Individually set kernel parameters",
+            "author": "Felix Schlepper"
+        },
+        {
+            "message": "TOF Param container: move to header only",
+            "author": "Nicol\u00f2 Jacazio"
+        },
+        {
+            "message": "Bug-fix for memory allocation (#14554)",
+            "author": "Christian Sonnabend"
+        },
+        {
+            "message": "ITS: if TF dropped clear tracks (#14553)",
+            "author": "Felix Schlepper"
+        },
+        {
+            "message": "dpl-workflow: simple serialization mitigation seems not to work on MI100 in async, have to use full serialization workaround",
+            "author": "David Rohr"
+        },
+        {
+            "message": "Add track hash to TrackStudy output",
+            "author": "shahoian"
+        },
+        {
+            "message": "Add hash method to the TrackParam",
+            "author": "shahoian"
+        },
+        {
+            "message": "GPU: GPUd --> GPUdii Force Inline, Code did not break",
+            "author": "Vikas Singhal"
+        },
+        {
+            "message": "Account for TPC clusters non-monotonous sorting",
+            "author": "shahoian"
+        },
+        {
+            "message": "DataFormats: Add V0Type (#14547)",
+            "author": "Felix Schlepper"
+        },
+        {
+            "message": "Make max Xiu for pre-propagation settable (#14544)",
+            "author": "ddobrigk"
+        },
+        {
+            "message": "NN clusterizer: Bug-fixes and adding deterministic mode (#14530)",
+            "author": "Christian Sonnabend"
+        },
+        {
+            "message": "Add Lambda1405 to TDatabasePdg and O2MCApplication (#14506)",
+            "author": "Francesco Mazzaschi"
+        }
+    ],
+    "generated_changelog": "## What's Changed\n- ITS: allow to Individually set kernel parameters by @Felix Schlepper\n- ITS: if TF dropped clear tracks by @Felix Schlepper\n- TOF Param container: move to header only by @Nicol\u00f2 Jacazio\n- Bug-fix for memory allocation by @Christian Sonnabend\n- Account for TPC clusters non-monotonous sorting by @shahoian\n- NN clusterizer: Bug-fixes and adding deterministic mode by @Christian Sonnabend\n- Add Lambda1405 to TDatabasePdg and O2MCApplication by @Francesco Mazzaschi"
 }
