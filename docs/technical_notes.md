@@ -81,12 +81,14 @@ similarity of document embeddings.
 
 ## Data and indexing
 
-### Documents
+### "Training" documents
 
 _At this point the documentation from https://github.com/AliceO2Group/simulation/tree/main/docs and working simulation examples from https://github.com/AliceO2Group/AliceO2/tree/dev/run/SimExamples
 are stored in the `/data` directory. Later they should be pulled directly from the repositories._
 
 See how **indexer** works and also check other relevant GitHub repos.
+
+TODO Describe the current resources
 
 ### Vector store
 
@@ -499,7 +501,7 @@ The evaluation process works in 3 steps, from low to high level checking:
 ### Commit messages
 
 Another use case of our LLM server is to use it for **automatic changelog generation** as part of the GitHub workflow.
-To test this functionality we scraped commits from the [AliceO2 repository](https://github.com/AliceO2Group/AliceO29) and grouped them by weeks.
+To test this functionality we scraped commits from the [AliceO2 repository](https://github.com/AliceO2Group/AliceO2) and grouped them by weeks.
 This is done in `scrape_commits.sh` script.
 Example commit history to be summarized:
 ```json
@@ -675,7 +677,6 @@ Example of a generated changelog:
 
 ### Knowledge base
 - _Scrape Jira issues from O2 (filters general, production request)_
-- Label Mattermost messages as either questions or bug reports
 - _Cluster Mattermost questions by similarity / topic_
 
 ### Question answering

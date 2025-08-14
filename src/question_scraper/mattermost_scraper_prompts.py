@@ -1,4 +1,5 @@
 from langchain_core.messages import SystemMessage
+from langchain_core.prompts import PromptTemplate
 
 classifier_system_message = SystemMessage(
     content="""You are a message classifier.
@@ -9,9 +10,20 @@ classifier_system_message = SystemMessage(
     Respond only with the category number (1, 2 or 3) and nothing else."""
 )
 
+classifier_prompt_template = PromptTemplate.from_template("""POST:
+    {post}
+
+    CATEGORY:""")
+
+
 extractor_system_message = SystemMessage(
     content="""You are a question extractor.
     You are provided with a user message that contains a question about running ALICE O2 simulations.
     Your task is to recap the core question and key information from the message.
     Return only the extracted question and nothing else."""
 )
+
+extractor_prompt_template = PromptTemplate.from_template("""POST:
+    {post}
+    
+    QUESTION:""")

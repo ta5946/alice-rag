@@ -142,7 +142,7 @@ ${O2DPG_ROOT}/MC/run/ANCHOR/anchorMC.sh
 ```
 """
 
-script_generator_system_message = SystemMessage(
+script_response_system_message = SystemMessage(
     content="""You are a script generator for anchored MC simulation.
     You are provided with a script template, table of variable definitions and previous messages.
     The user requested help with writing / running a simulation.

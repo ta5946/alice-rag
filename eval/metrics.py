@@ -2,8 +2,7 @@ import re
 import time
 import evaluate
 from sklearn.metrics.pairwise import cosine_similarity
-from langchain_core.messages import SystemMessage
-from langchain_core.prompts import PromptTemplate
+import eval.llm_judge_prompts as prompts
 from src.chatbot.langchain_components import LLM, EMBEDDINGS
 
 
@@ -25,22 +24,8 @@ def semantic_similarity_score(correct_answer, generated_answer):
 def llm_judge_score(question, correct_answer, generated_answer, llm=LLM, timeout=0):
     time.sleep(timeout) # rate limit workaround
 
-    llm_judge_system_prompt = SystemMessage(
-        content="""You are a chatbot response evaluator.
-        You are provided with a question, correct answer and a chatbot generated answer.
-        Your task is to grade the correctness of the generated answer on a scale of 1 to 5.
-        Respond only with a correctness score and nothing else."""
-    )
-    user_text = PromptTemplate.from_template("""QUESTION:
-    {question}
-    
-    CORRECT ANSWER:
-    {correct_answer}
-    
-    GENERATED ANSWER:
-    {generated_answer}""") # soft reasoning switch is \no_think
-    user_message = user_text.format(question=question, correct_answer=correct_answer, generated_answer=generated_answer)
-    messages = [llm_judge_system_prompt, user_message]
+    user_message = prompts.llm_judge_prompt_template.format(question=question, correct_answer=correct_answer, generated_answer=generated_answer)
+    messages = [prompts.llm_judge_system_prompt, user_message]
 
     llm.temperature = 0.0 # deterministic inference
     llm.top_p = 1.0

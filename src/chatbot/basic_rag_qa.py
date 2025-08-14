@@ -119,7 +119,7 @@ async def rag_response(prompt, message_history=None, mattermost_context=None, in
 
 # SCRIPT REQUEST
 async def script_response(prompt, message_history, mattermost_context):
-    system_message = prompts.script_generator_system_message
+    system_message = prompts.script_response_system_message
     user_text = prompts.script_prompt_template.format(conversation_history=messages_to_string(message_history), user_message=prompt, script_template=prompts.prototype_script_template, variable_definitions=prompts.prototype_variable_definitions)
     messages = [system_message, user_text]
 

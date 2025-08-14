@@ -1,16 +1,11 @@
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
-from langchain_core.prompts import PromptTemplate
 from src.chatbot.langchain_components import LLM
 import src.question_scraper.mattermost_scraper_prompts as prompts
 
 
 def classify_post(post):
     system_message = prompts.classifier_system_message
-    user_text = PromptTemplate.from_template("""POST:
-    {post}
-    
-    CATEGORY:""")
-    user_message = HumanMessage(content=user_text.format(post=post))
+    user_message = HumanMessage(content=prompts.classifier_prompt_template.format(post=post))
     messages = [system_message, user_message]
 
     assistant_message = LLM.invoke(messages)
@@ -25,11 +20,7 @@ def classify_post(post):
 
 def extract_question(post):
     system_message = prompts.extractor_system_message
-    user_text = PromptTemplate.from_template("""POST:
-    {post}
-    
-    QUESTION:""")
-    user_message = HumanMessage(content=user_text.format(post=post))
+    user_message = HumanMessage(content=prompts.extractor_prompt_template.format(post=post))
     messages = [system_message, user_message]
 
     assistant_message = LLM.invoke(messages)

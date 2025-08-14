@@ -37,7 +37,7 @@ if __name__ == "__main__":
 
             # Prepare the payload
             payload = {
-                "messages": [
+                "messages": [  # manual message construction
                     {
                         "role": "system",
                         "content": SYSTEM_PROMPT
@@ -58,7 +58,7 @@ if __name__ == "__main__":
                 "-H", "Content-Type: application/json",
                 "-d", payload_str
             ]
-            response = subprocess.run(curl, capture_output=True, text=True)
+            response = subprocess.run(curl, capture_output=True, check=False, text=True)
             response_json = json.loads(response.stdout)
 
             # Save model response
