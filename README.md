@@ -14,6 +14,7 @@ A set of prototype scripts for hosting a minimal RAG chatbot for ALICE, more spe
     - `chatbot`: RAG pipeline and chatbot interface.
     - `commit_summarization`: Scripts for pulling commit messages and generating change logs / release notes.
     - `data_indexer`: Document indexing and vector store management.
+    - `data_synthesis`: Scripts and prompts for LLM generated synthetic data (currently question-answer pairs) from existing documentation.
     - `question_scraper`: Data scraping from external platforms, such as Mattermost and Jira.
     - `script_generation`: Examples and checkers for chatbot code generation feature (anchoredMC scripts).
 - `tests` Short scripts for testing the functionality of individual components, such as LLM and embedding models.

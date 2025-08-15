@@ -2,8 +2,8 @@ import re
 import time
 import evaluate
 from sklearn.metrics.pairwise import cosine_similarity
-import eval.llm_judge_prompts as prompts
 from src.chatbot.langchain_components import LLM, EMBEDDINGS
+import eval.llm_judge_prompts as prompts
 
 
 def bleu_score(correct_answer, generated_answer):
@@ -49,11 +49,11 @@ if __name__ == "__main__":
         "Geneva is not a French city."
     ]
 
-    # print(bleu_score(correct_answer, generated_answers[0])) # 0.0
-    # print(bleu_score(correct_answer, generated_answers[1])) # 0.0
-    # print(rouge_score(correct_answer, generated_answers[0])) # 0.6666666666666666
-    # print(rouge_score(correct_answer, generated_answers[1])) # 0.16666666666666666
-    # print(semantic_similarity_score(correct_answer, generated_answers[0])) # 0.9729812727756343
-    # print(semantic_similarity_score(correct_answer, generated_answers[1])) # 0.6108495799294349
-    # print(llm_judge_score(question, correct_answer, generated_answers[0])) # 5
-    # print(llm_judge_score(question, correct_answer, generated_answers[1])) # 1
+    print(bleu_score(correct_answer, generated_answers[0])) # 0.0
+    print(bleu_score(correct_answer, generated_answers[1])) # 0.0
+    print(rouge_score(correct_answer, generated_answers[0])) # 0.6666666666666666
+    print(rouge_score(correct_answer, generated_answers[1])) # 0.16666666666666666
+    print(semantic_similarity_score(correct_answer, generated_answers[0])) # 0.9729812727756343
+    print(semantic_similarity_score(correct_answer, generated_answers[1])) # 0.6108495799294349
+    print(llm_judge_score(question, correct_answer, generated_answers[0])) # 5
+    print(llm_judge_score(question, correct_answer, generated_answers[1])) # 1
