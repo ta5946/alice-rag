@@ -6,16 +6,6 @@
 
 ## Content
 
-**Question:** What command is used to invoke a generator in O2 simulation?
-
-**Answer:** The command used to invoke a generator in O2 simulation is:
-
-```bash
-o2-sim -g <generator-name> [<potentialOtherArgs>]
-```
-
----
-
 **Question:** What are the steps to invoke a generator other than Pythia8 using the `o2-sim` command, and what additional information can be found for configuring and testing these generators?
 
 **Answer:** To invoke a generator other than Pythia8 using the `o2-sim` command, you would use the following syntax:
@@ -27,9 +17,3 @@ o2-sim -g <generator-name> [<potentialOtherArgs>]
 Replace `<generator-name>` with the name of the generator you wish to use, and optionally add `<potentialOtherArgs>` for any additional arguments required by the specific generator.
 
 For more detailed information on configuring and testing these generators, refer to the documentation file `generatorconfig.md`.
-
----
-
-**Question:** What specific configuration steps are required to ensure the proper functioning of the Pythia8 generator when used in the O2 simulation framework, and where can these steps be found in the provided documentation?
-
-**Answer:** The specific configuration steps required to ensure the proper functioning of the Pythia8 generator when used in the O2 simulation framework can be found in the document referenced as `generatorconfig.md`. This document provides detailed configurations and testing procedures for generators, including Pythia8.

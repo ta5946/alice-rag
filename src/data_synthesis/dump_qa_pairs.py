@@ -5,10 +5,12 @@ import json
 DATASET_PATH = "./data/synthetic/document_qa_dataset.json"
 DUMP_PATH = "./data/knowledge_base/synthetic/"
 
-def group_qa_pairs_by_link(qa_pairs_by_chunk):
+def group_qa_pairs_by_link(qa_pairs_by_chunk, include_difficulty="Medium"):
     qa_pairs_by_link = {}
     for chunk_id, qa_pairs in qa_pairs_by_chunk.items():
         for qa_pair in qa_pairs:
+            if qa_pair.get("difficulty") != include_difficulty: # only include medium difficulty questions to reduce size
+                continue
             link = qa_pair.get("link")
             if link not in qa_pairs_by_link:
                 qa_pairs_by_link[link] = [{
@@ -25,6 +27,7 @@ def group_qa_pairs_by_link(qa_pairs_by_chunk):
 if __name__ == "__main__":
     with open(DATASET_PATH, "r") as rf:
         qa_pairs_by_chunk = json.load(rf)
+        qa_pairs_by_chunk = dict(sorted(qa_pairs_by_chunk.items())) # consistent order of chunks
         qa_pairs_by_link = group_qa_pairs_by_link(qa_pairs_by_chunk)
 
         # dump questions

@@ -7,8 +7,8 @@ from eval.metrics import *
 
 
 # evaluation configuration
-ANSWER_PATH = "eval/answers/chunk_size/med_rag_qwen_500.json"
-RESULT_PATH = "eval/results/chunk_size/gemma_judge/med_rag_qwen_500.json"
+ANSWER_PATH = "eval/answers/synthetic/rag_qwen_all_questions.json"
+RESULT_PATH = "eval/results/synthetic/gemma_judge/rag_qwen_all_questions.json"
 JUDGE = LLM
 TIMEOUT = 0
 
