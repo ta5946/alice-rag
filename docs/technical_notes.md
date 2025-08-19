@@ -40,20 +40,66 @@ With CUDA support, the interface is about 5x faster (~55 tokens per second).
 
 ### HPC machine
 
-To connect to the machine with the MI100:
+To connect to the machine with MI100 GPUs:
 ```bash
-# FROM CERN network or lxplus
-ssh username@alihlt-gw-prod.cern.ch -p 2020
-```
-When connected simply:
-```bash
+# From CERN network or lxplus
+ssh tajdovec@alihlt-gw-prod.cern.ch -p 2020
 ssh epn320
 ```
 
-To check the VRAM usage on AMD graphics cards:
+If we want to access the llama.cpp server on our `pc-alice-ph01` machine, we have to **forward the remote port 8080** to some local port, such as 8090.
+```bash
+ssh -L 0.0.0.0:8090:127.0.0.1:8080 -J tajdovec@alihlt-gw-prod.cern.ch:2020 tajdovec@epn320
+# Prompted for password
+```
+
+To check the VRAM usage on AMD graphics cards and set the visible device(s):
 ```bash
 rocm-smi
+# Visible devices are not ordered
+export HIP_VISIBLE_DEVICES=0
+echo $HIP_VISIBLE_DEVICES
 ```
+
+Because we are not using the standard NVIDIA CUDA toolkit, we have to compile llama.cpp with HIP support:
+```bash
+git clone https://github.com/ggml-org/llama.cpp
+cd llama.cpp
+HIPCXX="$(hipconfig -l)/clang" HIP_PATH="$(hipconfig -R)" \
+    cmake -S . -B build -DGGML_HIP=ON -DAMDGPU_TARGETS=gfx908 -DCMAKE_BUILD_TYPE=Release \
+    && cmake --build build --config Release -- -j 16
+# On finish [100%] Built target llama-server
+```
+
+To manage active ssh connections on local device and remote LLM server(s):
+```bash
+ps -ef | grep ssh
+ps aux | grep llama
+# To kill all ssh connections
+pkill -f "^ssh -[lu]"
+# To terminate all llama-server instances
+pkill -f "^llama.cpp"
+```
+
+---
+
+**Enable port forwarding and run the llama.cpp server on remote machine:**
+```bash
+ssh -f -L 0.0.0.0:<local_port>:127.0.0.1:<remote_port> -J tajdovec@alihlt-gw-prod.cern.ch:2020 tajdovec@epn320 "HIP_VISIBLE_DEVICES=<x> llama.cpp/build/bin/llama-server --hf-repo <user>/<model>:<quant> --n-gpu-layers 1000 --no-kv-offload --ctx-size 32000 --n-predict 4000 --port <remote_port>"
+# Configure --n-predict
+```
+
+We selected the best performing models of sizes up to 30B parameters. Currently, the available LLM instances are:
+
+| Model Name                                                                                                     | Instance URL              | Notes                               |
+|----------------------------------------------------------------------------------------------------------------|---------------------------|-------------------------------------|
+| [gpt-oss-20b](https://huggingface.co/unsloth/gpt-oss-20b-GGUF)                                                 | http://pc-alice-ph01:8090 | Reasoning model                     |
+| [Qwen3-30B-A3B-Instruct-2507](https://huggingface.co/unsloth/Qwen3-30B-A3B-Instruct-2507-GGUF)                 | http://pc-alice-ph01:8091 | Faster because of active parameters |
+| [Mistral-Small-3.2-24B-Instruct-2506](https://huggingface.co/unsloth/Mistral-Small-3.2-24B-Instruct-2506-GGUF) | http://pc-alice-ph01:8092 |                                     |
+| [gemma-3-27b-it](https://huggingface.co/unsloth/gemma-3-27b-it-GGUF)                                           | http://pc-alice-ph01:8093 | Slower architecture?                |
+| [DeepSeek-R1-Distill-Qwen-32B](https://huggingface.co/unsloth/DeepSeek-R1-Distill-Qwen-32B-GGUF)               | http://pc-alice-ph01:8094 | Hard reasoning model                |
+
+They are all reachable via API endpoint like `<llm_url>/v1` or through the unified [OpenWebU chat interface](http://pc-alice-ph01:8081).
 
 ### GitHub workflows
 

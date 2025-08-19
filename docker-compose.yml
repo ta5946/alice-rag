@@ -13,6 +13,7 @@ services:
       --no-kv-offload
       --ctx-size ${CTX_LENGTH}
       --n-predict ${LLM_MAX_TOKENS}
+      --jinja
       --host 0.0.0.0
     deploy:
       resources:
@@ -25,5 +26,6 @@ services:
     network_mode: "host"
     environment:
       - PORT=8081
-      - OPENAI_API_BASE_URLS=${LLM_BASE_URL}
-      - OPENAI_API_KEYS=${LLM_API_KEY}
+      - OPENAI_API_BASE_URLS=http://pc-alice-ph01:8090/v1;http://pc-alice-ph01:8091/v1;http://pc-alice-ph01:8092/v1;http://pc-alice-ph01:8093/v1;http://pc-alice-ph01:8094/v1;${LLM_BASE_URL}
+      - OPENAI_API_KEYS=any;any;any;any;any;${LLM_API_KEY}
+      - WEBUI_AUTH=False
