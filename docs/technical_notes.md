@@ -99,7 +99,7 @@ We selected the best performing models of sizes up to 30B parameters. Currently,
 | [gemma-3-27b-it](https://huggingface.co/unsloth/gemma-3-27b-it-GGUF)                                           | http://pc-alice-ph01:8093 | Slower architecture?                |
 | [DeepSeek-R1-Distill-Qwen-32B](https://huggingface.co/unsloth/DeepSeek-R1-Distill-Qwen-32B-GGUF)               | http://pc-alice-ph01:8094 | Hard reasoning model                |
 
-They are all reachable via API endpoint like `<llm_url>/v1` or through the unified [OpenWebU chat interface](http://pc-alice-ph01:8081).
+They are all reachable via API endpoint like `<llm_url>/v1` or through the unified [OpenWebUI chat interface](http://pc-alice-ph01:8081).
 
 ### GitHub workflows
 
@@ -492,6 +492,16 @@ We also defined low, medium and high recall RAG configurations to observe the pe
 ![Average_response time comparison](/img/plots/5_sample/gemma_judge/time_comparison.png)
 
 
+### Third evaluation
+
+In this iteration we tried to expand the training dataset by generating artificial / **synthetic data**:
+- Question and answer pairs for each existing document,
+- Or paraphrased version of each existing document.
+
+Both strategies **doubled** our training data from 3000 chunks to almost 6000 chunks, but did not improve results (answer correctness metrics).
+![Gemma-as-Judge comparison](/img/plots/synthetic/gemma_judge/llm_judge_score_comparison.png)
+
+
 ## Knowledge base
 
 ### Mattermost question extraction
@@ -756,6 +766,5 @@ Example of a generated changelog:
 - _Cluster Mattermost questions by similarity / topic_
 
 ### Question answering
-- More question-answer pairs
 - Repeat answer extraction process (with GPT or Gemini)
 - Repeat chatbot evaluation (Mistral and other models)

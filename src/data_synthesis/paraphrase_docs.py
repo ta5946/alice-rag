@@ -1,4 +1,3 @@
-import os
 import json
 from tqdm import tqdm
 from src.chatbot.langchain_components import LLM, CHROMA_COLLECTION

@@ -2,20 +2,19 @@ import os
 import json
 import matplotlib.pyplot as plt
 
-RESULT_PATH = "eval/results/chunk_size/gemma_judge"
-PLOT_PATH = "img/plots/chunk_size/gemma_judge"
+RESULT_PATH = "eval/results/synthetic/gemma_judge"
+PLOT_PATH = "img/plots/synthetic/gemma_judge"
 
 
 # plot configuration
 N_SAMPLES = 5
 PLOT_TITLE = f"Results of evaluation on 25 questions (with {N_SAMPLES} sampled answers per question)"
-MODEL_RESULTS = ["med_rag_qwen_500.json", "med_rag_qwen_1000.json", "med_rag_qwen_2000.json", "med_rag_qwen_semantic.json"]
-MODEL_NAMES = ["Qwen2.5 + 500 character chunks", "1000 character chunks", "2000 character chunks", "Semantic chunks"]
+MODEL_RESULTS = ["med_rag_qwen_1000.json", "rag_qwen_medium_questions.json", "rag_qwen_all_paraphrased.json"]
+MODEL_NAMES = ["Qwen2.5 + Medium RAG", "+ Synthetic questions and answers", "+ Paraphrased documents"]
 MODEL_COLORS = [
-    "#aec7e8",  # light blue
     "#1f77b4",  # medium blue
-    "#08306b",  # dark blue
-    "#ff7f0e",  # distinct orange
+    "#ff4136",  # vivid red
+    "#ff851b",  # bright orange
 ]
 
 def plot_metric(metric, y_label, y_min=None, y_max=None):

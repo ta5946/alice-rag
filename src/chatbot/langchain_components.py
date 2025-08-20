@@ -15,50 +15,63 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-LLM = ChatOpenAI(
-    model=os.getenv("HF_LLM_REPO").split("/")[1].split("-GGUF")[0],
-    base_url=os.getenv("LLM_BASE_URL"),
-    api_key=os.getenv("LLM_API_KEY")
-    # max_tokens=int(os.getenv("LLM_MAX_TOKENS")) # set in llama.cpp server
-) # v1 endpoint with no authentication for now
+# LLM = ChatOpenAI(
+#     model=os.getenv("HF_LLM_REPO").split("/")[1].split("-GGUF")[0],
+#     base_url=os.getenv("LLM_BASE_URL"),
+#     api_key=os.getenv("LLM_API_KEY")
+#     # max_tokens=int(os.getenv("LLM_MAX_TOKENS")) # set in llama.cpp server
+# ) # v1 endpoint with no authentication for now
 
-GPT = ChatOpenAI(
-    model="gpt-oss-20b",
-    base_url="http://pc-alice-ph01:8090",
-    api_key="any"
-)
+class External:
+    GEMINI = ChatGoogleGenerativeAI(
+        model=os.getenv("GEMINI_MODEL"),
+        api_key=os.getenv("GEMINI_API_KEY"),
+        max_tokens=int(os.getenv("GEMINI_MAX_TOKENS")) # tested
+    )  # free api key with a rate limit
 
-QWEN = ChatOpenAI(
-    model="Qwen3-30B-A3B-Instruct-2507",
-    base_url="http://pc-alice-ph01:8091",
-    api_key="any"
-)
+    GPT = ChatOpenAI(
+        model="gpt-oss-20b",
+        base_url="http://pc-alice-ph01:8090",
+        api_key="any"
+    )
 
-MISTRAL = ChatOpenAI(
-    model="Mistral-Small-3.2-24B-Instruct-2506",
-    base_url="http://pc-alice-ph01:8092",
-    api_key="any"
-)
+    QWEN = ChatOpenAI(
+        model="Qwen3-30B-A3B-Instruct-2507",
+        base_url="http://pc-alice-ph01:8091",
+        api_key="any"
+    )
 
-GEMMA = ChatOpenAI(
-    model="gemma-3-27b-it",
-    base_url="http://pc-alice-ph01:8093",
-    api_key="any"
-)
+    MISTRAL = ChatOpenAI(
+        model="Mistral-Small-3.2-24B-Instruct-2506",
+        base_url="http://pc-alice-ph01:8092",
+        api_key="any"
+    )
 
-DEEPSEEK = ChatOpenAI(
-    model="DeepSeek-R1-Distill-Qwen-32B",
-    base_url="http://pc-alice-ph01:8094",
-    api_key="any"
-)
+    GEMMA = ChatOpenAI(
+        model="gemma-3-27b-it",
+        base_url="http://pc-alice-ph01:8093",
+        api_key="any"
+    )
 
-# LLM = DEEPSEEK
+    DEEPSEEK = ChatOpenAI(
+        model="DeepSeek-R1-Distill-Qwen-32B",
+        base_url="http://pc-alice-ph01:8094",
+        api_key="any"
+    )
 
-GEMINI = ChatGoogleGenerativeAI(
-    model=os.getenv("GEMINI_MODEL"),
-    api_key=os.getenv("GEMINI_API_KEY"),
-    max_tokens=int(os.getenv("GEMINI_MAX_TOKENS")) # tested
-) # free api key with a rate limit
+    OLD_QWEN = ChatOpenAI(
+        model="Qwen2.5-7B-Instruct",
+        base_url="http://pc-alice-ph01:8095",
+        api_key="any"
+    )
+
+    OLD_GEMMA = ChatOpenAI(
+        model="gemma-2-9b-it",
+        base_url="http://pc-alice-ph01:8096",
+        api_key="any"
+    )
+
+LLM = External.OLD_QWEN
 
 EMBEDDINGS = HuggingFaceEmbeddings(
     model_name=os.getenv("HF_EMBEDDINGS_REPO"),

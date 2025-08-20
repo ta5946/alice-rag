@@ -2,7 +2,7 @@ import re
 import time
 import evaluate
 from sklearn.metrics.pairwise import cosine_similarity
-from src.chatbot.langchain_components import LLM, EMBEDDINGS
+from src.chatbot.langchain_components import *
 import eval.llm_judge_prompts as prompts
 
 
@@ -39,6 +39,19 @@ def llm_judge_score(question, correct_answer, generated_answer, llm=LLM, timeout
         return int(correctness_scores[0])
     else:
         raise ValueError("Invalid correctness score:", assistant_text)
+
+def is_external_judge(judge):
+    for attr_name in dir(External):
+        if getattr(External, attr_name) is judge:
+            return True
+    return False
+
+def judge_name(judge):
+    model = re.match(r"[A-Za-z]+", judge.model_name).group(0) # only leading letters
+    if is_external_judge(judge):
+        return f"external_{model.lower()}_judge"
+    else:
+        return f"{model.lower()}_judge" # compatibility with existing results
 
 
 if __name__ == "__main__":
