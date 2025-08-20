@@ -18,7 +18,6 @@ question_generator_prompt_template = PromptTemplate.from_template("""DOCUMENT:
                    
     QUESTION:""")
 
-
 answer_generator_system_message = SystemMessage(
     content="""You are a question answerer.
     You are provided with some document from the ALICE O2 simulation documentation and a question about it.
@@ -35,3 +34,18 @@ answer_generator_prompt_template = PromptTemplate.from_template("""DOCUMENT:
     {question}
 
     ANSWER:""")
+
+
+paraphraser_system_message = SystemMessage(
+    content="""You are a document paraphraser.
+    You are provided with a chunk of text from the ALICE O2 simulation documentation.
+    Your task is to paraphrase this text.
+    Try to use different wording and sentence structure, while keeping the same meaning and facts.
+    The paraphrased text length should match the original text length.
+    Return only the paraphrased document and nothing else."""
+)
+
+paraphraser_prompt_template = PromptTemplate.from_template("""DOCUMENT:
+    {document}
+
+    PARAPHRASED DOCUMENT:""")

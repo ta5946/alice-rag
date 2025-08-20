@@ -2,7 +2,7 @@ import os
 import json
 from tqdm import tqdm
 from src.chatbot.langchain_components import LLM, CHROMA_COLLECTION
-import src.data_synthesis.qa_generation_prompts as prompts
+import src.data_synthesis.generation_prompts as prompts
 
 
 DATASET_PATH = "./data/synthetic/document_qa_dataset.json"

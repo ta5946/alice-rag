@@ -3,7 +3,7 @@ import json
 
 
 DATASET_PATH = "./data/synthetic/document_qa_dataset.json"
-DUMP_PATH = "./data/knowledge_base/synthetic/"
+DUMP_PATH = "./data/knowledge_base/synthetic/qa/"
 
 def group_qa_pairs_by_link(qa_pairs_by_chunk, include_difficulty="Medium"):
     qa_pairs_by_link = {}
@@ -38,7 +38,7 @@ if __name__ == "__main__":
             file_path = os.path.join(DUMP_PATH, f"{start_chunk_id}.md")
 
             with open(file_path, "w") as wf:
-                # Write metadata
+                # write metadata
                 wf.write("## Metadata\n\n")
                 wf.write(f"**Document link:** {link}\n\n")
                 wf.write(f"**Start chunk id:** {start_chunk_id}\n\n")
