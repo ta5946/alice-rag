@@ -7,9 +7,9 @@ from eval.metrics import *
 
 
 # evaluation configuration
-ANSWER_DIR = "eval/answers/1_sample"
-RESULT_DIR = "eval/results/1_sample"
-JUDGES = [External.GPT, External.QWEN, External.MISTRAL, External.GEMMA, External.DEEPSEEK]
+ANSWER_DIR = "eval/answers/embeddings"
+RESULT_DIR = "eval/results/embeddings"
+JUDGES = [OLD_GEMMA, External.GEMMA, External.QWEN]
 TIMEOUT = 0
 
 def single_calculate_results(answer_path, judge, timeout, result_path):
@@ -151,7 +151,7 @@ def evaluate_directory(answer_dir, judges, timeout, result_dir):
                 continue
 
             print(f"Evaluating {answer_path} with {judge_prefix}...")
-            single_calculate_results(answer_path, judge, timeout, result_path)
+            multiple_calculate_results(answer_path, judge, timeout, result_path)
 
 
 if __name__ == "__main__":

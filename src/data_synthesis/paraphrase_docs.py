@@ -4,8 +4,8 @@ from src.chatbot.langchain_components import LLM, CHROMA_COLLECTION
 from src.data_synthesis.generate_qa_pairs import check_or_create_file
 import src.data_synthesis.generation_prompts as prompts
 
-DATASET_PATH = "./data/synthetic/paraphrased_doc_dataset.json"
 
+DATASET_PATH = "./data/synthetic/paraphrased_doc_dataset.json"
 
 def paraphrase_document(document):
     print("Paraphrasing document...")

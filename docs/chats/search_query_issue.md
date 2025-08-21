@@ -1,4 +1,4 @@
-## When implementing RAG, how to properly generate a search query from the user prompt. What could be the issue with this example? o2-sim material density scaling ALICE simulation documentation examples
+## When implementing RAG, how to properly generate a search query from the user prompt? What could be the issue with this example? o2-sim material density scaling ALICE simulation documentation examples
 
 Generating a **search query** from a user prompt is a crucial step in RAG (Retrieval-Augmented Generation), and getting it wrong can result in poor or irrelevant retrieval. Let’s break down what makes query generation “proper,” then examine your example and what might be going wrong.
 

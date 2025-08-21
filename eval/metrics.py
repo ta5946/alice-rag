@@ -47,11 +47,14 @@ def is_external_judge(judge):
     return False
 
 def judge_name(judge):
-    model = re.match(r"[A-Za-z]+", judge.model_name).group(0) # only leading letters
-    if is_external_judge(judge):
-        return f"external_{model.lower()}_judge"
-    else:
-        return f"{model.lower()}_judge" # compatibility with existing results
+    try:
+        model = re.match(r"[A-Za-z]+", judge.model_name).group(0) # only leading letters
+        if is_external_judge(judge):
+            return f"external_{model.lower()}_judge"
+        else:
+            return f"{model.lower()}_judge" # compatibility with existing results
+    except Exception as error:
+        return "unknown_judge"
 
 
 if __name__ == "__main__":

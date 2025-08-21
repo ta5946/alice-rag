@@ -27,7 +27,7 @@ class External:
         model=os.getenv("GEMINI_MODEL"),
         api_key=os.getenv("GEMINI_API_KEY"),
         max_tokens=int(os.getenv("GEMINI_MAX_TOKENS")) # tested
-    )  # free api key with a rate limit
+    ) # free api key with a rate limit
 
     GPT = ChatOpenAI(
         model="gpt-oss-20b",
@@ -59,35 +59,38 @@ class External:
         api_key="any"
     )
 
-    OLD_QWEN = ChatOpenAI(
-        model="Qwen2.5-7B-Instruct",
-        base_url="http://pc-alice-ph01:8095",
-        api_key="any"
-    )
+OLD_QWEN = ChatOpenAI(
+    model="Qwen2.5-7B-Instruct",
+    base_url="http://pc-alice-ph01:8095",
+    api_key="any"
+)
 
-    OLD_GEMMA = ChatOpenAI(
-        model="gemma-2-9b-it",
-        base_url="http://pc-alice-ph01:8096",
-        api_key="any"
-    )
+OLD_GEMMA = ChatOpenAI(
+    model="gemma-2-9b-it",
+    base_url="http://pc-alice-ph01:8096",
+    api_key="any"
+)
 
-LLM = External.OLD_QWEN
+LLM = OLD_QWEN
 
 EMBEDDINGS = HuggingFaceEmbeddings(
     model_name=os.getenv("HF_EMBEDDINGS_REPO"),
     cache_folder=os.getenv("HF_CACHE_DIR"),
     model_kwargs={"device": "cuda"}, # cpu or cuda
-    encode_kwargs={"batch_size": 10}  # normalize_embeddings=False by default
+    encode_kwargs={"batch_size": 10} # normalize_embeddings=False by default
 ) # normalization not needed if we use cosine similarity
 
 CHROMA_CLIENT = PersistentClient(path=os.getenv("CHROMA_DIR")) # can switch to chromadb.HttpClient()
-CHROMA_COLLECTION = CHROMA_CLIENT.get_or_create_collection(name=os.getenv("CHROMA_COLLECTION_NAME"))
+CHROMA_COLLECTION = CHROMA_CLIENT.get_or_create_collection(
+    name=os.getenv("CHROMA_COLLECTION_NAME"),
+    metadata={"hnsw:space": "cosine"}
+)
+print(CHROMA_COLLECTION.metadata)
 
 VECTORSTORE = Chroma(
     collection_name=os.getenv("CHROMA_COLLECTION_NAME"),
     embedding_function=EMBEDDINGS,
-    client=CHROMA_CLIENT,
-    relevance_score_fn=lambda distance: 1 - distance
+    client=CHROMA_CLIENT
 ) # created in indexer folder
 
 VECTORSTORE_RETRIEVER = VECTORSTORE.as_retriever(
@@ -97,7 +100,7 @@ VECTORSTORE_RETRIEVER = VECTORSTORE.as_retriever(
 
 RERANKER = HuggingFaceCrossEncoder(
     model_name=os.getenv("HF_RERANKER_REPO"),
-    model_kwargs={"cache_folder": os.getenv("HF_CACHE_DIR"),"device": "cpu"} # cuda out of memory
+    model_kwargs={"cache_folder": os.getenv("HF_CACHE_DIR"), "device": "cuda"}
 )
 
 COMPRESSOR = CrossEncoderReranker(

@@ -2,11 +2,11 @@ import os
 import json
 import matplotlib.pyplot as plt
 
+
+# plot configuration
 RESULT_PATH = "eval/results/synthetic/gemma_judge"
 PLOT_PATH = "img/plots/synthetic/gemma_judge"
 
-
-# plot configuration
 N_SAMPLES = 5
 PLOT_TITLE = f"Results of evaluation on 25 questions (with {N_SAMPLES} sampled answers per question)"
 MODEL_RESULTS = ["med_rag_qwen_1000.json", "rag_qwen_medium_questions.json", "rag_qwen_all_paraphrased.json"]

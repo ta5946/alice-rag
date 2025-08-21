@@ -469,9 +469,24 @@ _Find the most similar open source judge by calculating correlation metrics base
 | 5        | Qwen2.5-7B-Instruct        | 0.489                   | 0.499                    | 1.011             |
 | 6        | Meta-Llama-3.1-8B-Instruct | 0.315                   | 0.298                    | 1.171             |
 
-#### Findings: 
+#### Findings:
 - Qwen3-8B is the most reliable reasoning local LLM judge,
 - Gemma-2-9b-it is the best non-reasoning (efficient) judge.
+
+#### Update:
+We repeated the evaluation with some **larger models** (external, served on the AMD machine) and plotted **heatmaps**.
+The correlations between more capable models and Gemini API are higher, but nothing stands out.
+
+_We should use one or a few external models as judges, for example Qwen3-30B-A3B-Instruct or Gemma-3-27b-it._
+
+- Pearson correlations:
+![Person correlation heatmap](/img/plots/correlations/pearson_correlation_heatmap.png)
+
+- Spearman correlations:
+![Spearman correlation heatmap](/img/plots/correlations/spearman_correlation_heatmap.png)
+
+- Root mean squared errors (RMSE):
+![Root mean squared error heatmap](/img/plots/correlations/rmse_heatmap.png)
 
 ### Second evaluation
 
@@ -500,6 +515,8 @@ In this iteration we tried to expand the training dataset by generating artifici
 
 Both strategies **doubled** our training data from 3000 chunks to almost 6000 chunks, but did not improve results (answer correctness metrics).
 ![Gemma-as-Judge comparison](/img/plots/synthetic/gemma_judge/llm_judge_score_comparison.png)
+
+TODO Embeddings
 
 
 ## Knowledge base

@@ -9,7 +9,7 @@ resources:
   - type: git
     url: https://github.com/AliceO2Group/O2DPG
     include: ["**/*.md", "**/*.py", "**/*.sh", "**/*.pdf"]
-    exclude: ["data/**"] # TODO fix exclusion
+    exclude: ["data/**"] # TODO fix exclusion pattern matching
     branch: master
 
   - type: git

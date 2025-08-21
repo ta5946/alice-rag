@@ -45,7 +45,7 @@ if __name__ == "__main__":
                 zip(collection.get("ids"), collection.get("metadatas"), collection.get("documents")),
                 total=len(collection.get("ids")),
                 desc="Processing documents"
-        ): # TODO sliding window
+        ): # could improve with a sliding window
             if json_data.get(identifier):
                 continue
 

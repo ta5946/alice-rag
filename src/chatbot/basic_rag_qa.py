@@ -104,6 +104,7 @@ async def rag_response(prompt, message_history=None, mattermost_context=None, in
     message_history = message_history or prompts.default_message_history # evaluation script workaround
     search_query = await generate_search_query(prompt, message_history, mattermost_context)
     retrieved_docs = await retrieve_documents(search_query, mattermost_context)
+    print("RETRIEVED DOCUMENTS:", len(retrieved_docs))
     if include_links and isinstance(retrieved_docs, list):
         links = [doc.metadata.get("link") for doc in retrieved_docs]
     else:

@@ -6,9 +6,9 @@ import seaborn as sns
 from sklearn.metrics import mean_squared_error
 from scipy.stats import zscore, pearsonr, spearmanr
 
+
 RESULTS_DIR = "eval/results/1_sample"
 PLOT_DIR = "img/plots/correlations"
-
 
 def plot_pearson_heatmap(pearson_matrix, folder_names):
     plt.figure(figsize=(12, 10))
@@ -18,7 +18,6 @@ def plot_pearson_heatmap(pearson_matrix, folder_names):
     plt.savefig(os.path.join(PLOT_DIR, "pearson_correlation_heatmap.png"))
     plt.show()
 
-
 def plot_spearman_heatmap(spearman_matrix, folder_names):
     plt.figure(figsize=(12, 10))
     sns.heatmap(spearman_matrix, annot=True, cmap="coolwarm", center=0, xticklabels=folder_names, yticklabels=folder_names)
@@ -26,7 +25,6 @@ def plot_spearman_heatmap(spearman_matrix, folder_names):
     plt.tight_layout()
     plt.savefig(os.path.join(PLOT_DIR, "spearman_correlation_heatmap.png"))
     plt.show()
-
 
 def plot_rmse_heatmap(rmse_matrix, folder_names):
     plt.figure(figsize=(12, 10))
