@@ -9,3 +9,5 @@ if __name__ == "__main__":
     # 5880 chunks for chunk size 1000 + synthetic paraphrased documents
     # 1450 chunks for chunk size 2000 - checks out
     # 3700 chunks for similarity threshold 0.9
+
+    # 1800 chunks after fixing exclude patterns

@@ -516,7 +516,22 @@ In this iteration we tried to expand the training dataset by generating artifici
 Both strategies **doubled** our training data from 3000 chunks to almost 6000 chunks, but did not improve results (answer correctness metrics).
 ![Gemma-as-Judge comparison](/img/plots/synthetic/gemma_judge/llm_judge_score_comparison.png)
 
-TODO Embeddings
+We also tested larger embedder (`BAAI/bge-m3`) and reranker (`BAAI/bge-reranker-v2-m3`), which were slower and degraded results.
+For example see this [debug question](/eval/answers/embeddings/info.txt). 
+_We should repeat that in the final evaluation with._
+
+### Final evaluation
+
+#### Plan:
+- Construct a larger expert labeled dataset,
+- Use smaller embeddings for now,
+- Evaluate base GEMINI, OLD_QWEN,
+- Evaluate all external models with and without RAG,
+- Use QWEN and GEMMA as judges,
+- Select the best performing model,
+- Try to upscale embeddings,
+- Try to include analysis documentation,
+- Try to include synthetic data,
 
 
 ## Knowledge base
@@ -783,5 +798,5 @@ Example of a generated changelog:
 - _Cluster Mattermost questions by similarity / topic_
 
 ### Question answering
-- Repeat answer extraction process (with GPT or Gemini)
 - Repeat chatbot evaluation (Mistral and other models)
+- Configure LLM and RAG in Mattermost with prefix like `#deepseek` or `/llm_deepseek`

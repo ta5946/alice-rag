@@ -71,13 +71,13 @@ OLD_GEMMA = ChatOpenAI(
     api_key="any"
 )
 
-LLM = OLD_QWEN
+LLM = External.QWEN
 
 EMBEDDINGS = HuggingFaceEmbeddings(
     model_name=os.getenv("HF_EMBEDDINGS_REPO"),
     cache_folder=os.getenv("HF_CACHE_DIR"),
     model_kwargs={"device": "cuda"}, # cpu or cuda
-    encode_kwargs={"batch_size": 10} # normalize_embeddings=False by default
+    encode_kwargs={"batch_size": 10, "normalize_embeddings": True}
 ) # normalization not needed if we use cosine similarity
 
 CHROMA_CLIENT = PersistentClient(path=os.getenv("CHROMA_DIR")) # can switch to chromadb.HttpClient()
@@ -85,7 +85,6 @@ CHROMA_COLLECTION = CHROMA_CLIENT.get_or_create_collection(
     name=os.getenv("CHROMA_COLLECTION_NAME"),
     metadata={"hnsw:space": "cosine"}
 )
-print(CHROMA_COLLECTION.metadata)
 
 VECTORSTORE = Chroma(
     collection_name=os.getenv("CHROMA_COLLECTION_NAME"),

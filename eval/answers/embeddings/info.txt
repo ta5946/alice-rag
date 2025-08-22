@@ -1,1 +1,19 @@
-Wrong due to vector database distance calculation!
+Debug question: "What is a MClabel in ALICE run3 simulation?"
+Correct sources:
+https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo_Transcript.md
+https://github.com/AliceO2Group/AliceO2/blob/dev/run/SimExamples/Jet_Embedding_Pythia8/run.sh
+
+Vectorstore config:
+# small embeddings
+HF_EMBEDDINGS_REPO="BAAI/bge-base-en-v1.5"
+HF_RERANKER_REPO="BAAI/bge-reranker-base"
+CHROMA_TOP_K=25
+CHROMA_TOP_N=10
+CHROMA_THRESHOLD=0.6
+
+# large embeddings
+HF_EMBEDDINGS_REPO="BAAI/bge-m3"
+HF_RERANKER_REPO="BAAI/bge-reranker-v2-m3"
+CHROMA_TOP_K=25
+CHROMA_TOP_N=10
+CHROMA_THRESHOLD=0.5

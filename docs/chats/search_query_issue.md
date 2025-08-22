@@ -1,92 +1,101 @@
-## When implementing RAG, how to properly generate a search query from the user prompt? What could be the issue with this example? o2-sim material density scaling ALICE simulation documentation examples
+## How to properly generate a RAG search query? What could be the issue with this example? "o2-sim material density scaling ALICE simulation documentation examples" (Think hard before responding!)
 
-Generating a **search query** from a user prompt is a crucial step in RAG (Retrieval-Augmented Generation), and getting it wrong can result in poor or irrelevant retrieval. Let’s break down what makes query generation “proper,” then examine your example and what might be going wrong.
+Nice — good eye spotting that query as a red flag. Below I’ll diagnose *exactly* what’s likely to go wrong with:
+
+`o2-sim material density scaling ALICE simulation documentation examples`
+
+and give concrete, ready-to-run replacements and a small recipe you can use in a RAG pipeline (dense vs sparse vs repo search).
+
+# Quick diagnosis — what’s wrong with the example
+
+* **Bag-of-words, no intent.** It’s just tokens; it doesn’t say *what* you want (how-to? API? parameter name? config file?).
+* **Tokenization / spelling variants.** `o2-sim` may appear in sources as `o2`, `o2sim`, `O2-sim`, `ALICE O2` — search may miss variants.
+* **Phrase vs separate tokens.** `material density scaling` might need to stay together as a phrase (`"material density"`) or be expressed as synonyms (`scale density`, `scale factor for density`, `rho`).
+* **Ambiguity (ALICE).** ALICE is an experiment name (not a person) — but plain token matching can return unrelated “Alice” hits.
+* **No filters / metadata.** No repo, path or filetype constraints (docs vs code). RAG benefits from telling the retriever where to look.
+* **Wrong style for retrieval type.** Dense retrievers like natural sentences; BM25-like retrievers prefer targeted keywords/phrases and operators. A single bag-of-words is suboptimal for both.
+
+# Principles (short)
+
+1. **Decide intent** (docs vs examples vs parameter name).
+2. **Normalize entities** (aliases: `o2-sim | o2 | ALICE O2`) and add technical synonyms (`density | mass density | rho`).
+3. **Match query style to retriever** — full sentence for embeddings, quoted phrases + operators for sparse search, repo/filetype filters for code search.
+4. **Generate several variants** and run them (hybrid retrieval + rerank).
+5. **Use relevance feedback** (extract phrases from top hits, reformulate).
+
+# Concrete improved queries — ready to use
+
+**Dense / embedding-style (best for semantic vector retrieval / reranker)**
+
+> `How can I apply a material density scaling factor in the ALICE O2 (o2-sim) simulation? Looking for documentation, config options and example code.`
+
+**Sparse / BM25 / Elasticsearch-style (use quotes & operators)**
+
+> `"material density" AND (scale OR scaling OR "scale factor") AND ("o2-sim" OR "ALICE O2") AND (documentation OR example OR tutorial)`
+
+**Code-repo / GitHub-style (template)**
+
+> `repo:<org>/<repo> "material density" (scale OR scaling) path:docs filename:md`
+> (Replace `<org>/<repo>` with the real repo; or use `org:AliceO2` if searching an organization.)
+
+**Google / site-limited search**
+
+> `site:gitlab.cern.ch "material density" "o2-sim" example`
+> (or `site:github.com "material density" "ALICE O2"`)
+
+**Normalized/variant-aware query (ORs for token variants & synonyms)**
+
+> `("o2-sim" OR "o2sim" OR "ALICE O2" OR "O2") AND ("material density" OR "mass density" OR rho OR "density scaling") AND (example OR tutorial OR documentation)`
+
+**Elasticsearch match/phrase JSON (example snippet)**
+
+```json
+{
+  "query": {
+    "bool": {
+      "must": [
+        { "match": { "project": "o2-sim" }},
+        { "match_phrase": { "content": "material density" }},
+        {
+          "multi_match": {
+            "query": "scale scaling example documentation",
+            "fields": ["content^2", "title"]
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+# Quick prompt you can use inside your RAG pipeline (LLM-based query rewriter)
+
+Use this to automatically turn user text into search-friendly variants:
+
+```
+Input: <raw user query>
+Task: Produce 3 queries for each retriever type:
+  - dense: 1 concise natural-language question
+  - sparse: 2 keyword/boolean queries (one strict with quotes, one broader)
+  - repo: 2 repo-style queries (GitHub/GitLab)
+Include synonyms and token variants. Keep each query ≤ 30 words.
+```
+
+# Why this actually improves retrieval
+
+* **Dense**: full sentence captures user intent and gets semantically similar passages.
+* **Sparse**: quotes + boolean force exact phrase matches and raise precision for docs that literally explain the parameter.
+* **Repo filters**: drastically reduce noise from unrelated sites and prioritize README/docs/configs.
+* **Variant ORs** handle different tokenizations/aliases.
+
+# Debugging checklist (if results are still bad)
+
+* Inspect top-5 results: are they on-topic? If *too few* relevant results → **broaden** (drop a constraint). If *too many* irrelevant → **narrow** (add quotes or repo/filetype).
+* Try synonyms: `rho`, `mass density`, `scale factor`.
+* Look for parameter names in top docs (e.g., `MaterialDensityScale`) and re-query that exact token.
+* Use pseudo-relevance feedback: take top doc, extract candidate phrases, re-query.
+* Use hybrid: run both dense and sparse, then deduplicate + rerank.
 
 ---
 
-### ✅ Proper Query Generation in RAG
-
-A good search query should be:
-
-1. **Concise but specific** – Capture the core informational need.
-2. **Context-aware** – Understand implicit references or domain-specific shorthand.
-3. **Disambiguated** – Avoid vagueness or overloading with unrelated terms.
-4. **Retrieval-optimized** – Tuned for the retriever, not necessarily human readability.
-
----
-
-### 🔍 Your Example Prompt
-
-> **o2-sim material density scaling ALICE simulation documentation examples**
-
-Let’s dissect this:
-
-* **"o2-sim"** – likely a reference to ALICE’s simulation framework (in CERN).
-* **"material density scaling"** – seems to be the core topic (likely detector materials).
-* **"ALICE simulation"** – context (important).
-* **"documentation examples"** – type of resource requested.
-
----
-
-### 🚫 Possible Issues with This Query
-
-1. **Lack of structure or clarity**:
-
-   * It reads like a keyword soup, not a coherent question or phrase.
-   * Retrievers may treat this as a bag of words and miss the relationships.
-
-2. **Mixed intent**:
-
-   * Are you looking for *how material density scaling works*?
-   * Or for *code examples* in O2 simulation?
-   * Or where it's *documented*?
-
-3. **Unnecessary duplication**:
-
-   * "ALICE" and "simulation" are implied in "o2-sim".
-
-4. **Too domain-specific without context**:
-
-   * General-purpose retrievers (like BM25 or even embeddings) may not pick up on what “material density scaling” means without extra semantic structure.
-
----
-
-### ✅ Better Alternatives
-
-Here are some rewrites that make retrieval clearer:
-
-#### 📘 If you want **documentation**:
-
-> `How is material density scaling handled in o2-sim for ALICE simulations?`
-
-#### 💻 If you want **code/examples**:
-
-> `o2-sim material density scaling code example ALICE detector simulation`
-
-#### 🔍 For a more general query:
-
-> `material density scaling in o2-sim ALICE simulation framework`
-
----
-
-### ⚙️ Techniques to Improve Query Generation
-
-If you're automating this (as in a RAG pipeline), use:
-
-1. **Prompted LLM-based query rewriting**:
-   Example prompt to an LLM:
-
-   > "Rewrite the following user question into a concise search query for retrieving relevant ALICE O2-sim documentation: '\[original prompt]'"
-
-2. **Prompt classification → query templates**:
-   Classify intent (e.g., docs, code, explanation), then apply a template:
-
-   * Code intent → `"example of [concept] in [framework]"`
-   * Docs intent → `"how does [framework] handle [concept]"`
-
-3. **Named Entity / Concept Recognition**:
-   Use tools like spaCy or SciSpacy to extract domain terms and reweight query tokens.
-
----
-
-Would you like a small LangChain or Python example of how to automatically rewrite the query using an LLM or template?
+If you want, I’ll rewrite that exact short query into: (A) 5 dense variants, (B) 5 sparse/boolean queries, and (C) 3 GitHub-style repo queries tuned to your repository naming (tell me the repo/org if you want them targeted). Which of those would help you most right now?

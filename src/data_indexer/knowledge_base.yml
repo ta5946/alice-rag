@@ -3,13 +3,13 @@ resources:
     url: https://github.com/AliceO2Group/simulation
     include: ["docs/**/*.md", "**/*.py", "**/*.sh", "**/*.pdf",
               "additional_resources/**/*.md"]
-    exclude: ["_sass/**"]
+    exclude: ["_sass/**/*"]
     branch: main
 
   - type: git
     url: https://github.com/AliceO2Group/O2DPG
     include: ["**/*.md", "**/*.py", "**/*.sh", "**/*.pdf"]
-    exclude: ["data/**"] # TODO fix exclusion pattern matching
+    exclude: ["DATA/**/*"]
     branch: master
 
   - type: git
@@ -21,7 +21,7 @@ resources:
   - type: git
     url: https://github.com/ta5946/alice-rag
     include: ["data/knowledge_base/**/*.pdf", "data/knowledge_base/**/*.md"]
-    exclude: ["data/knowledge_base/synthetic/qa/**/*.md", "data/knowledge_base/synthetic/docs/**/*.md"]
+    exclude: ["data/knowledge_base/synthetic/**/*"]
     branch: master
 
   # focus on simulations for now

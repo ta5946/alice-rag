@@ -11,7 +11,7 @@ from src.chatbot.basic_rag_qa import rag_response
 # evaluation configuration
 DATASET_PATH = "eval/datasets/expert_qa_dataset_gpt.json"
 ANSWER_GENERATOR = partial(rag_response, include_links=False)
-ANSWER_PATH = "eval/answers/embeddings/rag_qwen_new.json"
+ANSWER_PATH = "eval/answers/embeddings/rag_qwen_large.json"
 N_ANSWERS = 5
 
 async def base_llm(question):
