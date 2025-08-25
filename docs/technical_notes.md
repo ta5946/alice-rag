@@ -115,8 +115,8 @@ pylint $(git ls-files '*.py')
 
 ### LLM selection
 
-Models were selected based on [Chatbot Arena](https://huggingface.co/spaces/lmarena-ai/chatbot-arena-leaderboard) scores, the number of HuggingFace downloads 
-and space limitations of the NVIDIA GeForce RTX 2080 GPU.
+Models were selected based on [Chatbot Arena](https://huggingface.co/spaces/lmarena-ai/chatbot-arena-leaderboard) scores, the number of HuggingFace downloads and space limitations of the NVIDIA GeForce RTX 2080 GPU.
+Another trustworthy benchmark: https://livebench.ai/.
 
 | Model                      | Quantization | Size   | Context length | Notes                                              |
 |----------------------------|--------------|--------|----------------|----------------------------------------------------|
@@ -551,6 +551,12 @@ _I will provide you with text that contains questions and answers. Your task is 
 
 The process is demonstrated in [this chat](https://chatgpt.com/share/687e3d47-3f54-8013-916b-d15158683e78). 
 The extracted knowledge / qa pairs are stored in the file `eval/datasets/qa_dataset_gpt.json`.
+
+Before the final evaluation we repeated the answer extraction with GPT-5, enabled thinking and different prompt:
+
+_I will provide you with text that contains both questions and answers about running ALICE O2 simulations. Your task is to answer each question and return a list of JSON objects like: {"question", "answer"}. So if there are multiple questions extract the relevant parts of answer for each, and if there is no matching answer set the field to None. Use only the provided information._
+
+We also included 10 more question-answer pairs. That makes the total length of evaluation dataset `n = 35`.
 
 
 ## Code generation
