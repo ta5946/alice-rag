@@ -71,7 +71,8 @@ OLD_GEMMA = ChatOpenAI(
     api_key="any"
 )
 
-LLM = External.DEEPSEEK
+LLM = External.QWEN
+
 
 EMBEDDINGS = HuggingFaceEmbeddings(
     model_name=os.getenv("HF_EMBEDDINGS_REPO"),
@@ -79,23 +80,6 @@ EMBEDDINGS = HuggingFaceEmbeddings(
     model_kwargs={"device": "cuda"}, # cpu or cuda
     encode_kwargs={"batch_size": 10, "normalize_embeddings": True}
 ) # normalization not needed if we use cosine similarity
-
-CHROMA_CLIENT = PersistentClient(path=os.getenv("CHROMA_DIR")) # can switch to chromadb.HttpClient()
-CHROMA_COLLECTION = CHROMA_CLIENT.get_or_create_collection(
-    name=os.getenv("CHROMA_COLLECTION_NAME"),
-    metadata={"hnsw:space": "cosine"}
-)
-
-VECTORSTORE = Chroma(
-    collection_name=os.getenv("CHROMA_COLLECTION_NAME"),
-    embedding_function=EMBEDDINGS,
-    client=CHROMA_CLIENT
-) # created in indexer folder
-
-VECTORSTORE_RETRIEVER = VECTORSTORE.as_retriever(
-    search_type="similarity_score_threshold",
-    search_kwargs={"k": int(os.getenv("CHROMA_TOP_K")), "score_threshold": float(os.getenv("CHROMA_THRESHOLD"))}
-) # generalized retriever class
 
 RERANKER = HuggingFaceCrossEncoder(
     model_name=os.getenv("HF_RERANKER_REPO"),
@@ -107,10 +91,47 @@ COMPRESSOR = CrossEncoderReranker(
     top_n=int(os.getenv("CHROMA_TOP_N"))
 ) # compresses the context to only top n documents
 
-COMPRESSION_RETRIEVER = ContextualCompressionRetriever(
-    base_compressor=COMPRESSOR,
-    base_retriever=VECTORSTORE_RETRIEVER
+
+CHROMA_CLIENT = PersistentClient(path=os.getenv("CHROMA_DIR")) # can switch to chromadb.HttpClient()
+CHROMA_COLLECTION = CHROMA_CLIENT.get_or_create_collection(
+    name=os.getenv("CHROMA_COLLECTION_NAME"),
+    metadata={"hnsw:space": "cosine"}
 )
+
+SIMULATION_VECTORSTORE = Chroma(
+    collection_name="simulation",
+    embedding_function=EMBEDDINGS,
+    client=CHROMA_CLIENT
+) # created in indexer folder
+
+SIMULATION_RETRIEVER = SIMULATION_VECTORSTORE.as_retriever(
+    search_type="similarity_score_threshold",
+    search_kwargs={"k": int(os.getenv("CHROMA_TOP_K")), "score_threshold": float(os.getenv("CHROMA_THRESHOLD"))}
+) # generalized retriever class
+
+SIMULATION_COMPRESSION_RETRIEVER = ContextualCompressionRetriever(
+    base_compressor=COMPRESSOR,
+    base_retriever=SIMULATION_RETRIEVER
+)
+
+ANALYSIS_VECTORSTORE = Chroma(
+    collection_name="analysis",
+    embedding_function=EMBEDDINGS,
+    client=CHROMA_CLIENT
+) # created in indexer folder
+
+ANALYSIS_RETRIEVER = SIMULATION_VECTORSTORE.as_retriever(
+    search_type="similarity_score_threshold",
+    search_kwargs={"k": int(os.getenv("CHROMA_TOP_K")), "score_threshold": float(os.getenv("CHROMA_THRESHOLD"))}
+) # generalized retriever class
+
+ANALYSIS_COMPRESSION_RETRIEVER = ContextualCompressionRetriever(
+    base_compressor=COMPRESSOR,
+    base_retriever=SIMULATION_RETRIEVER
+)
+
+DB = SIMULATION_COMPRESSION_RETRIEVER
+
 
 TRACING_CLIENT = get_client()
 TRACING_HANDLER = CallbackHandler()

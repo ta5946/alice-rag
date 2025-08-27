@@ -43,11 +43,12 @@ basic_prompt_template = PromptTemplate.from_template("""(
     
     ANSWER:""")
 
-user_feedback_suffix = """
+user_feedback_suffix = PromptTemplate.from_template("""
 
 ---
 
-_Help us improve the askALICE chatbot by providing your feedback. React to this message with 👍 if the answer was helpful or 👎 if it was not._"""
+_This response used **{llm}** model and **{db}** database.
+Help us improve the askALICE chatbot by providing your feedback - React to this message with 👍 if the answer was helpful or 👎 if it was not._""")
 
 
 querier_system_message = SystemMessage(

@@ -1,4 +1,5 @@
 import os
+import re
 import asyncio
 from mattermostdriver import Driver
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
@@ -32,6 +33,8 @@ MATTERMOST_DRIVER.login()
 BOT_ID = MATTERMOST_DRIVER.users.get_user("me").get("id")
 
 TRACING_CLIENT = get_client()
+USER_PARAMS_RE = r"#(model|db):(\S+)"
+BOT_SUFFIX_RE = re.escape("\n\n---\n\n_This response used **")
 
 
 def get_thread_messages(thread_id):
@@ -40,10 +43,12 @@ def get_thread_messages(thread_id):
         sorted_posts = sorted(posts.values(), key=lambda p: p["create_at"])
         messages = []
         for post in sorted_posts:
-            message = post.get("message").replace(prompts.user_feedback_suffix, "") # remove user feedback suffix
+            message = post.get("message")
             if post.get("user_id") == BOT_ID:
+                message = re.sub(BOT_SUFFIX_RE + r".*$", "", message, flags=re.DOTALL).strip()
                 messages.append(AIMessage(content=message))
             else:
+                message = re.sub(USER_PARAMS_RE, "", message, flags=re.IGNORECASE).strip() # remove #model:_ and #db:_ tags from user messages
                 messages.append(HumanMessage(content=message))
         return messages
 
@@ -86,3 +91,13 @@ def score_message(post_id, score_context):
 async def delayed_score_message(post_id, score_context, delay=2):
     await asyncio.sleep(delay)
     await asyncio.to_thread(score_message, post_id, score_context)
+
+def get_thread_tags(thread_id):
+    try:
+        trace_list = TRACING_CLIENT.api.trace.list(tags=[f"thread_id:{thread_id}"], order_by="timestamp.desc")
+        trace = trace_list.data[0] # ensure most recent trace
+        return trace.tags
+
+    except Exception as error:
+        print(f"get_thread_tags(): {error}")
+        return []
