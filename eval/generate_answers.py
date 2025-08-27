@@ -8,21 +8,22 @@ from src.chatbot.langchain_components import LLM, External
 from src.chatbot.basic_rag_qa import rag_response
 
 
-# evaluation configuration
-DATASET_PATH = "eval/datasets/expert_qa_dataset_gpt.json"
-ANSWER_GENERATOR = partial(rag_response, include_links=False)
-ANSWER_PATH = "eval/answers/embeddings/rag_qwen_large.json"
-N_ANSWERS = 5
-
 async def base_llm(question):
     # await asyncio.sleep(1) # to not overload the llama.cpp server (1 second?)
     assistant_message = await LLM.ainvoke(question) # hangs at "srv log_server_r: request: GET /health 127.0.0.1 20"
     return assistant_message.content
 
 async def base_gemini(question):
-    await asyncio.sleep(3) # wait for N seconds to avoid rate limit
+    # await asyncio.sleep(3) # wait for N seconds to avoid rate limit
     assistant_message = await External.GEMINI.ainvoke(question) # sometimes returns empty content
     return assistant_message.content
+
+
+# evaluation configuration
+DATASET_PATH = "eval/datasets/final_expert_qa_dataset.json"
+ANSWER_GENERATOR = partial(rag_response, include_links=False)
+ANSWER_PATH = "eval/answers/final/rag_external_deepseek.json"
+N_ANSWERS = 5
 
 async def generate_answers():
     # load dataset

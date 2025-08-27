@@ -1,0 +1,702 @@
+[
+    {
+        "id": 1,
+        "author": "Marco",
+        "question": "How do you run a simple simulation at generation level?",
+        "correct_answer": "The basic way is to use the o2-sim executable provided natively by the O2sim environment.\nThe executable allows to enable particle transport through a simulated version of the ALICE subdetectors via Geant4 (default), Geant3 or FLUKA. \nThe easiest command one could execute is:\n```\no2-sim -n 10 -g pythia8pp\n```\nwhich will run 10 events with the default configuration of Pythia8 in pp collisions transported using Geant4.",
+        "generated_answers": [
+            "o2-sim -n 10 -g pythia8pp \no2-sim -n 10 -g pythia8pp -j 8 --skipModules ZDC --field 2 -e TGeant3\no2-sim -n 10 -g pythia8pp --noGeant \n(https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf)",
+            "```bash\no2-sim -n 10 -g pythia8pp\n```",
+            "```bash\no2-sim -n 10 -g pythia8pp\n```\n\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)\n[https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf](https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf)",
+            "o2-sim -n 10 -g pythia8pp \n\no2-sim -n 10 -g pythia8pp -j 8 --skipModules ZDC --field 2 -e TGeant3\n\no2-sim -n 10 -g pythia8pp --noGeant\n\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)\n[https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf](https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf)",
+            "```bash\no2-sim -n 10 -g pythia8pp\no2-sim -n 10 -g pythia8pp -j 8 --skipModules ZDC --field 2 -e TGeant3\no2-sim -n 10 -g pythia8pp --noGeant\n```\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)"
+        ],
+        "times": [
+            22.72926163673401,
+            16.195215702056885,
+            25.964312076568604,
+            28.727830410003662,
+            25.097464561462402
+        ]
+    },
+    {
+        "id": 2,
+        "author": "Marco",
+        "question": "What are the differences between using o2-sim and running a full simulation workflow?",
+        "correct_answer": "o2-sim is the main executable to run simulations, but it's a single step that will ultimately lead to a kinematic file and Hits files if the particles are transported to the various subdetectors. A simulation workflow instead contains multiple steps that mimic entirely the data workflow of the ALICE experiment.",
+        "generated_answers": [
+            "o2-sim is the particle-detector simulator for ALICE Run3, implementing the ALICE detector on top of particle-transport engines like Geant4, Geant3, and FLUKA. Its main tasks include ALICE geometry creation, event generation, simulating particle interactions, and creating hits. \n\nA full simulation workflow includes event generation, transport simulation (like o2-sim), digitization, reconstruction, QC, and analysis. o2-sim focuses on the transport simulation part, while a full workflow exercises all components. ([https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf))",
+            "o2-sim is the particle-detector simulator for ALICE Run3, handling ALICE geometry creation, event generation, simulation of particle interactions, and hit creation. A full simulation workflow goes beyond o2-sim to include digitization and reconstruction steps, forming a complete algorithmic pipeline. This full workflow is complex and is typically managed by systems like O2DPG for GRID productions. ([https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf), [https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf))",
+            "I do not know the answer.",
+            "I do not know the answer.",
+            "I do not know the answer."
+        ],
+        "times": [
+            26.28322410583496,
+            30.163820266723633,
+            16.123534440994263,
+            16.114331007003784,
+            16.12705659866333
+        ]
+    },
+    {
+        "id": 3,
+        "author": "Marco",
+        "question": "Which generators are natively included in AliGenO2?",
+        "correct_answer": "From the alidist recipe of the package, one can make a list of all the generators contained, which are:\n- DPMJET\n- POWHEG\n- PYTHIA8\n- ThePEG\n- SHERPA\n- JETSCAPE\n- CRMC\n- EPOS4\n- EPOS4HQ\n- STARlight\n- Upcgen\n- Graniitti\n- nOOn",
+        "generated_answers": [
+            "Pythia8 is natively included in AliGenO2. [https://github.com/AliceO2Group/simulation/blob/main/docs/generators/generatorso2.md](https://github.com/AliceO2Group/simulation/blob/main/docs/generators/generatorso2.md)",
+            "Pythia8 is natively included in AliGenO2. It has 5 different options that can be directly used with `o2-sim -g <generator>`. [https://github.com/AliceO2Group/simulation/blob/main/docs/generators/generatorso2.md](https://github.com/AliceO2Group/simulation/blob/main/docs/generators/generatorso2.md)",
+            "Pythia8 is natively included in AliGenO2. Additionally, \u201cexternal\u201d generators can be interfaced via just-in-time ROOT macros implementing a GeneratorTGenerator class. \n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf)",
+            "pythia8, pythia8pp, pythia8hf, pythia8hi, pythia8powheg, boxgen, hepmc, evtpool, extkinO2, external. [https://github.com/AliceO2Group/simulation/blob/main/docs/generators/generatorso2.md]",
+            "Pythia8 is natively included in AliGenO2. It has 5 different options/values which can be directly used as `<generator>` in `o2-sim -g <generator>`. [https://github.com/AliceO2Group/simulation/blob/main/docs/generators/generatorso2.md](https://github.com/AliceO2Group/simulation/blob/main/docs/generators/generatorso2.md)"
+        ],
+        "times": [
+            18.735778093338013,
+            19.962080478668213,
+            27.957897663116455,
+            18.861239910125732,
+            20.30086588859558
+        ]
+    },
+    {
+        "id": 4,
+        "author": "Marco",
+        "question": "How do you create and use event pools?",
+        "correct_answer": "The creation of event pools is done via the `--make-evtpool` flag of the workflow creator. This generates a JSON workflow that skips the AOD creation and, instead, moves to a *poolmerge* step that merges the output from the various timeframes generated into a single `evtpool.root` file.\nAn easy example is:\n```bash\n${O2DPG_ROOT}/MC/bin/o2dpg_sim_workflow.py -gen pythia8pp -eCM 13000 -tf 8 -ns 100 --make-evtpool -interactionRate 500000 -seed 123\n${O2DPG_ROOT}/MC/bin/o2dpg_workflow_runner.py -f workflow.json -tt pool\n```\nThe generated file can later be used via the `evtpool` generator that allows multiple events reading customisations (round-robin, randomisation etc.) and is compatible with either local paths or alien ones, making it extremely versatile. A configuration example using the hybrid generator is:\n```JSON\n{\n  \"name\": \"evtpool\",\n  \"config\": {\n    \"eventPoolPath\": \"alien:///alice/sim/2025/EP25f1/2\",\n    \"skipNonTrackable\": true,\n    \"roundRobin\": false,\n    \"randomize\": true,\n    \"rngseed\": 0,\n    \"randomphi\": false\n  }\n}\n```",
+        "generated_answers": [
+            "I do not know the answer.",
+            "I do not know the answer.",
+            "I do not know the answer.",
+            "I do not know the answer.",
+            "I do not know the answer."
+        ],
+        "times": [
+            17.073526859283447,
+            16.878445863723755,
+            16.897093296051025,
+            16.43462824821472,
+            17.49581480026245
+        ]
+    },
+    {
+        "id": 5,
+        "author": "Marco",
+        "question": "Can you provide CCDB objects for simulations instead of downloading them each time? If so, how?",
+        "correct_answer": "Yes this is achievable thanks to local CCDB snapshots. The O2DPG workflow fetches automatically all the CCDB objects and caches them into the current execution path in a *ccdb* folder. Instead of downloading them each time, experts can provide local folders using:\n```bash\nexport ALICEO2_CCDB_LOCALCACHE=/<your>/<path>\n```\nor while executing the workflow runner with:\n```bash\nALICEO2_CCDB_LOCALCACHE=${YOURPATH} o2_dpg_workflow_runner.py \u2026\n```\nMoreover a script is available to download CCDB objects manually\n```bash\n${O2_ROOT}/bin/o2-ccdb-downloadccdbfile --host http://alice-ccdb.cern.ch -p TPC/Calib/CorrectionMapRef --timestamp <timestamp> --created-not-after 3385078236000 \n-d ${YOURPATH}\n```",
+        "generated_answers": [
+            "Yes, you can use CCDB snapshots instead of downloading objects each time. When an object is requested for the first time, it is downloaded and cached. Subsequent requests are redirected to the cached object. \n\nBy default, the cache directory is `${CWD}/ccdb`, but it can be changed using:\n\n```bash\nexport ALICEO2_CCDB_LOCALCACHE=/path/to/snapshot_cache\n```\n\nYou can also copy a snapshot directory from a previous simulation run to avoid accessing the CCDB altogether. Note that no timestamp check is performed when using cached objects.\n\n[https://github.com/AliceO2Group/simulation/blob/main/docs/o2dpgworkflow/ccdb.md](https://github.com/AliceO2Group/simulation/blob/main/docs/o2dpgworkflow/ccdb.md)",
+            "This mechanism can also be useful to run a simulation without the need to access the CCDB at all: Simply refer to or copy a snapshot directory from a previous simulation run to the directory you are running the current simulation in. \n\n**NOTE**: No check is done on whether the timestamp of your simulation corresponds to the cached objects; they will simply be used as-is and are only identified by their path. [https://github.com/AliceO2Group/simulation/blob/main/docs/o2dpgworkflow/ccdb.md#use-custom-objectssnapshots](https://github.com/AliceO2Group/simulation/blob/main/docs/o2dpgworkflow/ccdb.md#use-custom-objectssnapshots)",
+            "Yes, you can use custom CCDB objects/snapshots instead of downloading them each time. \n\nHere's how:\n\n1.  **Caching:** When an object is requested for the first time, it is downloaded and cached (by default in `${CWD}/ccdb`). Subsequent requests will use the cached object. You can change the cache directory using `export ALICEO2_CCDB_LOCALCACHE=/path/to/snapshot_cache`. ([https://github.com/AliceO2Group/simulation/blob/main/docs/o2dpgworkflow/ccdb.md](https://github.com/AliceO2Group/simulation/blob/main/docs/o2dpgworkflow/ccdb.md))\n2.  **Custom Objects:** You can inject custom objects into your workflow by downloading them with `${O2_ROOT}/bin/o2-ccdb-downloadccdbfile` before starting the simulation. For example: `${O2_ROOT}/bin/o2-ccdb-downloadccdbfile --host http://alice-ccdb.cern.ch -p TPC/Calib/Align --timestamp <timestamp> -d ${ALICEO2_CCDB_LOCALCACHE}`. ([https://github.com/AliceO2Group/simulation/blob/main/docs/o2dpgworkflow/ccdb.md](https://github.com/AliceO2Group/simulation/blob/main/docs/o2dpgworkflow/ccdb.md))\n3.  **Using Existing Snapshots:** You can also copy a snapshot directory from a previous simulation run to the current simulation directory. ([https://github.com/AliceO2Group/simulation/blob/main/docs/o2dpgworkflow/ccdb.md](https://github.com/AliceO2Group/simulation/blob/main/docs/o2dpgworkflow/ccdb.md))\n\n\n\n",
+            "Yes, you can avoid downloading CCDB objects each time by using snapshots. When an object is requested for the first time, it is downloaded and cached. Subsequent requests are redirected to the cached object instead of querying the CCDB again. \n\nYou can change the default cache directory (`${CWD}/ccdb`) by setting the environment variable:\n\n```bash\nexport ALICEO2_CCDB_LOCALCACHE=/path/to/snapshot_cache\n```\n\nYou can also reuse a snapshot directory from a previous simulation run.\n\n[https://github.com/AliceO2Group/simulation/blob/main/docs/o2dpgworkflow/ccdb.md](https://github.com/AliceO2Group/simulation/blob/main/docs/o2dpgworkflow/ccdb.md)\n\n\n\n",
+            "Yes, you can provide CCDB objects for simulations instead of downloading them each time. \n\nThe following CCDB objects are commonly used:\n\n*   `/CTP/Calib/OrbitReset`\n*   `/GLO/Config/GRPMagField/`\n*   `/GLO/Config/GRPLHCIF`\n*   `/ITS/Calib/DeadMap`\n*   `/ITS/Calib/NoiseMap`\n*   `/ITS/Calib/ClusterDictionary`\n*   `/TPC/Calib/PadGainFull`\n*   `/TPC/Calib/TopologyGain`\n*   `/TPC/Calib/TimeGain`\n*   `/TPC/Calib/PadGainResidual`\n*   `/TPC/Config/FEEPad`\n*   `/TOF/Calib/Diagnostic`\n*   `/TOF/Calib/LHCphase`\n*   `/TOF/Calib/FEELIGHT`\n*   `/TOF/Calib/ChannelCalib`\n*   `/MFT/Calib/DeadMap`\n*   `/MFT/Calib/NoiseMap`\n*   `/MFT/Calib/ClusterDictionary`\n*   `/MFT/Calib/Align`\n*   `/FT0/Calibration/ChannelTimeOffset`\n*   `/FV0/Calibration/ChannelTimeOffset`\n*   `/GLO/GRP/BunchFilling`\n\nThese objects can be downloaded using the command:\n\n```bash\no2-ccdb-downloadccdbfile --host http://alice-ccdb.cern.ch/ -p ${CCDBOBJECTS} -d .ccdb --timestamp ${TIMESTAMP}\n```\n\n[https://github.com/AliceO2Group/O2DPG/blob/master/MC/run/ANCHOR/2022/JUN/pass1/anchorMC.sh](https://github.com/AliceO2Group/O2DPG/blob/master/MC/run/ANCHOR/2022/JUN/pass1/anchorMC.sh)\n\n[https://github.com/AliceO2Group/O2DPG/blob/master/MC/run/PWGHF/run_pp_anchor2022_D2H_ccbar_and_bbbar_gap5.sh](https://github.com/AliceO2Group/O2DPG/blob/master/MC/run/PWGHF/run_pp_anchor2022_D2H_ccbar_and_bbbar_gap5.sh)\n\n[https://github.com/AliceO2Group/O2DPG/blob/master/MC/run/ANCHOR/2021/OCT/pass4/anchorMC.sh](https://github.com/AliceO2Group/O2DPG/blob/master/MC/run/ANCHOR/2021/OCT/pass4/anchorMC.sh)"
+        ],
+        "times": [
+            25.102555990219116,
+            24.5906343460083,
+            36.91244578361511,
+            24.453564643859863,
+            48.66673183441162
+        ]
+    },
+    {
+        "id": 6,
+        "author": "Marco",
+        "question": "What are the components of a full simulation workflow?",
+        "correct_answer": "A simplified list of all the steps is:\n- Simulation configuration &rarr; CCDB objects are downloaded and the global run parameters are set\n- Collisions simulation &rarr; particles collisions are generated via the pre-defined Monte Carlo generator\n- Particles transport &rarr; output from previous step is transported via GEANT4 (by default) to the virtual representation of the ALICE detectors taken into account\n- Digitisation &rarr; virtual hits from the transport are digitised, as if they were transformed from real detectors analogic signals\n- Reconstruction &rarr; tracks of the subdetectors are found\n- Tracks matching &rarr; the output from the various detectors are processed to match together their signals\n- Vertexing &rarr; primary and secondary vertexes are built\n- AO2D creation \n",
+        "generated_answers": [
+            "Event generation, transport simulation, and digitization. Additionally, MC workflows may exercise reconstruction, QC, analysis, etc.",
+            "The components of a full simulation workflow are: event generation, transport simulation, digitization, reconstruction, QC, and analysis. \n([https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf), [https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf](https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf), [https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf))",
+            "Event generation, transport simulation, and digitization. In addition, MC workflows may exercise reconstruction, QC, and analysis. \n\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf]",
+            "The components of a full simulation workflow are:\n\n*   Geometry file\n*   Kinematics file\n*   Detector response files (hits)\n*   Digitization\n*   Reconstruction\n*   Physics\n*   Analysis\n*   Event generation\n*   Transport simulation\n\n([https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf), [https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf](https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf), [https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf))",
+            "Event generation, transport simulation, and digitization. Additionally, the workflow may exercise reconstruction, QC, analysis, and AOD creation. \n\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf)"
+        ],
+        "times": [
+            17.673428297042847,
+            31.98699426651001,
+            20.540093898773193,
+            33.851306200027466,
+            23.11886715888977
+        ]
+    },
+    {
+        "id": 7,
+        "author": "Marco",
+        "question": "Can you read HepMC formatted data?",
+        "correct_answer": "Yes, **O2sim** includes the custom *GeneratorHepMC* that is able to read both HepMC2 and HepMC3 output.",
+        "generated_answers": [
+            "Yes, o2-sim is capable of reading HepMC files out-of-the-box and can also read data from FIFOs. It defaults to HepMC3, but is compatible with HepMC2.06 data as well. \n\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)\n[https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf](https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf)\n[https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/MC_Tutorials.pdf](https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/MC_Tutorials.pdf)\n[https://github.com/AliceO2Group/AliceO2/blob/dev/run/SimExamples/HepMC/README.md](https://github.com/AliceO2Group/AliceO2/blob/dev/run/SimExamples/HepMC/README.md)",
+            "Yes, o2-sim is capable of reading HepMC files. It can read both HepMC3 (default) and HepMC2.06 data. \n\n[https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/MC_Tutorials.pdf](https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/MC_Tutorials.pdf)\n[https://github.com/AliceO2Group/AliceO2/blob/dev/run/SimExamples/HepMC/README.md](https://github.com/AliceO2Group/AliceO2/blob/dev/run/SimExamples/HepMC/README.md)\n[https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf](https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf)",
+            "Yes, o2-sim can read HepMC formatted data by specifying \"hepmc\" as an option for the generator: `o2-sim -g hepmc --configKeyValues \"HepMC.fileName=/path_to/file.hepmc\"`. [https://github.com/AliceO2Group/AliceO2/blob/dev/run/SimExamples/HepMC/README.md](https://github.com/AliceO2Group/AliceO2/blob/dev/run/SimExamples/HepMC/README.md) [https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/MC_Tutorials.pdf](https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/MC_Tutorials.pdf)",
+            "Yes, `o2-sim` is capable of reading HepMC formatted data. It can read HepMC files directly or read data from FIFOs. It defaults to HepMC3, but is also compatible with HepMC2.06.\n\n[https://github.com/AliceO2Group/AliceO2/blob/dev/run/SimExamples/HepMC/README.md](https://github.com/AliceO2Group/AliceO2/blob/dev/run/SimExamples/HepMC/README.md)\n[https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/MC_Tutorials.pdf](https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/MC_Tutorials.pdf)\n[https://github.com/AliceO2Group/AliceO2/blob/dev/run/SimExamples/HepMC/README.md](https://github.com/AliceO2Group/AliceO2/blob/dev/run/SimExamples/HepMC/README.md)\n[https://github.com/AliceO2Group/AliceO2/blob/dev/run/SimExamples/TParticle/read.sh](https://github.com/AliceO2Group/AliceO2/blob/dev/run/SimExamples/TParticle/read.sh)\n[https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf](https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf)",
+            "I do not know the answer."
+        ],
+        "times": [
+            33.764628410339355,
+            28.18225932121277,
+            25.243080377578735,
+            35.502522230148315,
+            16.760735273361206
+        ]
+    },
+    {
+        "id": 8,
+        "author": "Marco",
+        "question": "Is there a way to generate data on-the-fly for hyperloop usage?",
+        "correct_answer": "o2-sim can be used as on-the-fly generator for analysis purposes injecting events directly into a DPL topology without intermediate storage. This can be used in hyperloop trains and it is useful for fast-simulation studies within analysis framework. An example: \n```bash\n# Launch simulation\no2-sim -j 1 -g pythia8pp -n 10 --noDiscOutput --forwardKine --noGeant &> sim.log &\n# Launch a DPL process\no2-sim-mctracks-proxy -b --nevents 10 --o2sim-pid ${SIMPROC} --aggregate-timeframe 1 &\n```\nOn Hyperloop this is done by generating a dummy dataset containing the ini file that will be picked up for the simulation.",
+        "generated_answers": [
+            "Yes, it is possible to generate data on-the-fly for hyperloop usage using O2 external generators via on-the-fly events generation.\n[https://github.com/AliceO2Group/simulation/blob/main/docs/generators/generatorso2.md](https://github.com/AliceO2Group/simulation/blob/main/docs/generators/generatorso2.md)",
+            "Yes, it is possible to generate data on-the-fly for hyperloop usage. This can be done using O2 external generators, as demonstrated in the EPOS4 example ([https://github.com/AliceO2Group/O2DPG/tree/master/MC/config/examples/epos4](https://github.com/AliceO2Group/O2DPG/tree/master/MC/config/examples/epos4)). It's also possible to generate events directly within a DPL device and forward them to analysis, as shown in the examples [here](https://github.com/AliceO2Group/AliceO2/tree/dev/run/SimExamples/McTracksToAOD). \n\n([https://github.com/AliceO2Group/simulation/blob/main/docs/generators/generatorso2.md](https://github.com/AliceO2Group/simulation/blob/main/docs/generators/generatorso2.md), [https://github.com/AliceO2Group/AliceO2/blob/dev/run/SimExamples/McTracksToAOD/README.md](https://github.com/AliceO2Group/AliceO2/blob/dev/run/SimExamples/McTracksToAOD/README.md))",
+            "I do not know the answer.",
+            "o2-sim -n 10 -g pythia8pp generates 10 default Pythia8 pp events and transports them through the complete ALICE detector. Additionally, o2-sim -n 10 -g pythia8pp -j 8 --skipModules ZDC --field 2 -e TGeant3 generates 10 default Pythia8 pp events and transports them with 8 Geant3 workers through everything but ZDC and uses an L3-field of 2kGauss. Finally, o2-sim -n 10 -g pythia8pp --noGeant generates 10 default Pythia8 pp events without Geant.\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)\n\n\n\n",
+            "The output of the event generation process is stored in a file called workflow.json. You can generate 10 default Pythia8 pp events and transport them through the complete ALICE detector using the command `o2-sim -n 10 -g pythia8pp` [https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf]."
+        ],
+        "times": [
+            20.494362592697144,
+            30.55102849006653,
+            16.678452730178833,
+            28.61642575263977,
+            21.7501962184906
+        ]
+    },
+    {
+        "id": 9,
+        "author": "Marco",
+        "question": "Is there a simple mechanism to combine particles coming from different generators for each event?",
+        "correct_answer": "The hybrid generator allows to combine multiple generators output through the cocktail system: each event will contain sequentially the results of each generator.\nIt is straightforward to configure and an example is: \n```JSON\n{\n  \"mode\": \"sequential\",\n  \"generators\": [\n    {\n      \"cocktail\": [\n        {\n          \"name\": \"evtpool\",\n          \"config\": {\n            \"eventPoolPath\": \"alien:///alice/sim/2025/EP25f1/2\",\n            \"skipNonTrackable\": true,\n            \"roundRobin\": false,\n            \"randomize\": true,\n            \"rngseed\": 0,\n            \"randomphi\": false\n          }\n        },\n        {\n          \"name\": \"external\",\n          \"config\": {\n            \"fileName\": \"${O2DPG_MC_CONFIG_ROOT}/MC/config/common/external/generator/TPCLoopers.C\",\n            \"funcName\": \"Generator_TPCLoopers(\\\"ccdb://Users/m/mgiacalo/WGAN_ExtGenPair\\\", \\\"ccdb://Users/m/mgiacalo/WGAN_ExtGenCompton\\\", \\\"${O2DPG_MC_CONFIG_ROOT}/MC/config/common/TPCloopers/poisson_params.csv\\\", \\\"${O2DPG_MC_CONFIG_ROOT}/MC/config/common/TPCloopers/gaussian_params.csv\\\", \\\"${O2DPG_MC_CONFIG_ROOT}/MC/config/common/TPCloopers/ScalerPairParams.json\\\", \\\"${O2DPG_MC_CONFIG_ROOT}/MC/config/common/TPCloopers/ScalerComptonParams.json\\\", {4.,4.})\",\n            \"iniFile\": \"\"\n          }\n        }\n      ]\n    }\n  ],\n  \"fractions\": [\n    1\n  ]\n}\n\n```",
+        "generated_answers": [
+            "The `--aggregate-timeframe` option can be used to combine generated events into a timeframe. For example, `--aggregate-timeframe 10` combines 10 generated events. [https://github.com/AliceO2Group/AliceO2/blob/dev/run/SimExamples/McTracksToAOD/run_Pythia8.sh]",
+            "The `o2-sim-dpl-eventgen` script uses the `--aggregate-timeframe` option to combine events into a timeframe. For example, `--aggregate-timeframe 10` combines 10 generated events into a timeframe that is then converted to AOD tables. [https://github.com/AliceO2Group/AliceO2/blob/dev/run/SimExamples/McTracksToAOD/run_Pythia8.sh]",
+            "I do not know the answer.",
+            "I do not know the answer.",
+            "It is possible to combine particles from different generators for each event using a trigger function. You can use the `--trigger external` option with `o2-sim` and specify a custom trigger function in a separate file (e.g., `myTrigger.C`) to filter events based on particle properties.\n\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf)\n[https://github.com/AliceO2Group/AliceO2/blob/dev/run/SimExamples/McTracksToAOD/run_trigger.sh](https://github.com/AliceO2Group/AliceO2/blob/dev/run/SimExamples/McTracksToAOD/run_trigger.sh)\n\n\n\n"
+        ],
+        "times": [
+            18.875291347503662,
+            20.621126413345337,
+            17.100696325302124,
+            16.317527294158936,
+            27.330219507217407
+        ]
+    },
+    {
+        "id": 10,
+        "author": "Marco",
+        "question": "Which tool can be used to run a test production on the GRID using the users quota? How does it work?",
+        "correct_answer": "The O2DPG package comes with the `grid_submit.sh` tool that can be used to submit GRID jobs using your personal quota. It is a powerful script allowing the user to push simulation shell scripts on AliEN and automatically run them without generating beforehand a JDL. It is highly configurable with both flags and bash comments setting up for example output files, loaded packages and specific run requirements. The user can learn about the most used options by using the common `--help` flag, while the rest is described directly in the source code of the script, located in the `${O2DPG_ROOT}/GRID/utils` folder. A short example is provided below.\n<h5 a><strong><code>my_script.sh</code></strong></h5>\n\n```bash\n#!/usr/bin/env bash\n# Workflow creation: step 1\n${O2DPG_ROOT}/MC/bin/o2dpg_sim_workflow.py -eCM 13600 -col pp -gen pythia8 -proc cdiff -tf 1 -ns 200 -e TGeant4 -interactionRate 500000\n# Workflow execution: step 2\n${O2DPG_ROOT}/MC/bin/o2dpg_workflow_runner.py -f workflow.json -tt aod\n```\n<h5 a><strong><code>Execution command</code></strong></h5>\n\n```bash\n${O2DPG_ROOT}/GRID/utils/grid_submit.sh --script my_script.sh --jobname test --outputspec \"*.log@disk=1\",\"*.root@disk=2\" --packagespec \"VO_ALICE@O2sim::v20250808-1\"\n```",
+        "generated_answers": [
+            "The tool to run a test production on the GRID using the users quota is `o2_dpg_workflow_runner.py`. \n\nIt works by executing workflows specified in a JSON format, offering features like automatic task parallelization, restart-from-failure, skipping already done tasks, and file provenance tracking. The workflow is first created using `o2dpg_sim_workflow.py` which generates a workflow.json file, and then executed using `o2_dpg_workflow_runner.py`. Jobs are submitted to the GRID using `grid_submit.sh` ([https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf), [https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/MC_Tutorials.pdf](https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/MC_Tutorials.pdf)).",
+            "O2DPG repository can be used to run a test production on the GRID using the users quota. It integrates all the relevant processing tasks into a coherent and consistent environment to have a working pipeline from event generation to AOD production and beyond. \n\nTo run a workflow, you can use the `o2dpg_sim_workflow.py` script with the generator and beam energies specified. [https://github.com/AliceO2Group/simulation/blob/main/docs/o2dpgworkflow/README.md](https://github.com/AliceO2Group/simulation/blob/main/docs/o2dpgworkflow/README.md)\n\nYou need a valid GRID token to access the CCDB objects/alien. [https://alice-doc.github.io/alice-analysis-tutorial/start/cert.html](https://alice-doc.github.io/alice-analysis-tutorial/start/cert.html)\n\n\n\n",
+            "O2DPG repository (MC part) can be used to run a test production on the GRID using the users quota. It integrates all the relevant processing tasks into a coherent and consistent environment to have a working pipeline from event generation to AOD production and beyond.\n\nTo run a workflow, you can use the `o2dpg_sim_workflow.py` script with the generator and beam energies specified. [https://github.com/AliceO2Group/simulation/blob/main/docs/o2dpgworkflow/README.md](https://github.com/AliceO2Group/simulation/blob/main/docs/o2dpgworkflow/README.md)\n\nYou need a valid GRID token to access the CCDB objects/alien. [https://alice-doc.github.io/alice-analysis-tutorial/start/cert.html](https://alice-doc.github.io/alice-analysis-tutorial/start/cert.html)\n\n\n\n",
+            "O2DPG repo (MC part) can be used to run a test production on the GRID using the users quota. It also contains scripts/setup for data taking (DATA part). [https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf]\n\nThe WorkflowRunner tool allows for automatic task parallelization, scaling from few-core GRID nodes to large HPC cores, restart-from-failure features, skipping done tasks, and file provenance tracking. Workflows are specified in JSON format. [https://github.com/AliceO2Group/O2DPG/blob/master/MC/doc/WorkflowRunner.md]",
+            "`grid_submit.sh` can be used to run a test production on the GRID using the users quota. It allows submitting a locally existing script to run on the GRID without much boilerplate. \n\nHere\u2019s how it works:\n\n*   `--script <script>`: Specifies the script to be executed on the GRID.\n*   `--jobname <jobname>`:  Assigns a name to the job, which will appear on MonALISA.\n*   `--outputspec \"*.log@disk=1\",\"*.root@disk=2\"`: Defines where to store the output files.\n*   `--packagespec \"VO_ALICE@O2sim::v20241014-1\"`: Specifies the software package to use.\n*   `--wait`: Waits for the job to complete.\n*   `--fetch-output`: Fetches the output files after completion.\n*   `--ttl <ttl>`: Alters the TTL setting of the job.\n*   `--asuser <alien-user>`: Sets the GRID user name if it differs from the local user name.\n*   `--prodsplit <prodsplit>`: Alters the number of splits for production MC simulations.\n\n[https://github.com/AliceO2Group/O2DPG/blob/master/GRID/utils/grid_submit.sh](https://github.com/AliceO2Group/O2DPG/blob/master/GRID/utils/grid_submit.sh)\n[https://github.com/AliceO2Group/simulation/blob/main/docs/gridproductions/README.md](https://github.com/AliceO2Group/simulation/blob/main/docs/gridproductions/README.md)\n[https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/MC_Tutorials.pdf](https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/MC_Tutorials.pdf)"
+        ],
+        "times": [
+            29.618074417114258,
+            25.421067237854004,
+            25.983145236968994,
+            24.015026807785034,
+            39.14828681945801
+        ]
+    },
+    {
+        "id": 11,
+        "author": "Sandro",
+        "question": "How can I run a basic ALICE detector simulation for Run3?",
+        "correct_answer": "Use the Run3 detector simulator `o2-sim`. A typical basic example provided is:\n\n`o2-sim -g pythia8pp -e TGeant4 -n 10 -j 8`\n\nThis runs a Pythia8 pp generator, uses Geant4 (`-e TGeant4`), simulates 10 events (`-n 10`) in the full ALICE geometry and runs on 8 workers (`-j 8`). For Run3 the simulator is rewritten to be fully multi-core capable and asynchronous. The integrated MC workflow (O2DPG) is the official way to run ALICE MC; full `o2-sim` docs and examples are in the provided links.",
+        "generated_answers": [
+            "```\no2-sim -n 10 -g pythia8pp\no2-sim -n 10 -g pythia8pp -j 8 --skipModules ZDC --field 2 -e TGeant3\no2-sim -n 10 -g pythia8pp --noGeant\n```\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)",
+            "```\no2-sim -n 10 -g pythia8pp\n```",
+            "```\no2-sim -n 10 -g pythia8pp\no2-sim -n 10 -g pythia8pp -j 8 --skipModules ZDC --field 2 -e TGeant3\no2-sim -n 10 -g pythia8pp --noGeant\n```\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)",
+            "o2-sim -n 10 -g pythia8pp \n\no2-sim -n 10 -g pythia8pp -j 8 --skipModules ZDC --field 2 -e TGeant3\n\no2-sim -n 10 -g pythia8pp --noGeant\n(https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)",
+            "```bash\no2-sim -n 10 -g pythia8pp\n```\n\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf)"
+        ],
+        "times": [
+            24.1137535572052,
+            17.528507947921753,
+            24.249828815460205,
+            22.4635968208313,
+            27.039311408996582
+        ]
+    },
+    {
+        "id": 12,
+        "author": "Sandro",
+        "question": "How to run Run3 detector simulation?",
+        "correct_answer": "Run the `o2-sim` executable (the Run3 detector simulation was rewritten to be multi-core and asynchronous). A concrete example is:\n\n`o2-sim -g pythia8pp -e TGeant4 -n 10 -j 8`\n\nThis steers event generation, detector geometry/material construction and particle transport; use the O2DPG setup (official MC workflow) and refer to the `o2-sim` documentation and SimExamples in the AliceO2 repository for more examples.",
+        "generated_answers": [
+            "o2-sim -n 10 -g pythia8pp\no2-sim -n 10 -g pythia8pp -j 8 --skipModules ZDC --field 2 -e TGeant3\no2-sim -n 10 -g pythia8pp --noGeant \n(https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)",
+            "```\no2-sim -n 10 -g pythia8pp\no2-sim -n 10 -g pythia8pp -j 8 --skipModules ZDC --field 2 -e TGeant3\no2-sim -n 10 -g pythia8pp --noGeant\n```",
+            "```\no2-sim -n 10 -g pythia8pp\no2-sim -n 10 -g pythia8pp -j 8 --skipModules ZDC --field 2 -e TGeant3\no2-sim -n 10 -g pythia8pp --noGeant\n```",
+            "o2-sim -n 10 -g pythia8pp\no2-sim -n 10 -g pythia8pp -j 8 --skipModules ZDC --field 2 -e TGeant3\no2-sim -n 10 -g pythia8pp --noGeant \n([https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf))",
+            "```\no2-sim -n 10 -g pythia8pp\no2-sim -n 10 -g pythia8pp -j 8 --skipModules ZDC --field 2 -e TGeant3\no2-sim -n 10 -g pythia8pp --noGeant\n```\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)"
+        ],
+        "times": [
+            22.426246166229248,
+            20.176737308502197,
+            20.181092023849487,
+            24.613866090774536,
+            25.075578689575195
+        ]
+    },
+    {
+        "id": 13,
+        "author": "Sandro",
+        "question": "How to run Run3 Geant simulation?",
+        "correct_answer": "Use `o2-sim` and select a Geant backend via the VMC engine option. Example for Geant4:\n\n`o2-sim -g pythia8pp -e TGeant4 -n 10 -j 8`\n\n`o2-sim` uses a VMC abstraction that lets you choose Geant4, Geant3 or FLUKA as the actual simulator backend; the example above runs Geant4 on 8 workers for 10 events.",
+        "generated_answers": [
+            "```bash\no2-sim -n 10 -g pythia8pp\no2-sim -n 10 -g pythia8pp -j 8 --skipModules ZDC --field 2 -e TGeant3\no2-sim -n 10 -g pythia8pp --noGeant\n```\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)\n[https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf](https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf)",
+            "o2-sim -n 10 -g pythia8pp\no2-sim -n 10 -g pythia8pp -j 8 --skipModules ZDC --field 2 -e TGeant3\no2-sim -n 10 -g pythia8pp --noGeant ([https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf), [https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf](https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf))",
+            "```bash\no2-sim -n 10 -g pythia8pp\no2-sim -n 10 -g pythia8pp -j 8 --skipModules ZDC --field 2 -e TGeant3\no2-sim -n 10 -g pythia8pp --noGeant\n```",
+            "o2-sim -n 10 -g pythia8pp\no2-sim -n 10 -g pythia8pp -j 8 --skipModules ZDC --field 2 -e TGeant3\no2-sim -n 10 -g pythia8pp --noGeant\n\n([https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf), [https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf](https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf))",
+            "o2-sim -n 10 -g pythia8pp\no2-sim -n 10 -g pythia8pp -j 8 --skipModules ZDC --field 2 -e TGeant3\no2-sim -n 10 -g pythia8pp --noGeant\n\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)\n[https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf](https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf)"
+        ],
+        "times": [
+            33.97219109535217,
+            29.036688089370728,
+            20.358174800872803,
+            29.159868955612183,
+            28.566059112548828
+        ]
+    },
+    {
+        "id": 14,
+        "author": "Sandro",
+        "question": "Describe the o2-sim executable.",
+        "correct_answer": "`o2-sim` is the ALICE detector simulation executable that transforms virtual particle collisions into detector-response information (hits). It steers event generation, constructs the detector geometry and material and performs particle-transport simulation via a Virtual Monte Carlo (VMC) abstraction so users can choose Geant4, Geant3 or FLUKA as backend. `o2-sim` produces hit files for each sensitive detector (e.g. `o2sim_HitsITS.root`) and a kinematics file (by default `o2sim_Kine.root`) containing primary and secondary particle information. For Run3 it is fully multi-core capable and asynchronous. Full documentation and examples are available in the provided links, and the O2DPG repository provides the integrated/official MC workflow.",
+        "generated_answers": [
+            "The `o2-sim` executable simulates detector responses. It accepts options such as:\n\n*   `--chunkSize`: Size of a sub-event, determining the number of primary tracks processed by a simulation worker.\n*   `--skipModules`: List of modules to exclude from the simulation.\n*   `--configFile`: Path to a `.ini` file for configuring simulation parameters.\n*   `--configKeyValues`: Allows setting parameters from the command line.\n*   `--seed`: Initial seed for random number instances.\n*   `-o,--outPrefix`: Prefix for output files.\n*   `--noGeant`: Disables Geant transport, producing only generator kinematics.\n*   `-n,--number`: The number of events to simulate.\n*   `-g,--generator`: Name of a predefined generator template.\n*   `-e,--engine`: Select the VMC transport engine (TGeant4, TGeant3).\n*   `-m,--modules`: List of modules/geometries to include.\n*   `-j,--nworkers`: Number of parallel simulation engine workers.\n*   `--sims`: Comma separated list of simulation prefixes to overlay/embed.\n\nIt produces output files such as `o2sim_Kine.root`, `o2sim_geometry.root`, `o2sim_grp.root`, `o2sim_XXXHits.root`, `o2sim_configuration.ini`, `o2sim_serverlog`, and `o2sim_workerlog`.\n\n[https://github.com/AliceO2Group/AliceO2/blob/dev/doc/DetectorSimulation.md](https://github.com/AliceO2Group/AliceO2/blob/dev/doc/DetectorSimulation.md)\n",
+            "o2-sim is the particle-detector simulator for ALICE Run3. It implements the ALICE detector on top of well known particle-transport engines such as Geant4, Geant3 and FLUKA. Its main tasks are ALICE geometry creation, event generation, simulation of physics interactions, and creation of hits. [https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf) [https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf)",
+            "The `o2-sim` executable simulates the passage of particles emerging from a collision inside the detector and obtains their effect in terms of energy deposits (hits). It is the driver executable which spawns a topology of sub-processes that interact via messages in a distributed system. It runs the simulation using multiple worker processes, including particle generation and hit collection. \n\nIt accepts various command line options, including:\n- `-n` or `--number`: The number of events to simulate.\n- `-g` or `--generator`: Name of a predefined generator template.\n- `-e` or `--engine`: Select the VMC transport engine.\n- `-m` or `--modules`: List of modules/geometries to include.\n- `-j` or `--nworkers`: Number of parallel simulation engine workers.\n- `--configFile`: A `.ini` file containing simulation parameters.\n- `--configKeyValues`: Allows setting parameters on the command line.\n- `--skipModules`: List of modules to skip.\n- `-o` or `--outPrefix`: Prefix for output files.\n\n[https://github.com/AliceO2Group/simulation/blob/main/docs/gettingstarted/README.md](https://github.com/AliceO2Group/simulation/blob/main/docs/gettingstarted/README.md)\n[https://github.com/AliceO2Group/AliceO2/blob/dev/doc/DetectorSimulation.md](https://github.com/AliceO2Group/AliceO2/blob/dev/doc/DetectorSimulation.md)\n",
+            "The `o2-sim` executable simulates the passage of particles emerging from a collision inside the detector and obtains their effect in terms of energy deposits (hits). It is the driver executable that spawns a topology of sub-processes interacting via messages in a distributed system. It performs geometry creation, event generation, and simulates the physics interaction of particles with the detector material, transporting them until they exit or stop, and creating hits ([https://github.com/AliceO2Group/simulation/blob/main/docs/gettingstarted/README.md](https://github.com/AliceO2Group/simulation/blob/main/docs/gettingstarted/README.md), [https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo_Transcript.md](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo_Transcript.md)). \n\nIt is scalable with multi-core simulation and sub-event parallelism, allowing use of large servers ([https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf](https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf)).  It treats events in complete isolation and produces internal log files for detailed process descriptions and debugging ([https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf](https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf)). It also produces the kinematics output from transport simulation, including creation vertices, momenta, and physics creation processes ([https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo_Transcript.md](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo_Transcript.md)).",
+            "The `o2-sim` executable simulates the passage of particles emerging from a collision inside the detector and obtains their effect in terms of energy deposits (hits). It is the driver executable that spawns a topology of sub-processes interacting via messages in a distributed system. It performs geometry creation, event generation, and the simulation of particle interactions with detector material, ultimately creating hits. It is scalable for multi-core simulation with sub-event parallelism and produces three internal log files for debugging: `o2sim_serverlog`, `o2sim_workerlog0`, and `o2sim_mergerlog`. \n\n[https://github.com/AliceO2Group/simulation/blob/main/docs/gettingstarted/README.md](https://github.com/AliceO2Group/simulation/blob/main/docs/gettingstarted/README.md)\n[https://github.com/AliceO2Group/AliceO2/blob/dev/doc/DetectorSimulation.md](https://github.com/AliceO2Group/AliceO2/blob/dev/doc/DetectorSimulation.md)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo_Transcript.md](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo_Transcript.md)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)\n[https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf](https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf)\n\n\n\n"
+        ],
+        "times": [
+            33.64970350265503,
+            29.51320791244507,
+            30.874520540237427,
+            43.04729890823364,
+            39.89914274215698
+        ]
+    },
+    {
+        "id": 15,
+        "author": "Sandro",
+        "question": "How can I run the production MC workflow for ALICE?",
+        "correct_answer": "Use the O2DPG-provided workflows which integrate the AliceO2 executables into end-to-end MC pipelines. Two supported ways are:\n\n1) Build and run a workflow explicitly with the two O2DPG Python scripts:\n\n- Create the workflow description (workflow.json) with `o2dpg_sim_workflow.py` and then execute it with `o2dpg_workflow_runner.py`.\n\nExample:\n`\n${O2DPG_ROOT}/MC/bin/o2dpg_sim_workflow.py -eCM 14000  -col pp -gen pythia8 -tf 1 -ns 2000 --interactionRate 500000 -run 302000\n\n${O2DPG_ROOT}/MC/bin/o2dpg_workflow_runner.py -f workflow.json -tt aod\n`\nThis configures a complete simulation for 1 timeframe of pp collisions and runs up to the `aod` stage.\n\n2) (Typical user) Use the provided anchor script `anchorMC.sh`, which manages setup and execution for MC that matches real data-taking conditions. You set a few obligatory environment variables (data-taking period, reconstruction pass, plus generator options) and call the script. Detailed docs are available in the O2DPG documentation (anchored workflow).",
+        "generated_answers": [
+            "To run the production MC workflow for ALICE, use the following command:\n\n```bash\n${O2DPG_ROOT}/MC/bin/o2dpg_sim_workflow.py -gen <generator> -eCM <emc energy  [GeV]>\n# OR\n${O2DPG_ROOT}/MC/bin/o2dpg_sim_workflow.py -gen <generator> -eA <energy of first incoming beam [GeV]> -eB <energy of second incoming beam [GEV]>\n```\n\nYou need a valid GRID token to access the CCDB objects/alien.\n\n[https://github.com/AliceO2Group/simulation/blob/main/docs/o2dpgworkflow/README.md](https://github.com/AliceO2Group/simulation/blob/main/docs/o2dpgworkflow/README.md)\n[https://github.com/AliceO2Group/O2DPG/blob/master/MC/bin/README.md](https://github.com/AliceO2Group/O2DPG/blob/master/MC/bin/README.md)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)",
+            "To run the production MC workflow for ALICE, use the O2DPG repository (MC part). It provides an authoritative setup for official MC productions for ALICE-Run3 and a runtime to execute MC jobs on GRID.\n\nYou will need to use the scripts `o2dpg_sim_workflow.py` to set up a MC workflow and `o2_dpg_workflow_runner.py` to execute the tasks defined in the workflow file.  An example minimal execution line is:\n\n`${O2DPG_ROOT}/MC/bin/o2dpg_sim_workflow.py -gen <generator> -eCM <emc energy  [GeV]>`\n\nor\n\n`${O2DPG_ROOT}/MC/bin/o2dpg_sim_workflow.py -gen <generator> -eA <energy of first incoming beam [GeV]> -eB <energy of second incoming beam [GEV]>`\n\n[https://github.com/AliceO2Group/O2DPG/blob/master/MC/bin/README.md](https://github.com/AliceO2Group/O2DPG/blob/master/MC/bin/README.md)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)\n[https://github.com/AliceO2Group/simulation/blob/main/docs/o2dpgworkflow/README.md](https://github.com/AliceO2Group/simulation/blob/main/docs/o2dpgworkflow/README.md)",
+            "Official productions for ALICE physics working groups or larger productions for research and development should be handled via the Data Processing Group (DPG). You can use the `o2dpg_sim_workflow.py` script to set up a MC workflow and `o2_dpg_workflow_runner.py` to execute it. See the O2DPG repository for more details. \n\n[https://github.com/AliceO2Group/simulation/blob/main/docs/gridproductions/README.md](https://github.com/AliceO2Group/simulation/blob/main/docs/gridproductions/README.md)\n[https://github.com/AliceO2Group/O2DPG/blob/master/MC/bin/README.md](https://github.com/AliceO2Group/O2DPG/blob/master/MC/bin/README.md)",
+            "To run the production MC workflow for ALICE, use the following command:\n\n`${O2DPG_ROOT}/MC/bin/o2dpg_sim_workflow.py -eCM 14000 -col pp -gen pythia8 -proc cdiff -tf 5 \u2014ns 2000 -interactionRate 500000 -run 302000`\n\nImportant options include: `-gen`, `-tf`, `-n`, `-eCM`, `-interactionRate`, `-run`, and `-col`. Optionally, you can also use: `-field`, `-seed`, and `-proc`.\n\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)\n[https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf](https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf)\n[https://github.com/AliceO2Group/simulation/blob/main/docs/o2dpgworkflow/README.md](https://github.com/AliceO2Group/simulation/blob/main/docs/o2dpgworkflow/README.md)",
+            "To run the production MC workflow for ALICE, you should use the [O2DPG repository](https://github.com/AliceO2Group/O2DPG) as it provides the authoritative setup for official MC productions for ALICE-Run3. \n\nHere\u2019s a breakdown of the process:\n\n1.  Use `o2dpg_sim_workflow.py` to set up the MC workflow, which creates a `workflow.json` file describing the tasks to run.\n2.  Use `o2_dpg_workflow_runner.py` to execute the tasks defined in the workflow file.\n\nYou can find the scripts in `${O2DPG_ROOT}/MC/bin/`.  A minimal execution line for a workflow is:\n\n```bash\n${O2DPG_ROOT}/MC/bin/o2dpg_sim_workflow.py -gen <generator> -eCM <emc energy  [GeV]>\n# OR\n${O2DPG_ROOT}/MC/bin/o2dpg_sim_workflow.py -gen <generator> -eA <energy of first incoming beam [GeV]> -eB <energy of second incoming beam [GEV]>\n```\n\n[https://github.com/AliceO2Group/simulation/blob/main/docs/o2dpgworkflow/README.md](https://github.com/AliceO2Group/simulation/blob/main/docs/o2dpgworkflow/README.md)\n[https://github.com/AliceO2Group/O2DPG/blob/master/MC/bin/README.md](https://github.com/AliceO2Group/O2DPG/blob/master/MC/bin/README.md)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf)\n\n\n\n"
+        ],
+        "times": [
+            32.170082807540894,
+            40.60523200035095,
+            24.8455650806427,
+            38.74150252342224,
+            38.02255702018738
+        ]
+    },
+    {
+        "id": 16,
+        "author": "Sandro",
+        "question": "Script to run MC in ALICE3?",
+        "correct_answer": "The primary user-facing script is `anchorMC.sh` (located in `${O2DPG_ROOT}/MC/run/ANCHOR/anchorMC.sh`). Set the required environment variables (data-taking period, pass, run number, production tag, and generator options) and invoke the script. Example header shown in the provided text:\n\n`\n# Define obligatory environment variables\nexport ALIEN_JDL_LPMANCHORPASSNAME=apass4\nexport ALIEN_JDL_MCANCHOR=apass4\nexport ALIEN_JDL_CPULIMIT=8\nexport ALIEN_JDL_LPMRUNNUMBER=545312\nexport ALIEN_JDL_LPMPRODUCTIONTYPE=MC\nexport ALIEN_JDL_LPMINTERACTIONTYPE=Pb-Pb\nexport ALIEN_JDL_LPMPRODUCTIONTAG=LHC24a2_mystudy\nexport ALIEN_JDL_LPMANCHORRUN=545312\nexport ALIEN_JDL_LPMANCHORPRODUCTION=LHC23zzo\nexport ALIEN_JDL_LPMANCHORYEAR=2023\n\n# event generator config\nexport ALIEN_JDL_ANCHOR_SIM_OPTIONS=\"-gen pythia8pp\"\n\n# numbers\nexport NTIMEFRAMES=2\nexport NSIGEVENTS=5000\nexport PRODSPLIT=100\nexport SPLITID=50\nexport CYCLE=0\n\n# start the workflow\n${O2DPG_ROOT}/MC/run/ANCHOR/anchorMC.sh\n`\n\nFor advanced or expert-mode setups you can instead build a workflow with `o2dpg_sim_workflow.py` and run it with `o2dpg_workflow_runner.py` as shown above.",
+        "generated_answers": [
+            "`o2-sim -n 10 -g pythia8pp` or `o2-sim -n 10 -g pythia8pp -j 8 --skipModules ZDC --field 2 -e TGeant3` or `o2-sim -n 10 -g pythia8pp --noGeant`. [https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf] [https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf] [https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf]",
+            "```bash\n${O2DPG_ROOT}/MC/bin/o2dpg_sim_workflow.py -eCM 14000 -col pp -gen pythia8 -proc cdiff -tf 5 \u2014ns 2000 -interactionRate 500000 -run 302000\n```\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)\n[https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf](https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf)\n",
+            "`o2dpg_sim_workflow.py` is used to set up a MC workflow of dependent tasks, with the main output being a `workflow.json` file describing the graph of individual tasks to run. `o2_dpg_workflow_runner.py` is then used to execute those tasks. (https://github.com/AliceO2Group/O2DPG/blob/master/MC/bin/README.md)\n\nYou can also use `o2dpg_sim_workflow.py` with parameters such as collision system, event generator, number of time frames, events per timeframe, and interaction rate. (https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo_Transcript.md)\n\nAdditionally, `o2-sim` is the particle-detector simulator for ALICE Run3, with example usages like `o2-sim -n 10 -g pythia8pp`. (https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)",
+            "o2-sim -n 10 -g pythia8pp\no2-sim -n 10 -g pythia8pp -j 8 --skipModules ZDC --field 2 -e TGeant3\no2-sim -n 10 -g pythia8pp --noGeant \n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)\n[https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf](https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf)",
+            "```bash\no2-sim -n 10 -g pythia8pp\no2-sim -n 10 -g pythia8pp -j 8 --skipModules ZDC --field 2 -e TGeant3\no2-sim -n 10 -g pythia8pp --noGeant\n```\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)"
+        ],
+        "times": [
+            25.833483934402466,
+            33.17660403251648,
+            29.11720561981201,
+            32.81001329421997,
+            23.231456995010376
+        ]
+    },
+    {
+        "id": 17,
+        "author": "Sandro",
+        "question": "How can I load the software necessary to run simulation, reconstruction etc?",
+        "correct_answer": "You can load the `O2PDPSuite` package from CVMFS using the `alienv` command:\n```\n/cvmfs/alice.cern.ch/bin/alienv enter O2PDPSuite::VERSION\n```\nwhere `VERSION` is a specific tag such as `O2PDPSuite::MC-prod-2025-v1-2` or a daily release like `daily-20250711-0000-1`. Alternatively, you can build the software stack yourself using the aliBuild/alidist ecosystem (instructions: https://alice-doc.github.io/alice-analysis-tutorial/building/).",
+        "generated_answers": [
+            "To run simulation, you need the `o2Sim` package, which can be built or taken from CVMFS in precompiled form. \n\nHere are a few options for setting up the software environment:\n\n*   **Simplest local build:** `aliBuild build O2 O2DPG --defaults o2` followed by `alienv enter O2/latest,O2DPG/latest`\n*   **Full local build:** `aliBuild build O2sim --defaults o2` followed by `alienv enter O2sim/latest`\n*   **Nightly precompiled builds (with CVMFS):** `/cvmfs/alice.cern.ch/bin/alienv enter O2sim::v20241014-1`\n\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo_Transcript.md](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo_Transcript.md)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)",
+            "To build the software for simulation, reconstruction etc., you can use the following commands:\n\n*   **Simplest local build (basic generators such as Pythia8):** `aliBuild build O2 O2DPG --defaults o2` followed by `alienv enter O2/latest,O2DPG/latest`\n*   **Full local build (all generators, QC and O2Physics included):** `aliBuild build O2sim --defaults o2` followed by `alienv enter O2sim/latest`\n*   **Nightly precompiled builds (with CVMFS):** `/cvmfs/alice.cern.ch/bin/alienv enter O2sim::v20241014-1`\n\nYou can find more information at: [https://aliceo2group.github.io/simulation/](https://aliceo2group.github.io/simulation/) and [https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)",
+            "To load the software, use `alienv enter O2sim/latest` for nightly precompiled builds (CentOS) or `/cvmfs/alice.cern.ch/bin/alienv enter O2sim::v20230419-1`. \n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf]",
+            "o2-sim is the particle-detector simulator for ALICE Run3. It implements the ALICE detector on top of well known particle-transport engines such as Geant4, Geant3 and FLUKA. Examples of usage include: `o2-sim -n 10 -g pythia8pp` and `o2-sim -n 10 -g pythia8pp -j 8 --skipModules ZDC --field 2 -e TGeant3` ([https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)).",
+            "You need the O2Sim package, which you can build or take from CVMFS in precompiled form. [https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf)"
+        ],
+        "times": [
+            33.53822731971741,
+            29.6962788105011,
+            21.43342924118042,
+            25.136536598205566,
+            21.81074333190918
+        ]
+    },
+    {
+        "id": 18,
+        "author": "Sandro",
+        "question": "What software packages are required to run the simulation pipeline?",
+        "correct_answer": "The `O2PDPSuite` software package provides all necessary components to run the Monte Carlo pipeline for ALICE in Run3 and also to do physics analysis.",
+        "generated_answers": [
+            "o2-sim is the ALICE Run3 simulation tool. It can be built and entered, or taken from CVMFS in precompiled form. It contains everything that is needed for detector simulation. \n\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo_Transcript.md](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo_Transcript.md)",
+            "The O2Sim package is required to run ALICE detector simulations. It can be built or taken from CVMFS in precompiled form and contains everything needed for detector simulation. Additionally, Geant4, Geant3, and FLUKA can be used interchangeably through a Virtual Monte Carlo API. \n\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo_Transcript.md](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo_Transcript.md)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)\n[https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf](https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf)",
+            "The O2Sim package is required to run ALICE detector simulations. It can be built or taken from CVMFS in precompiled form. Additionally, event generators like Pythia8 are used for event generation, and the simulation utilizes particle-transport engines such as Geant4, Geant3, and FLUKA via a Virtual Monte Carlo API.\n\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)",
+            "The O2Sim package is required to run ALICE detector simulations. It can be built or taken from CVMFS in precompiled form and contains everything needed for detector simulation. Additionally, the simulation pipeline utilizes event generators, and interchangeably uses Geant4, Geant3, and FLUKA through a Virtual Monte Carlo API. [https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf) [https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)\n\n\n\n",
+            "The O2Sim package is required to run ALICE detector simulations. It can be built or taken from CVMFS in precompiled form and contains everything needed for detector simulation. Additionally, the simulation ecosystem comprises various components maintained in O2 and O2Physics repos, integrated through the O2DPG repository and full-system-test. \n\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo_Transcript.md](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo_Transcript.md)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)\n[https://github.com/AliceO2Group/O2DPG/blob/master/README.md](https://github.com/AliceO2Group/O2DPG/blob/master/README.md)\n[https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf](https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf)"
+        ],
+        "times": [
+            22.096782207489014,
+            37.72636103630066,
+            28.49289584159851,
+            28.54055166244507,
+            35.18058490753174
+        ]
+    },
+    {
+        "id": 19,
+        "author": "Sandro",
+        "question": "Software packages for ALICE simulation?",
+        "correct_answer": "`O2PDPSuite`, deployed on CVMFS, contains all required software for ALICE simulation and analysis.",
+        "generated_answers": [
+            "o2-sim is the particle-detector simulator for ALICE Run3. It uses Geant4, Geant3 and FLUKA interchangeably through use of Virtual Monte Carlo API. \n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo_Transcript.md](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo_Transcript.md)",
+            "o2-sim is the particle-detector simulator for ALICE Run3. It implements ALICE detector on top of well known particle-transport engines such as Geant4, Geant3 and FLUKA. \n\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)\n[https://github.com/AliceO2Group/AliceO2/blob/dev/doc/DetectorSimulation.md](https://github.com/AliceO2Group/AliceO2/blob/dev/doc/DetectorSimulation.md)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf)\n[https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf](https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf)",
+            "o2-sim is the particle-detector simulator for ALICE Run3. It implements ALICE detector on top of well known particle-transport engines such as Geant4, Geant3 and FLUKA. \n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf)\n\n\n\n",
+            "o2-sim is the particle-detector simulator for ALICE Run3. It implements the ALICE detector on top of well known particle-transport engines such as Geant4, Geant3 and FLUKA. \n\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf)\n[https://github.com/AliceO2Group/AliceO2/blob/dev/doc/DetectorSimulation.md](https://github.com/AliceO2Group/AliceO2/blob/dev/doc/DetectorSimulation.md)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)",
+            "o2-sim, Geant4, Geant3 and FLUKA. \n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo_Transcript.md](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo_Transcript.md)"
+        ],
+        "times": [
+            31.184391975402832,
+            34.24593544006348,
+            27.31032657623291,
+            29.729665994644165,
+            30.455530166625977
+        ]
+    },
+    {
+        "id": 20,
+        "author": "Sandro",
+        "question": "How can I configure ALICE MC?",
+        "correct_answer": "Configuration of Monte Carlo simulation happens with a mix of command line options and configurable parameters (ConfigurableParams). The `o2-sim` executable has command line options to set top-level choices such as the event generator, the simulator backend, the output filename, etc. (see `o2-sim --help`). ConfigurableParams are two-level key-value strings `MainKey.SubKey=Value` passed via the `--configKeyValues` option; the main key addresses a broader category and the sub-key a specific modifiable variable. Example configurable parameter: `G4Params.configMacroFile` to set a Geant4 input file. Full example: `o2-sim -e TGeant4 --configKeyValues=\"G4Params.configMacroFile=myG4config.in\"`. Under the hood ConfigurableParams are C++ classes registered in a service whose registry knows all available configurable params and can spot wrong keys/sub-keys.",
+        "generated_answers": [
+            "o2-sim -n 10 -g pythia8pp\no2-sim -n 10 -g pythia8pp -j 8 --skipModules ZDC --field 2 -e TGeant3\no2-sim -n 10 -g pythia8pp --noGeant \n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)\n[https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf](https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf)",
+            "You can configure ALICE MC using `o2dpg_sim_workflow.py` and `o2_dpg_workflow_runner.py` scripts provided in the O2DPG repository ([https://github.com/AliceO2Group/O2DPG](https://github.com/AliceO2Group/O2DPG)). \n\nHere are some examples of how to use `o2-sim`:\n\n*   `o2-sim -n 10 -g pythia8pp`\n*   `o2-sim -n 10 -g pythia8pp -j 8 --skipModules ZDC --field 2 -e TGeant3`\n*   `o2-sim -n 10 -g pythia8pp --noGeant` ([https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf), [https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf](https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf))\n\nYou can also use the following command to generate an ALICE-Run3 Monte Carlo workflow:\n\n`${O2DPG_ROOT}/MC/bin/o2dpg_sim_workflow.py -eCM 14000 -col pp -gen pythia8 -proc cdiff -tf 5 \u2014ns 2000 -interactionRate 500000 -run 302000` ([https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf), [https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf](https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf))\n\n\n\n",
+            "o2-sim is the particle-detector simulator for ALICE Run3. It implements the ALICE detector on top of particle-transport engines like Geant4, Geant3 and FLUKA. Its main tasks include ALICE geometry creation, event generation, simulation of physics interactions, and creation of hits. \n\nExamples of usage:\n- `o2-sim -n 10 -g pythia8pp`: Generate 10 default Pythia8 pp events and transport them through the complete ALICE detector.\n- `o2-sim -n 10 -g pythia8pp -j 8 --skipModules ZDC --field 2 -e TGeant3`: Generate 10 default Pythia8 pp events and transport them with 8 Geant3 workers through everything but ZDC and use an L3-field of 2kGauss.\n- `o2-sim -n 10 -g pythia8pp --noGeant`: Generate 10 default Pythia8 pp events without Geant.\n\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)\n[https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf](https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf)",
+            "```bash\no2-sim -n 10 -g pythia8pp -e TGeant4 -j 2 --skipModules ZDC,PHS\n```\n\nThis command launches a simulation for 10 pythia8 events on the whole ALICE detector but ZDC and PHOS, using Geant4 on 2 parallel worker processes.  For a detailed list of command-line arguments, refer to the transport section: [https://github.com/AliceO2Group/simulation/blob/main/docs/gettingstarted/README.md#transport](https://github.com/AliceO2Group/simulation/blob/main/docs/gettingstarted/README.md#transport)",
+            "o2-sim -n 10 -g pythia8pp\no2-sim -n 10 -g pythia8pp -j 8 --skipModules ZDC --field 2 -e TGeant3\no2-sim -n 10 -g pythia8pp --noGeant\n([https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf), [https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf](https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf))"
+        ],
+        "times": [
+            28.175933599472046,
+            47.63472533226013,
+            41.80444121360779,
+            23.203047513961792,
+            28.476078510284424
+        ]
+    },
+    {
+        "id": 21,
+        "author": "Sandro",
+        "question": "How can I configure ALICE Run3 simulation?",
+        "correct_answer": "Use the `o2-sim` top-level command line options for high-level choices and ConfigurableParams (`MainKey.SubKey=Value`) for deeper runtime configuration, passed with `--configKeyValues`. Example: `o2-sim -e TGeant4 --configKeyValues=\"G4Params.configMacroFile=myG4config.in\"`.",
+        "generated_answers": [
+            "o2-sim -n 10 -g pythia8pp\no2-sim -n 10 -g pythia8pp -j 8 --skipModules ZDC --field 2 -e TGeant3\no2-sim -n 10 -g pythia8pp --noGeant\n(https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)",
+            "o2-sim is the particle-detector simulator for ALICE Run3. It implements ALICE detector on top of well known particle-transport engines such as Geant4, Geant3 and FLUKA. \n\nHere are some examples of its usage:\n- `o2-sim -n 10 -g pythia8pp`: Generate 10 default Pythia8 pp events and transport them through the complete ALICE detector.\n- `o2-sim -n 10 -g pythia8pp -j 8 --skipModules ZDC --field 2 -e TGeant3`: Generate 10 default Pythia8 pp events and transport them with 8 Geant3 workers through everything but ZDC and use an L3-field of 2kGauss.\n- `o2-sim -n 10 -g pythia8pp --noGeant`: Generate 10 default Pythia8 pp events and transport them without Geant.\n\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf)\n[https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf](https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf)",
+            "```\no2-sim -n 10 -g pythia8pp\no2-sim -n 10 -g pythia8pp -j 8 --skipModules ZDC --field 2 -e TGeant3\no2-sim -n 10 -g pythia8pp --noGeant\n```",
+            "o2-sim -n 10 -g pythia8pp\no2-sim -n 10 -g pythia8pp -j 8 --skipModules ZDC --field 2 -e TGeant3\no2-sim -n 10 -g pythia8pp --noGeant \n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf)",
+            "o2-sim -n 10 -g pythia8pp\no2-sim -n 10 -g pythia8pp -j 8 --skipModules ZDC --field 2 -e TGeant3\no2-sim -n 10 -g pythia8pp --noGeant\n(https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)"
+        ],
+        "times": [
+            22.129091024398804,
+            40.930723905563354,
+            20.403383493423462,
+            29.91999316215515,
+            22.412014484405518
+        ]
+    },
+    {
+        "id": 23,
+        "author": "Sandro",
+        "question": "How can I set a particular event generator for simulation?",
+        "correct_answer": "Pass the generator with the `-g` option to `o2-sim`. Example from the text: `o2-sim -g pythia8hi -n 11 --noGeant`.",
+        "generated_answers": [
+            "To set a particular event generator for simulation, use the `-g` option with `o2-sim`. For example: `o2-sim -g pythia8pp`. You can also use external event generators with `--configKeyValues 'GeneratorExternal.fileName=signal_impactb.macro;GeneratorExternal.funcName=signal_impactb(333, \"20. / (x + 1.)\")'`.\n\n[https://github.com/AliceO2Group/AliceO2/blob/dev/run/SimExamples/Signal_ImpactB/run.sh](https://github.com/AliceO2Group/AliceO2/blob/dev/run/SimExamples/Signal_ImpactB/run.sh)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo_Transcript.md](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo_Transcript.md)\n[https://github.com/AliceO2Group/AliceO2/blob/dev/doc/DetectorSimulation.md](https://github.com/AliceO2Group/AliceO2/blob/dev/doc/DetectorSimulation.md)\n\n\n\n",
+            "To set a particular event generator for simulation, use the `-g` option with `o2-sim`. \n\nSome predefined configurations include:\n\n*   `pythia8pp` for proton-proton collisions\n*   `pythia8hi` for lead-lead collisions\n*   `pythia8inel` for pp at 14 TeV, min. bias inelastic collisions\n*   `pythia8hf` for pp at 14 TeV, with hard c-cbar and b-bar processes turned on.\n*   `pythia8powheg` for pp at 13 TeV using POWHEG parton distribution functions\n*   `pythia8_inel.cfg`\n*   `pythia8_hf.cfg`\n*   `pythia8_powheg.cfg`\n*   `pythia8_hi.cfg`\n\nYou can also use an external event generator by specifying its file name and function name using `--configKeyValues`, like this: `--configKeyValues 'GeneratorExternal.fileName=signal_impactb.macro;GeneratorExternal.funcName=signal_impactb(333, \"20. / (x + 1.)\")'`. [https://github.com/AliceO2Group/AliceO2/blob/dev/run/SimExamples/Signal_ImpactB/run.sh](https://github.com/AliceO2Group/AliceO2/blob/dev/run/SimExamples/Signal_ImpactB/run.sh) [https://github.com/AliceO2Group/AliceO2/blob/dev/run/SimExamples/HF_Embedding_Pythia8/run.sh](https://github.com/AliceO2Group/AliceO2/blob/dev/run/SimExamples/HF_Embedding_Pythia8/run.sh) [https://github.com/AliceO2Group/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo_Transcript.md](https://github.com/AliceO2Group/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo_Transcript.md)",
+            "You can set a particular event generator for simulation using the `-g` option with `o2-sim`. For Pythia8, you can also use the `--configKeyValues \"GeneratorPythia8.config=<path/to/config>\"` option to specify a configuration file. Alternatively, you can use an external application that writes HepMC output and specify it with `--configKeyValues 'GeneratorExternal.fileName=<macro_file>;GeneratorExternal.funcName=<function_name>'` ([https://github.com/AliceO2Group/AliceO2/blob/dev/run/SimExamples/Signal_ImpactB/run.sh](https://github.com/AliceO2Group/AliceO2/blob/dev/run/SimExamples/Signal_ImpactB/run.sh)).\n\nPredefined configurations for Pythia8 are available through the `GeneratorFactory` and can be selected using options like `alldet`, `pythia8inel`, `pythia8hf`, `pythia8powheg`, and `pythia8hi` ([https://github.com/AliceO2Group/AliceO2/blob/dev/run/SimExamples/Pythia8/README.md](https://github.com/AliceO2Group/AliceO2/blob/dev/run/SimExamples/Pythia8/README.md)).",
+            "You can set a particular event generator for simulation using the `-g` option with `o2-sim`. For example, `o2-sim -n 10 -g pythia8pp` generates 10 default Pythia8 pp events.\n\nPredefined configurations include:\n\n*   `alldet` (`pythia8_inel.cfg`)\n*   `pythia8inel` (`pythia8_inel.cfg`)\n*   `pythia8hf` (`pythia8_hf.cfg`)\n*   `pythia8powheg` (`pythia8_powheg.cfg`)\n*   `pythia8hi` (`pythia8_hi.cfg`)\n\n([https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2\\_AnalysisTutorial\\_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf), [https://github.com/AliceO2Group/AliceO2/blob/dev/run/SimExamples/Pythia8/README.md](https://github.com/AliceO2Group/AliceO2/blob/dev/run/SimExamples/Pythia8/README.md))",
+            "To set a particular event generator for simulation, use the `-g` option with `o2-sim`. For example: `o2-sim -g pythia8pp`.\n\nYou can also specify a configuration file for Pythia8 using `--configKeyValues`: `o2-sim -g pythia8 --configKeyValues \"GeneratorPythia8.config=/path_to/pythia8.cfg\"`.\n\nFor external event generators, use `--configKeyValues` to specify the file name and function name: `o2-sim -g external --configKeyValues 'GeneratorExternal.fileName=signal_impactb.macro;GeneratorExternal.funcName=signal_impactb(333, \"20. / (x + 1.)\")'`.\n(https://github.com/AliceO2Group/AliceO2/blob/dev/run/SimExamples/Signal_ImpactB/run.sh)\n\nPredefined configurations for Pythia8 include `alldet`, `pythia8inel`, `pythia8hf`, `pythia8powheg`, and `pythia8hi`. (https://github.com/AliceO2Group/AliceO2/blob/dev/run/SimExamples/Pythia8/README.md)\n\n\n\n"
+        ],
+        "times": [
+            30.66687035560608,
+            39.69397592544556,
+            29.694754362106323,
+            32.35858702659607,
+            28.89525532722473
+        ]
+    },
+    {
+        "id": 24,
+        "author": "Sandro",
+        "question": "How can I only obtain the output of the event-generation stage?",
+        "correct_answer": "Three options are described:\n1) Use `o2-sim` with the `--noGeant` option to skip detector simulation; example: `o2-sim -g pythia8hi -n 11 --noGeant` \u2014 collision output will be in `o2sim_Kine.root`.\n2) Use the dedicated `o2-sim-dpl-eventgen` tool which focuses only on event generation and injects events on-the-fly into O2Physics (it typically does not store the collision output to a file). Examples live in `run/SimExamples/McTracksToAOD` in the AliceO2 repository.\n3) With the integrated O2DPG workflow, generate `workflow.json` using `o2dpg_sim_workflow.py` and run the workflow up to the `sgngen` stage: `${O2DPG_ROOT}/bin/o2dpg_workflow_runner.py -f workflow.json -tt sgngen`.",
+        "generated_answers": [
+            "I do not know the answer.",
+            "I do not know the answer.",
+            "I do not know the answer.",
+            "o2-sim -n 10 -g pythia8pp --noGeant",
+            "I do not know the answer."
+        ],
+        "times": [
+            16.811073064804077,
+            17.24679660797119,
+            14.595844507217407,
+            17.053739547729492,
+            15.361478328704834
+        ]
+    },
+    {
+        "id": 25,
+        "author": "Sandro",
+        "question": "How to do only event generation?",
+        "correct_answer": "Use one of the three options to perform only event generation:\n\u2022 `o2-sim --noGeant` to produce `o2sim_Kine.root` without Geant;\n\u2022 `o2-sim-dpl-eventgen` to inject generated events on-the-fly (usually without writing a file);\n\u2022 stop the O2DPG workflow after the event-generation stage by running the generated `workflow.json` up to `sgngen` with `${O2DPG_ROOT}/bin/o2dpg_workflow_runner.py -f workflow.json -tt sgngen`.",
+        "generated_answers": [
+            "o2-sim -n 10 -g pythia8pp\no2-sim -n 10 -g pythia8pp -j 8 --skipModules ZDC --field 2 -e TGeant3\no2-sim -n 10 -g pythia8pp --noGeant\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)\n[https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf](https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf)",
+            "```bash\no2-sim -n 10 -g pythia8pp\n```\n[https://github.com/AliceO2Group/AliceO2/blob/dev/run/SimExamples/McTracksToAOD/README.md](https://github.com/AliceO2Group/AliceO2/blob/dev/run/SimExamples/McTracksToAOD/README.md)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf)",
+            "Core simulation part includes event generation. [https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf]\n\n\n\nYou can generate events using `o2-sim` with a command like `o2-sim -n 10 -g pythia8pp`. [https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf] and [https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf]\n\n\n\nYou can also use scripts like `epos.sh` or `rundpg.sh` for event generation. [https://github.com/AliceO2Group/AliceO2/blob/dev/run/SimExamples/HepMC_EPOS4/README.md]",
+            "o2-sim can be used as an on-the-fly event generator for analysis, injecting generated events into a DPL analysis topology without intermediate storage. This is useful for studies where you want to analyze or process primaries only. \n\nFor example:\n`o2-sim -j 1 -g pythia8pp -n 10 --noDiscOutput --forwardKine --noGeant &> sim.log &`\n`o2-sim-mctracks-proxy -b --nevents 10 --o2sim-pid ${SIMPROC} --aggregate-timeframe 1 &`\n\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)\n[https://github.com/AliceO2Group/AliceO2/blob/dev/run/SimExamples/McTracksToAOD/run.sh](https://github.com/AliceO2Group/AliceO2/blob/dev/run/SimExamples/McTracksToAOD/run.sh)",
+            "o2-sim -n 10 -g pythia8pp --noGeant"
+        ],
+        "times": [
+            26.565572500228882,
+            22.907240867614746,
+            26.606951475143433,
+            34.06650376319885,
+            15.510502099990845
+        ]
+    },
+    {
+        "id": 26,
+        "author": "Sandro",
+        "question": "How can I simulate only specific detectors in the ALICE MC pipeline?",
+        "correct_answer": "On the level of the `o2-sim` detector simulation executable you can: (1) use `-m` to specify the exact list of modules to include, e.g. `o2-sim -m PIPE ITS TPC`; (2) use `--skipModules` to exclude modules from the full detector, e.g. `o2-sim --skipModules ZDC`; (3) instantiate the complete detector material but request hits only from certain sensitive detectors with `--readoutDetectors`, e.g. `o2-sim --skipModules ZDC --readoutDetectors ITS TPC`. On the level of the complete O2DPG MC workflows use the similar `--readoutDets` option with `o2dpg_sim_workflow.py`.",
+        "generated_answers": [
+            "You can skip modules using the `--skipModules` option. For example, `o2-sim -n 10 -g pythia8pp -j 8 --skipModules ZDC --field 2 -e TGeant3` will simulate everything but ZDC. \n\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)\n[https://github.com/AliceO2Group/simulation/blob/main/docs/gettingstarted/README.md](https://github.com/AliceO2Group/simulation/blob/main/docs/gettingstarted/README.md)",
+            "I do not know the answer.",
+            "o2-sim -n 10 -g pythia8pp -j 8 --skipModules ZDC --field 2 -e TGeant3.",
+            "To simulate only specific detectors, use the `--redoutDetectors` and `-m` options with the names of the detectors you want to include. You can also use the `--skip` option to exclude specific modules.\n\n[https://github.com/AliceO2Group/simulation/blob/main/docs/transport/README.md](https://github.com/AliceO2Group/simulation/blob/main/docs/transport/README.md)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)",
+            "I do not know the answer."
+        ],
+        "times": [
+            25.42550015449524,
+            15.51697850227356,
+            16.8054940700531,
+            24.417521715164185,
+            15.952987909317017
+        ]
+    },
+    {
+        "id": 27,
+        "author": "Sandro",
+        "question": "Where can I find the documentation for ALICE detector simulation?",
+        "correct_answer": "The main documentation is available at [https://aliceo2group.github.io/simulation/](https://aliceo2group.github.io/simulation/).",
+        "generated_answers": [
+            "I do not know the answer.",
+            "o2-sim is the particle-detector simulator for ALICE Run3. It implements the ALICE detector on top of well-known particle-transport engines like Geant4, Geant3 and FLUKA. \n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)\n[https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf](https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/ALICE-simulation-tutorial.pptx-1.pdf)",
+            "I do not know the answer.",
+            "I do not know the answer.",
+            "I do not know the answer."
+        ],
+        "times": [
+            16.35488772392273,
+            32.31828022003174,
+            16.250467777252197,
+            16.435908317565918,
+            15.882571697235107
+        ]
+    },
+    {
+        "id": 28,
+        "author": "Sandro",
+        "question": "Where can I find the documentation for ALICE Run3 MC?",
+        "correct_answer": "The main documentation is available at [https://aliceo2group.github.io/simulation/](https://aliceo2group.github.io/simulation/). In addition, concrete examples for the o2-sim detector simulator or event-generator setup are available at [https://github.com/AliceO2Group/AliceO2/tree/dev/run/SimExamples](https://github.com/AliceO2Group/AliceO2/tree/dev/run/SimExamples).",
+        "generated_answers": [
+            "The O2DPG repository provides the authoritative setup for official MC productions for ALICE-Run3. It integrates all relevant processing tasks used in simulation into a coherent and consistent environment/framework. You can find more information and the scripts [here](https://github.com/AliceO2Group/O2DPG). Specifically, the `o2dpg_sim_workflow.py` script is used for creating MC workflows. ([https://github.com/AliceO2Group/simulation/blob/main/docs/o2dpgworkflow/README.md](https://github.com/AliceO2Group/simulation/blob/main/docs/o2dpgworkflow/README.md), [https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf))",
+            "The integration and configuration of all parts into a coherent workflow is actually done in the O2DPG repository. [https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf) and [https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)",
+            "The documentation for ALICE Run3 MC is available in the [O2DPG repository](https://github.com/AliceO2Group/O2DPG). It provides the authoritative setup for official MC productions and integrates all relevant processing tasks into a coherent framework. Specifically, the [o2dpg_sim_workflow.py](https://github.com/AliceO2Group/O2DPG/blob/master/MC/bin/o2dpg_sim_workflow.py) and [o2_dpg_workflow_runner.py](https://github.com/AliceO2Group/O2DPG/blob/master/MC/bin/o2_dpg_workflow_runner.py) scripts are essential for configuring and running MC jobs. [https://github.com/AliceO2Group/simulation/blob/main/docs/o2dpgworkflow/README.md](https://github.com/AliceO2Group/simulation/blob/main/docs/o2dpgworkflow/README.md)",
+            "The documentation for ALICE Run3 MC workflows is available in the [O2DPG repository](https://github.com/AliceO2Group/O2DPG). Specifically, the [o2dpg_sim_workflow.py](https://github.com/AliceO2Group/O2DPG/blob/master/MC/bin/o2dpg_sim_workflow.py) and [o2_dpg_workflow_runner.py](https://github.com/AliceO2Group/O2DPG/blob/master/MC/bin/o2_dpg_workflow_runner.py) scripts are essential for configuring and running MC jobs. \n\n[https://github.com/AliceO2Group/simulation/blob/main/docs/o2dpgworkflow/README.md](https://github.com/AliceO2Group/simulation/blob/main/docs/o2dpgworkflow/README.md)",
+            "The documentation for ALICE Run3 MC can be found in the O2DPG repository: [https://github.com/AliceO2Group/O2DPG](https://github.com/AliceO2Group/O2DPG). It provides the authoritative setup for official MC productions and integrates all relevant processing tasks into a coherent environment. Specifically, the scripts [o2dpg_sim_workflow.py](https://github.com/AliceO2Group/O2DPG/blob/master/MC/bin/o2dpg_sim_workflow.py) and [o2_dpg_workflow_runner.py](https://github.com/AliceO2Group/O2DPG/blob/master/MC/bin/o2_dpg_workflow_runner.py) are essential. ([https://github.com/AliceO2Group/simulation/blob/main/docs/o2dpgworkflow/README.md](https://github.com/AliceO2Group/simulation/blob/main/docs/o2dpgworkflow/README.md), [https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf))"
+        ],
+        "times": [
+            28.67941164970398,
+            27.39694046974182,
+            26.606557607650757,
+            25.607298135757446,
+            31.62284779548645
+        ]
+    },
+    {
+        "id": 29,
+        "author": "Sandro",
+        "question": "How to obtain support for ALICE simulation?",
+        "correct_answer": "User-support can be obtained via dedicated Mattermost channels: [https://mattermost.web.cern.ch/alice/channels/o2-simulation](https://mattermost.web.cern.ch/alice/channels/o2-simulation).",
+        "generated_answers": [
+            "I do not know the answer.",
+            "To obtain support for ALICE simulation, you can contact the developers through the following channels:\n\n*   Simulation e-group (for meeting announcements) + WP12 meetings\n*   Collaborative Mattermost channels: O2-simulation + O2DPG\n*   JIRA tickets for feature requests/bug reports (components simulation or O2DPG)\n*   Mattermost O2DPG channel: [https://mattermost.web.cern.ch/alice/channels/o2dpg](https://mattermost.web.cern.ch/alice/channels/o2dpg)\n*   Mattermost Run3 Simulation channel: [https://mattermost.web.cern.ch/alice/channels/o2-simulation](https://mattermost.web.cern.ch/alice/channels/o2-simulation)\n*   ALICE Talk: [https://alice-talk.web.cern.ch/](https://alice-talk.web.cern.ch/)\n*   WP12 / WP13 meetings: [https://indico.cern.ch/category/4868/](https://indico.cern.ch/category/4868/)\n\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf)\n[https://github.com/AliceO2Group/simulation/blob/main/docs/gettingstarted/otherresources.md](https://github.com/AliceO2Group/simulation/blob/main/docs/gettingstarted/otherresources.md)",
+            "To obtain support for ALICE simulation, you can contact the simulation developers through the following channels:\n\n*   Simulation e-group (for meeting announcements) + WP12 meetings\n*   Collaborative Mattermost channels: O2-simulation + O2DPG\n*   JIRA tickets for feature requests/bug reports (components simulation or O2DPG)\n*   Mattermost O2DPG channel: [https://mattermost.web.cern.ch/alice/channels/o2dpg](https://mattermost.web.cern.ch/alice/channels/o2dpg)\n*   Mattermost Run3 Simulation channel: [https://mattermost.web.cern.ch/alice/channels/o2-simulation](https://mattermost.web.cern.ch/alice/channels/o2-simulation)\n*   ALICE Talk: [https://alice-talk.web.cern.ch/](https://alice-talk.web.cern.ch/)\n*   WP12 / WP13 meetings: [https://indico.cern.ch/category/4868/](https://indico.cern.ch/category/4868/)\n\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf)\n[https://github.com/AliceO2Group/simulation/blob/main/docs/gettingstarted/otherresources.md](https://github.com/AliceO2Group/simulation/blob/main/docs/gettingstarted/otherresources.md)",
+            "Simulation e-group for meeting announcements + WP12 meetings, collaborative Mattermost channels (O2-simulation + O2DPG), or JIRA tickets for feature requests/bug reports (components simulation or O2DPG). New documentation is available at https://aliceo2group.github.io/simulation/.\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf]",
+            "To obtain support for ALICE simulation, you can:\n\n*   Join the Simulation e-group for meeting announcements and WP12 meetings.\n*   Use collaborative Mattermost channels: O2-simulation and O2DPG (preferred over private email).\n*   Submit JIRA tickets for feature requests/bug reports (components simulation or O2DPG).\n*   Consult the new documentation project: https://aliceo2group.github.io/simulation/\n*   Refer to previous documentation in AliceO2: DetectorSimulation.md and some info in O2DPG: Work\ufb02owRunner.md.\n*   Find various examples at O2/SimExamples or nightly-tests.\n\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf)\n[https://github.com/AliceO2Group/simulation/blob/main/docs/gettingstarted/otherresources.md](https://github.com/AliceO2Group/simulation/blob/main/docs/gettingstarted/otherresources.md)"
+        ],
+        "times": [
+            16.151387691497803,
+            36.13621282577515,
+            36.474445104599,
+            21.89957618713379,
+            30.246459007263184
+        ]
+    },
+    {
+        "id": 30,
+        "author": "Sandro",
+        "question": "Where or how should I report bugs or ask for feature requests for simulation?",
+        "correct_answer": "Bug reports and feature requests should be made at [https://its.cern.ch/jira/projects/O2](https://its.cern.ch/jira/projects/O2) with tickets mentioning \"simulation\".",
+        "generated_answers": [
+            "JIRA tickets for feature requests/bug reports should be submitted with components simulation or O2DPG. Collaborative Mattermost channels (preferred over private email) are also available: O2-simulation + O2DPG. \n\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf)",
+            "For feature requests/bug reports, use JIRA tickets (components simulation or O2DPG). \n\nFor information about simulation, visit: https://aliceo2group.github.io/simulation/ \n\nYou can also reach out via collaborative Mattermost channels: O2-simulation + O2DPG.\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf]",
+            "I do not know the answer.",
+            "I do not know the answer.",
+            "JIRA tickets for feature requests/bug reports (components simulation or O2DPG). \n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf]"
+        ],
+        "times": [
+            21.99221968650818,
+            20.975579738616943,
+            14.730409145355225,
+            15.918325662612915,
+            18.546677350997925
+        ]
+    },
+    {
+        "id": 31,
+        "author": "Sandro",
+        "question": "What is a MClabel in ALICE run3 simulation",
+        "correct_answer": "In ALICE Run3 a Monte Carlo label (MCLabel) is the triple (source_id, event_id, track_id). It identifies a particular Monte Carlo particle across possibly multiple kinematics files and is provided via the C++ class o2::MCCompLabel.",
+        "generated_answers": [
+            "I do not know the answer.",
+            "I do not know the answer.",
+            "I do not know the answer.",
+            "I do not know the answer.",
+            "I do not know the answer."
+        ],
+        "times": [
+            15.898163557052612,
+            15.696416854858398,
+            16.1702823638916,
+            16.284997701644897,
+            16.030088901519775
+        ]
+    },
+    {
+        "id": 32,
+        "author": "Sandro",
+        "question": "What about MC labels in ALICE simulation?",
+        "correct_answer": "MCLabels allow combining multiple kinematics sources (e.g. for signal-background combinations) by adding a source_id to the (event_id, track_id) pair. Products of the computing chain (digits, clusters, reconstructed tracks) typically refer to one or more MCLabels to keep provenance information of the contributing particles.",
+        "generated_answers": [
+            "I do not know the answer.",
+            "I do not know the answer.",
+            "I do not know the answer.",
+            "I do not know the answer.",
+            "I do not know the answer."
+        ],
+        "times": [
+            16.089306354522705,
+            15.352280855178833,
+            16.228778839111328,
+            16.313753128051758,
+            16.34877610206604
+        ]
+    },
+    {
+        "id": 33,
+        "author": "Sandro",
+        "question": "How does MCTruth work?",
+        "correct_answer": "MCTruth analysis is based on MCLabels and the stored Monte Carlo information: generator and detector-simulation particles are saved as MCTrack objects in kinematics files (e.g. o2sim_Kine.root). An MCTrack encodes particle properties at creation; TrackReferences are snapshots of track properties along the trajectory (one MCTrack can have multiple TrackReferences). Kinematics files contain a vector of MCTracks per event, addressable by (event_id, track_id), and with multiple kinematic files by source_id \u2014 together forming the MCLabel used to trace provenance for closure tests, physics analysis and efficiency studies.",
+        "generated_answers": [
+            "I do not know the answer.",
+            "I do not know the answer.",
+            "o2-sim is the particle-detector simulator for ALICE Run3. It implements the ALICE detector on top of well known particle-transport engines like Geant4, Geant3 and FLUKA through use of a Virtual Monte Carlo API. Its main tasks are ALICE geometry creation, event generation, simulation of physics interactions of particles with detector material, and creation of hits (energy deposits) as a pre-stage of detector response. [https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf] [https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf] \n\nIt produces three internal log files for in-depth description and debugging: o2sim_serverlog, o2sim_workerlog0, and o2sim_mergerlog. [https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf]\n\nThe simulation pipeline produces geometry files, kinematics files, and detector response files (hits). [https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo_Transcript.md]",
+            "o2-sim is the particle-detector simulator for ALICE Run3. It implements the ALICE detector on top of well known particle-transport engines like Geant4, Geant3 and FLUKA through use of a Virtual Monte Carlo API. \n\nIts main tasks are:\n\n*   ALICE geometry creation\n*   Event generation (primary particle generation)\n*   Simulation of physics interaction of particles with detector material (secondary creation, etc.) and transport of particles until they exit detector or stop\n*   Creation of hits (energy deposits) as a pre-stage of detector response after particle passage.\n\nIt also features scalable multi-core simulation with sub-event parallelism allowing for the use of big servers and obtaining results for individual large events quickly. It treats events in complete isolation, with no timeframe concept (enters during digitization).\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)\n[https://github.com/AliceO2Group/AliceO2/blob/dev/doc/DetectorSimulation.md](https://github.com/AliceO2Group/AliceO2/blob/dev/doc/DetectorSimulation.md)",
+            "o2-sim is the particle-detector simulator for ALICE Run3. It implements the ALICE detector on top of particle-transport engines like Geant4, Geant3, and FLUKA via a Virtual Monte Carlo API. Its main tasks include ALICE geometry creation, event generation, simulation of particle interactions, and creation of hits. It also features scalable multi-core simulation and treats events in complete isolation. [https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf) [https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf)"
+        ],
+        "times": [
+            17.139171600341797,
+            16.631962776184082,
+            33.490400552749634,
+            37.3335599899292,
+            30.058626890182495
+        ]
+    },
+    {
+        "id": 34,
+        "author": "Sandro",
+        "question": "How to access MC tracks given a MC label?",
+        "correct_answer": "Initialize an MCKinematicsReader with either a kinematics file or a digitization (or collision) context. Then use the interface: MCTrack const& MCKinematicsReader::getTrack(MCCompLabel const&) const to translate a MCLabel (MCCompLabel) into an MCTrack. If you need all tracks for a particular event (single source_id) you can also use: std::vector<MCTrack> const& getTracks(int event) const.",
+        "generated_answers": [
+            "The `MCKinematicsReader` class can retrieve tracks for a given Monte Carlo label. \n\n[https://github.com/AliceO2Group/simulation/blob/main/docs/transport/mckine.md](https://github.com/AliceO2Group/simulation/blob/main/docs/transport/mckine.md)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo_Transcript.md](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo_Transcript.md)\n[https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/MC_Tutorials.pdf](https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/MC_Tutorials.pdf)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)",
+            "The `MCKinematicsReader` class can be used to retrieve tracks for a given Monte Carlo label. \n\n[https://github.com/AliceO2Group/simulation/blob/main/docs/transport/mckine.md](https://github.com/AliceO2Group/simulation/blob/main/docs/transport/mckine.md)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)\n[https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/MC_Tutorials.pdf](https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/MC_Tutorials.pdf)",
+            "The `MCKinematicsReader` class can return the tracks associated to a Monte Carlo label. \n\n[https://github.com/AliceO2Group/AliceO2/blob/dev/doc/DetectorSimulation.md](https://github.com/AliceO2Group/AliceO2/blob/dev/doc/DetectorSimulation.md)\n[https://github.com/AliceO2Group/simulation/blob/main/docs/transport/mckine.md](https://github.com/AliceO2Group/simulation/blob/main/docs/transport/mckine.md)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf)",
+            "The `MCKinematicsReader` class can retrieve tracks for a given MC label. \n\n[https://github.com/AliceO2Group/AliceO2/blob/dev/doc/DetectorSimulation.md](https://github.com/AliceO2Group/AliceO2/blob/dev/doc/DetectorSimulation.md)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo_Transcript.md](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo_Transcript.md)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf)",
+            "The `MCKinematicsReader` class can be used to retrieve tracks for a given Monte Carlo label. \n\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_April2023/ALICE-Run3-MC-HowTo.pdf)\n[https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf](https://github.com/AliceO2Group/simulation/blob/main/additional_resources/talks/O2_AnalysisTutorial_Nov2024/MCTutorial4Giacalone.pdf)\n[https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/MC_Tutorials.pdf](https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/MC_Tutorials.pdf)\n[https://github.com/AliceO2Group/simulation/blob/main/docs/transport/mckine.md](https://github.com/AliceO2Group/simulation/blob/main/docs/transport/mckine.md)"
+        ],
+        "times": [
+            30.76658535003662,
+            31.47491955757141,
+            30.132413625717163,
+            37.594011545181274,
+            31.321012258529663
+        ]
+    },
+    {
+        "id": 35,
+        "author": "Sandro",
+        "question": "How to access TrackReferences?",
+        "correct_answer": "Use gsl::span[o2::TrackReference](o2::TrackReference) getTrackRefs(int source, int event, int track) const to fetch TrackReferences belonging to a given MCLabel.",
+        "generated_answers": [
+            "I do not know the answer.",
+            "I do not know the answer.",
+            "I do not know the answer.",
+            "I do not know the answer.",
+            "I do not know the answer."
+        ],
+        "times": [
+            15.598012685775757,
+            15.594557762145996,
+            14.338390111923218,
+            14.630860805511475,
+            15.337419986724854
+        ]
+    },
+    {
+        "id": 36,
+        "author": "Sandro",
+        "question": "Provide an example of job script running anchored MC",
+        "correct_answer": "#!/usr/bin/env bash\n\n# Define some obligatory environment variables\n# referencing/defining the data taking period for this MC\nexport ALIEN_JDL_LPMANCHORPASSNAME=apass4\nexport ALIEN_JDL_MCANCHOR=apass4\nexport ALIEN_JDL_CPULIMIT=8\nexport ALIEN_JDL_LPMRUNNUMBER=545312\nexport ALIEN_JDL_LPMPRODUCTIONTYPE=MC\nexport ALIEN_JDL_LPMINTERACTIONTYPE=Pb-Pb\nexport ALIEN_JDL_LPMPRODUCTIONTAG=LHC24a2_mystudy\nexport ALIEN_JDL_LPMANCHORRUN=545312\nexport ALIEN_JDL_LPMANCHORPRODUCTION=LHC23zzo\nexport ALIEN_JDL_LPMANCHORYEAR=2023\n\n# event generator config to be used \nexport ALIEN_JDL_ANCHOR_SIM_OPTIONS=\"-gen pythia8pp\" \n\n# some numbers\nexport NTIMEFRAMES=2   # number of timeframes to do \nexport NSIGEVENTS=5000 # <-- an upper boundary; actual number is the min of this and what fits into a timeframe\nexport PRODSPLIT=100\nexport SPLITID=50\nexport CYCLE=0\n\nexport ALIEN_PROC_ID=${ALIEN_PROC_ID:-2963436952}\n\n# start the actual workflow\n${O2DPG_ROOT}/MC/run/ANCHOR/anchorMC.sh\n\nThis script will run a single MC job for run number 545312 of the 2023 PbPb data taking period for 2 timeframes. Note that in an actual MC production on the GRID, the only line that a user should provide is `ALIEN_JDL_ANCHOR_SIM_OPTIONS` to define the event generator setup and the rest is filled or provided by the operator or the system.",
+        "generated_answers": [
+            "```bash\n#!/bin/bash\n\n#\n# An example steering script for anchored MC simulations, PbPb\n#\nexport ALIEN_JDL_LPMANCHORPASSNAME=apass2\nexport ALIEN_JDL_MCANCHOR=apass2\nexport ALIEN_JDL_CPULIMIT=8\nexport ALIEN_JDL_LPMRUNNUMBER=544121\nexport ALIEN_JDL_LPMPRODUCTIONTYPE=MC\nexport ALIEN_JDL_LPMINTERACTIONTYPE=PbPb\nexport ALIEN_JDL_LPMPRODUCTIONTAG=LHC24a1\nexport ALIEN_JDL_LPMANCHORRUN=544121\nexport ALIEN_JDL_LPMANCHORPRODUCTION=LHC23zzh\nexport ALIEN_JDL_LPMANCHORYEAR=2023\n\nexport NTIMEFRAMES=2\nexport NSIGEVENTS=2\nexport SPLITID=100\nexport PRODSPLIT=153\nexport CYCLE=0\n\n# on the GRID, this is set and used as seed; when set, it takes precedence over SEED\n#export ALIEN_PROC_ID=2963436952\nexport SEED=5\n\n${O2DPG_ROOT}/MC/run/ANCHOR/anchorMC.sh\n```\n[https://github.com/AliceO2Group/O2DPG/blob/master/MC/run/ANCHOR/tests/test_anchor_2023_apass2_PbPb.sh](https://github.com/AliceO2Group/O2DPG/blob/master/MC/run/ANCHOR/tests/test_anchor_2023_apass2_PbPb.sh)",
+            "```bash\nexport ALIEN_JDL_LPMANCHORPASSNAME=apass2\nexport ALIEN_JDL_MCANCHOR=apass2\nexport ALIEN_JDL_COLLISIONSYSTEM=pp\nexport ALIEN_JDL_CPULIMIT=8\nexport ALIEN_JDL_LPMPASSNAME=apass2\nexport ALIEN_JDL_LPMRUNNUMBER=544167\nexport ALIEN_JDL_LPMPRODUCTIONTYPE=MC\nexport ALIEN_JDL_LPMINTERACTIONTYPE=pp\nexport ALIEN_JDL_LPMPRODUCTIONTAG=LHC24a1\nexport ALIEN_JDL_LPMANCHORRUN=544167\nexport ALIEN_JDL_LPMANCHORPRODUCTION=LHC22o\nexport ALIEN_JDL_LPMANCHORYEAR=2023\nexport ALIEN_JDL_SIM_OPTIONS=\"-gen external -proc cdiff -ini ${O2DPG_ROOT}/MC/config/PWGLF/ini/GeneratorLFStrangenessTriggered.ini\"\n\nexport NTIMEFRAMES=1\nexport NSIGEVENTS=50\nexport SPLITID=100\nexport PRODSPLIT=153\nexport CYCLE=0\n\nexport SEED=5\nexport NWORKERS=2\n\n${O2DPG_ROOT}/MC/run/ANCHOR/anchorMC.sh\n```\n([https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/MC_Tutorials.pdf](https://github.com/ta5946/alice-rag/blob/master/data/knowledge_base/presentations/MC_Tutorials.pdf))",
+            "```bash\n${O2DPG_ROOT}/MC/bin/o2dpg_sim_workflow_anchored.py -tf 500 --split-id ${s} --cycle ${cycle} --prod-split 100 --run-number 505600         \\\\\\n                                                       -- -gen pythia8 -eCM 900 -col pp -gen pythia8 -proc inel                             \\\\\\n                                                           -ns 22 -e TGeant4                                                                \\\\\\n                                                           -j 8 -interactionRate 2000                                                       \\\\\\n                                                           -field +2                                                                        \\\\\\n                                                           -confKey \"Diamond.width[2]=6\"\n```\n[https://github.com/AliceO2Group/O2DPG/blob/master/MC/bin/o2dpg_sim_workflow_anchored.py](https://github.com/AliceO2Group/O2DPG/blob/master/MC/bin/o2dpg_sim_workflow_anchored.py)",
+            "```bash\n#!/bin/bash\n\n#\n# An example steering script for anchored MC simulations, PbPb\n#\nexport ALIEN_JDL_LPMANCHORPASSNAME=apass2\nexport ALIEN_JDL_MCANCHOR=apass2\nexport ALIEN_JDL_CPULIMIT=8\nexport ALIEN_JDL_LPMRUNNUMBER=544121\nexport ALIEN_JDL_LPMPRODUCTIONTYPE=MC\nexport ALIEN_JDL_LPMINTERACTIONTYPE=PbPb\nexport ALIEN_JDL_LPMPRODUCTIONTAG=LHC24a1\nexport ALIEN_JDL_LPMANCHORRUN=544121\nexport ALIEN_JDL_LPMANCHORPRODUCTION=LHC23zzh\nexport ALIEN_JDL_LPMANCHORYEAR=2023\n\nexport NTIMEFRAMES=2\nexport NSIGEVENTS=2\nexport SPLITID=100\nexport PRODSPLIT=153\nexport CYCLE=0\n\n# on the GRID, this is set and used as seed; when set, it takes precedence over SEED\n#export ALIEN_PROC_ID=2963436952\nexport SEED=5\n\n${O2DPG_ROOT}/MC/run/ANCHOR/anchorMC.sh\n```\n[https://github.com/AliceO2Group/O2DPG/blob/master/MC/run/ANCHOR/tests/test_anchor_2023_apass2_PbPb.sh](https://github.com/AliceO2Group/O2DPG/blob/master/MC/run/ANCHOR/tests/test_anchor_2023_apass2_PbPb.sh)",
+            "```bash\n${O2DPG_ROOT}/MC/run/ANCHOR/anchorMC.sh\n```\n\n[https://github.com/AliceO2Group/O2DPG/blob/master/MC/run/PWGEM/runAnchoredHFGapToDielectrons_pp_Gap6.sh](https://github.com/AliceO2Group/O2DPG/blob/master/MC/run/PWGEM/runAnchoredHFGapToDielectrons_pp_Gap6.sh)\n[https://github.com/AliceO2Group/O2DPG/blob/master/MC/run/PWGEM/runAnchoredHFGapToDielectrons_pp_Gap7.sh](https://github.com/AliceO2Group/O2DPG/blob/master/MC/run/PWGEM/runAnchoredHFGapToDielectrons_pp_Gap7.sh)\n[https://github.com/AliceO2Group/O2DPG/blob/master/MC/run/PWGEM/runAnchoredHFGapToDielectrons_pp_Gap5.sh](https://github.com/AliceO2Group/O2DPG/blob/master/MC/run/PWGEM/runAnchoredHFGapToDielectrons_pp_Gap5.sh)"
+        ],
+        "times": [
+            34.82347369194031,
+            34.33022952079773,
+            26.29210376739502,
+            34.77460479736328,
+            28.862993955612183
+        ]
+    }
+]

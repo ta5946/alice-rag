@@ -63,157 +63,157 @@
     "id": 11,
     "author": "Sandro",
     "question": "How can I run a basic ALICE detector simulation for Run3?",
-    "answer": "Use the Run3 detector simulator `o2-sim`. A typical basic example provided is:\n\n`o2-sim -g pythia8pp -e TGeant4 -n 10 -j 8`\n\nThis runs a Pythia8 pp generator, uses Geant4 (`-e TGeant4`), simulates 10 events (`-n 10`) in the full ALICE geometry and runs on 8 workers (`-j 8`). For Run3 the simulator is rewritten to be fully multi-core capable and asynchronous. The integrated MC workflow (O2DPG) is the official way to run ALICE MC; full `o2-sim` docs and examples are in the provided links."
+    "correct_answer": "Use the Run3 detector simulator `o2-sim`. A typical basic example provided is:\n\n`o2-sim -g pythia8pp -e TGeant4 -n 10 -j 8`\n\nThis runs a Pythia8 pp generator, uses Geant4 (`-e TGeant4`), simulates 10 events (`-n 10`) in the full ALICE geometry and runs on 8 workers (`-j 8`). For Run3 the simulator is rewritten to be fully multi-core capable and asynchronous. The integrated MC workflow (O2DPG) is the official way to run ALICE MC; full `o2-sim` docs and examples are in the provided links."
   },
   {
     "id": 12,
     "author": "Sandro",
     "question": "How to run Run3 detector simulation?",
-    "answer": "Run the `o2-sim` executable (the Run3 detector simulation was rewritten to be multi-core and asynchronous). A concrete example is:\n\n`o2-sim -g pythia8pp -e TGeant4 -n 10 -j 8`\n\nThis steers event generation, detector geometry/material construction and particle transport; use the O2DPG setup (official MC workflow) and refer to the `o2-sim` documentation and SimExamples in the AliceO2 repository for more examples."
+    "correct_answer": "Run the `o2-sim` executable (the Run3 detector simulation was rewritten to be multi-core and asynchronous). A concrete example is:\n\n`o2-sim -g pythia8pp -e TGeant4 -n 10 -j 8`\n\nThis steers event generation, detector geometry/material construction and particle transport; use the O2DPG setup (official MC workflow) and refer to the `o2-sim` documentation and SimExamples in the AliceO2 repository for more examples."
   },
   {
     "id": 13,
     "author": "Sandro",
     "question": "How to run Run3 Geant simulation?",
-    "answer": "Use `o2-sim` and select a Geant backend via the VMC engine option. Example for Geant4:\n\n`o2-sim -g pythia8pp -e TGeant4 -n 10 -j 8`\n\n`o2-sim` uses a VMC abstraction that lets you choose Geant4, Geant3 or FLUKA as the actual simulator backend; the example above runs Geant4 on 8 workers for 10 events."
+    "correct_answer": "Use `o2-sim` and select a Geant backend via the VMC engine option. Example for Geant4:\n\n`o2-sim -g pythia8pp -e TGeant4 -n 10 -j 8`\n\n`o2-sim` uses a VMC abstraction that lets you choose Geant4, Geant3 or FLUKA as the actual simulator backend; the example above runs Geant4 on 8 workers for 10 events."
   },
   {
     "id": 14,
     "author": "Sandro",
     "question": "Describe the o2-sim executable.",
-    "answer": "`o2-sim` is the ALICE detector simulation executable that transforms virtual particle collisions into detector-response information (hits). It steers event generation, constructs the detector geometry and material and performs particle-transport simulation via a Virtual Monte Carlo (VMC) abstraction so users can choose Geant4, Geant3 or FLUKA as backend. `o2-sim` produces hit files for each sensitive detector (e.g. `o2sim_HitsITS.root`) and a kinematics file (by default `o2sim_Kine.root`) containing primary and secondary particle information. For Run3 it is fully multi-core capable and asynchronous. Full documentation and examples are available in the provided links, and the O2DPG repository provides the integrated/official MC workflow."
+    "correct_answer": "`o2-sim` is the ALICE detector simulation executable that transforms virtual particle collisions into detector-response information (hits). It steers event generation, constructs the detector geometry and material and performs particle-transport simulation via a Virtual Monte Carlo (VMC) abstraction so users can choose Geant4, Geant3 or FLUKA as backend. `o2-sim` produces hit files for each sensitive detector (e.g. `o2sim_HitsITS.root`) and a kinematics file (by default `o2sim_Kine.root`) containing primary and secondary particle information. For Run3 it is fully multi-core capable and asynchronous. Full documentation and examples are available in the provided links, and the O2DPG repository provides the integrated/official MC workflow."
   },
   {
     "id": 15,
     "author": "Sandro",
     "question": "How can I run the production MC workflow for ALICE?",
-    "answer": "Use the O2DPG-provided workflows which integrate the AliceO2 executables into end-to-end MC pipelines. Two supported ways are:\n\n1) Build and run a workflow explicitly with the two O2DPG Python scripts:\n\n- Create the workflow description (workflow.json) with `o2dpg_sim_workflow.py` and then execute it with `o2dpg_workflow_runner.py`.\n\nExample:\n`\n${O2DPG_ROOT}/MC/bin/o2dpg_sim_workflow.py -eCM 14000  -col pp -gen pythia8 -tf 1 -ns 2000 --interactionRate 500000 -run 302000\n\n${O2DPG_ROOT}/MC/bin/o2dpg_workflow_runner.py -f workflow.json -tt aod\n`\nThis configures a complete simulation for 1 timeframe of pp collisions and runs up to the `aod` stage.\n\n2) (Typical user) Use the provided anchor script `anchorMC.sh`, which manages setup and execution for MC that matches real data-taking conditions. You set a few obligatory environment variables (data-taking period, reconstruction pass, plus generator options) and call the script. Detailed docs are available in the O2DPG documentation (anchored workflow)."
+    "correct_answer": "Use the O2DPG-provided workflows which integrate the AliceO2 executables into end-to-end MC pipelines. Two supported ways are:\n\n1) Build and run a workflow explicitly with the two O2DPG Python scripts:\n\n- Create the workflow description (workflow.json) with `o2dpg_sim_workflow.py` and then execute it with `o2dpg_workflow_runner.py`.\n\nExample:\n`\n${O2DPG_ROOT}/MC/bin/o2dpg_sim_workflow.py -eCM 14000  -col pp -gen pythia8 -tf 1 -ns 2000 --interactionRate 500000 -run 302000\n\n${O2DPG_ROOT}/MC/bin/o2dpg_workflow_runner.py -f workflow.json -tt aod\n`\nThis configures a complete simulation for 1 timeframe of pp collisions and runs up to the `aod` stage.\n\n2) (Typical user) Use the provided anchor script `anchorMC.sh`, which manages setup and execution for MC that matches real data-taking conditions. You set a few obligatory environment variables (data-taking period, reconstruction pass, plus generator options) and call the script. Detailed docs are available in the O2DPG documentation (anchored workflow)."
   },
   {
     "id": 16,
     "author": "Sandro",
     "question": "Script to run MC in ALICE3?",
-    "answer": "The primary user-facing script is `anchorMC.sh` (located in `${O2DPG_ROOT}/MC/run/ANCHOR/anchorMC.sh`). Set the required environment variables (data-taking period, pass, run number, production tag, and generator options) and invoke the script. Example header shown in the provided text:\n\n`\n# Define obligatory environment variables\nexport ALIEN_JDL_LPMANCHORPASSNAME=apass4\nexport ALIEN_JDL_MCANCHOR=apass4\nexport ALIEN_JDL_CPULIMIT=8\nexport ALIEN_JDL_LPMRUNNUMBER=545312\nexport ALIEN_JDL_LPMPRODUCTIONTYPE=MC\nexport ALIEN_JDL_LPMINTERACTIONTYPE=Pb-Pb\nexport ALIEN_JDL_LPMPRODUCTIONTAG=LHC24a2_mystudy\nexport ALIEN_JDL_LPMANCHORRUN=545312\nexport ALIEN_JDL_LPMANCHORPRODUCTION=LHC23zzo\nexport ALIEN_JDL_LPMANCHORYEAR=2023\n\n# event generator config\nexport ALIEN_JDL_ANCHOR_SIM_OPTIONS=\"-gen pythia8pp\"\n\n# numbers\nexport NTIMEFRAMES=2\nexport NSIGEVENTS=5000\nexport PRODSPLIT=100\nexport SPLITID=50\nexport CYCLE=0\n\n# start the workflow\n${O2DPG_ROOT}/MC/run/ANCHOR/anchorMC.sh\n`\n\nFor advanced or expert-mode setups you can instead build a workflow with `o2dpg_sim_workflow.py` and run it with `o2dpg_workflow_runner.py` as shown above."
+    "correct_answer": "The primary user-facing script is `anchorMC.sh` (located in `${O2DPG_ROOT}/MC/run/ANCHOR/anchorMC.sh`). Set the required environment variables (data-taking period, pass, run number, production tag, and generator options) and invoke the script. Example header shown in the provided text:\n\n`\n# Define obligatory environment variables\nexport ALIEN_JDL_LPMANCHORPASSNAME=apass4\nexport ALIEN_JDL_MCANCHOR=apass4\nexport ALIEN_JDL_CPULIMIT=8\nexport ALIEN_JDL_LPMRUNNUMBER=545312\nexport ALIEN_JDL_LPMPRODUCTIONTYPE=MC\nexport ALIEN_JDL_LPMINTERACTIONTYPE=Pb-Pb\nexport ALIEN_JDL_LPMPRODUCTIONTAG=LHC24a2_mystudy\nexport ALIEN_JDL_LPMANCHORRUN=545312\nexport ALIEN_JDL_LPMANCHORPRODUCTION=LHC23zzo\nexport ALIEN_JDL_LPMANCHORYEAR=2023\n\n# event generator config\nexport ALIEN_JDL_ANCHOR_SIM_OPTIONS=\"-gen pythia8pp\"\n\n# numbers\nexport NTIMEFRAMES=2\nexport NSIGEVENTS=5000\nexport PRODSPLIT=100\nexport SPLITID=50\nexport CYCLE=0\n\n# start the workflow\n${O2DPG_ROOT}/MC/run/ANCHOR/anchorMC.sh\n`\n\nFor advanced or expert-mode setups you can instead build a workflow with `o2dpg_sim_workflow.py` and run it with `o2dpg_workflow_runner.py` as shown above."
   },
   {
     "id": 17,
     "author": "Sandro",
     "question": "How can I load the software necessary to run simulation, reconstruction etc?",
-    "answer": "You can load the `O2PDPSuite` package from CVMFS using the `alienv` command:\n```\n/cvmfs/alice.cern.ch/bin/alienv enter O2PDPSuite::VERSION\n```\nwhere `VERSION` is a specific tag such as `O2PDPSuite::MC-prod-2025-v1-2` or a daily release like `daily-20250711-0000-1`. Alternatively, you can build the software stack yourself using the aliBuild/alidist ecosystem (instructions: https://alice-doc.github.io/alice-analysis-tutorial/building/)."
+    "correct_answer": "You can load the `O2PDPSuite` package from CVMFS using the `alienv` command:\n```\n/cvmfs/alice.cern.ch/bin/alienv enter O2PDPSuite::VERSION\n```\nwhere `VERSION` is a specific tag such as `O2PDPSuite::MC-prod-2025-v1-2` or a daily release like `daily-20250711-0000-1`. Alternatively, you can build the software stack yourself using the aliBuild/alidist ecosystem (instructions: https://alice-doc.github.io/alice-analysis-tutorial/building/)."
   },
   {
     "id": 18,
     "author": "Sandro",
     "question": "What software packages are required to run the simulation pipeline?",
-    "answer": "The `O2PDPSuite` software package provides all necessary components to run the Monte Carlo pipeline for ALICE in Run3 and also to do physics analysis."
+    "correct_answer": "The `O2PDPSuite` software package provides all necessary components to run the Monte Carlo pipeline for ALICE in Run3 and also to do physics analysis."
   },
   {
     "id": 19,
     "author": "Sandro",
     "question": "Software packages for ALICE simulation?",
-    "answer": "`O2PDPSuite`, deployed on CVMFS, contains all required software for ALICE simulation and analysis."
+    "correct_answer": "`O2PDPSuite`, deployed on CVMFS, contains all required software for ALICE simulation and analysis."
   },
   {
     "id": 20,
     "author": "Sandro",
     "question": "How can I configure ALICE MC?",
-    "answer": "Configuration of Monte Carlo simulation happens with a mix of command line options and configurable parameters (ConfigurableParams). The `o2-sim` executable has command line options to set top-level choices such as the event generator, the simulator backend, the output filename, etc. (see `o2-sim --help`). ConfigurableParams are two-level key-value strings `MainKey.SubKey=Value` passed via the `--configKeyValues` option; the main key addresses a broader category and the sub-key a specific modifiable variable. Example configurable parameter: `G4Params.configMacroFile` to set a Geant4 input file. Full example: `o2-sim -e TGeant4 --configKeyValues=\"G4Params.configMacroFile=myG4config.in\"`. Under the hood ConfigurableParams are C++ classes registered in a service whose registry knows all available configurable params and can spot wrong keys/sub-keys."
+    "correct_answer": "Configuration of Monte Carlo simulation happens with a mix of command line options and configurable parameters (ConfigurableParams). The `o2-sim` executable has command line options to set top-level choices such as the event generator, the simulator backend, the output filename, etc. (see `o2-sim --help`). ConfigurableParams are two-level key-value strings `MainKey.SubKey=Value` passed via the `--configKeyValues` option; the main key addresses a broader category and the sub-key a specific modifiable variable. Example configurable parameter: `G4Params.configMacroFile` to set a Geant4 input file. Full example: `o2-sim -e TGeant4 --configKeyValues=\"G4Params.configMacroFile=myG4config.in\"`. Under the hood ConfigurableParams are C++ classes registered in a service whose registry knows all available configurable params and can spot wrong keys/sub-keys."
   },
   {
     "id": 21,
     "author": "Sandro",
     "question": "How can I configure ALICE Run3 simulation?",
-    "answer": "Use the `o2-sim` top-level command line options for high-level choices and ConfigurableParams (`MainKey.SubKey=Value`) for deeper runtime configuration, passed with `--configKeyValues`. Example: `o2-sim -e TGeant4 --configKeyValues=\"G4Params.configMacroFile=myG4config.in\"`."
+    "correct_answer": "Use the `o2-sim` top-level command line options for high-level choices and ConfigurableParams (`MainKey.SubKey=Value`) for deeper runtime configuration, passed with `--configKeyValues`. Example: `o2-sim -e TGeant4 --configKeyValues=\"G4Params.configMacroFile=myG4config.in\"`."
   },
   {
     "id": 22,
     "author": "Sandro",
     "question": "What event-generators are supported?",
-    "answer":  null
+    "correct_answer":  null
   },
   {
     "id": 23,
     "author": "Sandro",
     "question": "How can I set a particular event generator for simulation?",
-    "answer": "Pass the generator with the `-g` option to `o2-sim`. Example from the text: `o2-sim -g pythia8hi -n 11 --noGeant`."
+    "correct_answer": "Pass the generator with the `-g` option to `o2-sim`. Example from the text: `o2-sim -g pythia8hi -n 11 --noGeant`."
   },
   {
     "id": 24,
     "author": "Sandro",
     "question": "How can I only obtain the output of the event-generation stage?",
-    "answer": "Three options are described:\n1) Use `o2-sim` with the `--noGeant` option to skip detector simulation; example: `o2-sim -g pythia8hi -n 11 --noGeant` — collision output will be in `o2sim_Kine.root`.\n2) Use the dedicated `o2-sim-dpl-eventgen` tool which focuses only on event generation and injects events on-the-fly into O2Physics (it typically does not store the collision output to a file). Examples live in `run/SimExamples/McTracksToAOD` in the AliceO2 repository.\n3) With the integrated O2DPG workflow, generate `workflow.json` using `o2dpg_sim_workflow.py` and run the workflow up to the `sgngen` stage: `${O2DPG_ROOT}/bin/o2dpg_workflow_runner.py -f workflow.json -tt sgngen`."
+    "correct_answer": "Three options are described:\n1) Use `o2-sim` with the `--noGeant` option to skip detector simulation; example: `o2-sim -g pythia8hi -n 11 --noGeant` — collision output will be in `o2sim_Kine.root`.\n2) Use the dedicated `o2-sim-dpl-eventgen` tool which focuses only on event generation and injects events on-the-fly into O2Physics (it typically does not store the collision output to a file). Examples live in `run/SimExamples/McTracksToAOD` in the AliceO2 repository.\n3) With the integrated O2DPG workflow, generate `workflow.json` using `o2dpg_sim_workflow.py` and run the workflow up to the `sgngen` stage: `${O2DPG_ROOT}/bin/o2dpg_workflow_runner.py -f workflow.json -tt sgngen`."
   },
   {
     "id": 25,
     "author": "Sandro",
     "question": "How to do only event generation?",
-    "answer": "Use one of the three options to perform only event generation:\n• `o2-sim --noGeant` to produce `o2sim_Kine.root` without Geant;\n• `o2-sim-dpl-eventgen` to inject generated events on-the-fly (usually without writing a file);\n• stop the O2DPG workflow after the event-generation stage by running the generated `workflow.json` up to `sgngen` with `${O2DPG_ROOT}/bin/o2dpg_workflow_runner.py -f workflow.json -tt sgngen`."
+    "correct_answer": "Use one of the three options to perform only event generation:\n• `o2-sim --noGeant` to produce `o2sim_Kine.root` without Geant;\n• `o2-sim-dpl-eventgen` to inject generated events on-the-fly (usually without writing a file);\n• stop the O2DPG workflow after the event-generation stage by running the generated `workflow.json` up to `sgngen` with `${O2DPG_ROOT}/bin/o2dpg_workflow_runner.py -f workflow.json -tt sgngen`."
 
   },
   {
     "id": 26,
     "author": "Sandro",
     "question": "How can I simulate only specific detectors in the ALICE MC pipeline?",
-    "answer": "On the level of the `o2-sim` detector simulation executable you can: (1) use `-m` to specify the exact list of modules to include, e.g. `o2-sim -m PIPE ITS TPC`; (2) use `--skipModules` to exclude modules from the full detector, e.g. `o2-sim --skipModules ZDC`; (3) instantiate the complete detector material but request hits only from certain sensitive detectors with `--readoutDetectors`, e.g. `o2-sim --skipModules ZDC --readoutDetectors ITS TPC`. On the level of the complete O2DPG MC workflows use the similar `--readoutDets` option with `o2dpg_sim_workflow.py`."
+    "correct_answer": "On the level of the `o2-sim` detector simulation executable you can: (1) use `-m` to specify the exact list of modules to include, e.g. `o2-sim -m PIPE ITS TPC`; (2) use `--skipModules` to exclude modules from the full detector, e.g. `o2-sim --skipModules ZDC`; (3) instantiate the complete detector material but request hits only from certain sensitive detectors with `--readoutDetectors`, e.g. `o2-sim --skipModules ZDC --readoutDetectors ITS TPC`. On the level of the complete O2DPG MC workflows use the similar `--readoutDets` option with `o2dpg_sim_workflow.py`."
   },
   {
     "id": 27,
     "author": "Sandro",
     "question": "Where can I find the documentation for ALICE detector simulation?",
-    "answer": "The main documentation is available at [https://aliceo2group.github.io/simulation/](https://aliceo2group.github.io/simulation/)."
+    "correct_answer": "The main documentation is available at [https://aliceo2group.github.io/simulation/](https://aliceo2group.github.io/simulation/)."
   },
   {
     "id": 28,
     "author": "Sandro",
     "question": "Where can I find the documentation for ALICE Run3 MC?",
-    "answer": "The main documentation is available at [https://aliceo2group.github.io/simulation/](https://aliceo2group.github.io/simulation/). In addition, concrete examples for the o2-sim detector simulator or event-generator setup are available at [https://github.com/AliceO2Group/AliceO2/tree/dev/run/SimExamples](https://github.com/AliceO2Group/AliceO2/tree/dev/run/SimExamples)."
+    "correct_answer": "The main documentation is available at [https://aliceo2group.github.io/simulation/](https://aliceo2group.github.io/simulation/). In addition, concrete examples for the o2-sim detector simulator or event-generator setup are available at [https://github.com/AliceO2Group/AliceO2/tree/dev/run/SimExamples](https://github.com/AliceO2Group/AliceO2/tree/dev/run/SimExamples)."
   },
   {
     "id": 29,
     "author": "Sandro",
     "question": "How to obtain support for ALICE simulation?",
-    "answer": "User-support can be obtained via dedicated Mattermost channels: [https://mattermost.web.cern.ch/alice/channels/o2-simulation](https://mattermost.web.cern.ch/alice/channels/o2-simulation)."
+    "correct_answer": "User-support can be obtained via dedicated Mattermost channels: [https://mattermost.web.cern.ch/alice/channels/o2-simulation](https://mattermost.web.cern.ch/alice/channels/o2-simulation)."
   },
   {
     "id": 30,
     "author": "Sandro",
     "question": "Where or how should I report bugs or ask for feature requests for simulation?",
-    "answer": "Bug reports and feature requests should be made at [https://its.cern.ch/jira/projects/O2](https://its.cern.ch/jira/projects/O2) with tickets mentioning \"simulation\"."
+    "correct_answer": "Bug reports and feature requests should be made at [https://its.cern.ch/jira/projects/O2](https://its.cern.ch/jira/projects/O2) with tickets mentioning \"simulation\"."
   },
   {
     "id": 31,
     "author": "Sandro",
     "question": "What is a MClabel in ALICE run3 simulation",
-    "answer": "In ALICE Run3 a Monte Carlo label (MCLabel) is the triple (source_id, event_id, track_id). It identifies a particular Monte Carlo particle across possibly multiple kinematics files and is provided via the C++ class o2::MCCompLabel."
+    "correct_answer": "In ALICE Run3 a Monte Carlo label (MCLabel) is the triple (source_id, event_id, track_id). It identifies a particular Monte Carlo particle across possibly multiple kinematics files and is provided via the C++ class o2::MCCompLabel."
   },
   {
     "id": 32,
     "author": "Sandro",
     "question": "What about MC labels in ALICE simulation?",
-    "answer": "MCLabels allow combining multiple kinematics sources (e.g. for signal-background combinations) by adding a source_id to the (event_id, track_id) pair. Products of the computing chain (digits, clusters, reconstructed tracks) typically refer to one or more MCLabels to keep provenance information of the contributing particles."
+    "correct_answer": "MCLabels allow combining multiple kinematics sources (e.g. for signal-background combinations) by adding a source_id to the (event_id, track_id) pair. Products of the computing chain (digits, clusters, reconstructed tracks) typically refer to one or more MCLabels to keep provenance information of the contributing particles."
   },
   {
     "id": 33,
     "author": "Sandro",
     "question": "How does MCTruth work?",
-    "answer": "MCTruth analysis is based on MCLabels and the stored Monte Carlo information: generator and detector-simulation particles are saved as MCTrack objects in kinematics files (e.g. o2sim_Kine.root). An MCTrack encodes particle properties at creation; TrackReferences are snapshots of track properties along the trajectory (one MCTrack can have multiple TrackReferences). Kinematics files contain a vector of MCTracks per event, addressable by (event_id, track_id), and with multiple kinematic files by source_id — together forming the MCLabel used to trace provenance for closure tests, physics analysis and efficiency studies."
+    "correct_answer": "MCTruth analysis is based on MCLabels and the stored Monte Carlo information: generator and detector-simulation particles are saved as MCTrack objects in kinematics files (e.g. o2sim_Kine.root). An MCTrack encodes particle properties at creation; TrackReferences are snapshots of track properties along the trajectory (one MCTrack can have multiple TrackReferences). Kinematics files contain a vector of MCTracks per event, addressable by (event_id, track_id), and with multiple kinematic files by source_id — together forming the MCLabel used to trace provenance for closure tests, physics analysis and efficiency studies."
   },
   {
     "id": 34,
     "author": "Sandro",
     "question": "How to access MC tracks given a MC label?",
-    "answer": "Initialize an MCKinematicsReader with either a kinematics file or a digitization (or collision) context. Then use the interface: MCTrack const& MCKinematicsReader::getTrack(MCCompLabel const&) const to translate a MCLabel (MCCompLabel) into an MCTrack. If you need all tracks for a particular event (single source_id) you can also use: std::vector<MCTrack> const& getTracks(int event) const."
+    "correct_answer": "Initialize an MCKinematicsReader with either a kinematics file or a digitization (or collision) context. Then use the interface: MCTrack const& MCKinematicsReader::getTrack(MCCompLabel const&) const to translate a MCLabel (MCCompLabel) into an MCTrack. If you need all tracks for a particular event (single source_id) you can also use: std::vector<MCTrack> const& getTracks(int event) const."
   },
   {
     "id": 35,
     "author": "Sandro",
     "question": "How to access TrackReferences?",
-    "answer": "Use gsl::span[o2::TrackReference](o2::TrackReference) getTrackRefs(int source, int event, int track) const to fetch TrackReferences belonging to a given MCLabel."
+    "correct_answer": "Use gsl::span[o2::TrackReference](o2::TrackReference) getTrackRefs(int source, int event, int track) const to fetch TrackReferences belonging to a given MCLabel."
   },
   {
     "id": 36,
     "author": "Sandro",
     "question": "Provide an example of job script running anchored MC",
-    "answer": "#!/usr/bin/env bash\n\n# Define some obligatory environment variables\n# referencing/defining the data taking period for this MC\nexport ALIEN_JDL_LPMANCHORPASSNAME=apass4\nexport ALIEN_JDL_MCANCHOR=apass4\nexport ALIEN_JDL_CPULIMIT=8\nexport ALIEN_JDL_LPMRUNNUMBER=545312\nexport ALIEN_JDL_LPMPRODUCTIONTYPE=MC\nexport ALIEN_JDL_LPMINTERACTIONTYPE=Pb-Pb\nexport ALIEN_JDL_LPMPRODUCTIONTAG=LHC24a2_mystudy\nexport ALIEN_JDL_LPMANCHORRUN=545312\nexport ALIEN_JDL_LPMANCHORPRODUCTION=LHC23zzo\nexport ALIEN_JDL_LPMANCHORYEAR=2023\n\n# event generator config to be used \nexport ALIEN_JDL_ANCHOR_SIM_OPTIONS=\"-gen pythia8pp\" \n\n# some numbers\nexport NTIMEFRAMES=2   # number of timeframes to do \nexport NSIGEVENTS=5000 # <-- an upper boundary; actual number is the min of this and what fits into a timeframe\nexport PRODSPLIT=100\nexport SPLITID=50\nexport CYCLE=0\n\nexport ALIEN_PROC_ID=${ALIEN_PROC_ID:-2963436952}\n\n# start the actual workflow\n${O2DPG_ROOT}/MC/run/ANCHOR/anchorMC.sh\n\nThis script will run a single MC job for run number 545312 of the 2023 PbPb data taking period for 2 timeframes. Note that in an actual MC production on the GRID, the only line that a user should provide is `ALIEN_JDL_ANCHOR_SIM_OPTIONS` to define the event generator setup and the rest is filled or provided by the operator or the system."
+    "correct_answer": "#!/usr/bin/env bash\n\n# Define some obligatory environment variables\n# referencing/defining the data taking period for this MC\nexport ALIEN_JDL_LPMANCHORPASSNAME=apass4\nexport ALIEN_JDL_MCANCHOR=apass4\nexport ALIEN_JDL_CPULIMIT=8\nexport ALIEN_JDL_LPMRUNNUMBER=545312\nexport ALIEN_JDL_LPMPRODUCTIONTYPE=MC\nexport ALIEN_JDL_LPMINTERACTIONTYPE=Pb-Pb\nexport ALIEN_JDL_LPMPRODUCTIONTAG=LHC24a2_mystudy\nexport ALIEN_JDL_LPMANCHORRUN=545312\nexport ALIEN_JDL_LPMANCHORPRODUCTION=LHC23zzo\nexport ALIEN_JDL_LPMANCHORYEAR=2023\n\n# event generator config to be used \nexport ALIEN_JDL_ANCHOR_SIM_OPTIONS=\"-gen pythia8pp\" \n\n# some numbers\nexport NTIMEFRAMES=2   # number of timeframes to do \nexport NSIGEVENTS=5000 # <-- an upper boundary; actual number is the min of this and what fits into a timeframe\nexport PRODSPLIT=100\nexport SPLITID=50\nexport CYCLE=0\n\nexport ALIEN_PROC_ID=${ALIEN_PROC_ID:-2963436952}\n\n# start the actual workflow\n${O2DPG_ROOT}/MC/run/ANCHOR/anchorMC.sh\n\nThis script will run a single MC job for run number 545312 of the 2023 PbPb data taking period for 2 timeframes. Note that in an actual MC production on the GRID, the only line that a user should provide is `ALIEN_JDL_ANCHOR_SIM_OPTIONS` to define the event generator setup and the rest is filled or provided by the operator or the system."
   }
 ]

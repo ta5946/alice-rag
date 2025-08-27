@@ -71,7 +71,7 @@ OLD_GEMMA = ChatOpenAI(
     api_key="any"
 )
 
-LLM = External.QWEN
+LLM = External.DEEPSEEK
 
 EMBEDDINGS = HuggingFaceEmbeddings(
     model_name=os.getenv("HF_EMBEDDINGS_REPO"),
