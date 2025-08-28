@@ -93,14 +93,11 @@ COMPRESSOR = CrossEncoderReranker(
 
 
 CHROMA_CLIENT = PersistentClient(path=os.getenv("CHROMA_DIR")) # can switch to chromadb.HttpClient()
-CHROMA_COLLECTION = CHROMA_CLIENT.get_or_create_collection(
-    name=os.getenv("CHROMA_COLLECTION_NAME"),
-    metadata={"hnsw:space": "cosine"}
-)
 
 SIMULATION_VECTORSTORE = Chroma(
     collection_name="simulation",
     embedding_function=EMBEDDINGS,
+    collection_metadata={"hnsw:space": "cosine"}, # safer than get_or_create_collection()
     client=CHROMA_CLIENT
 ) # created in indexer folder
 
@@ -117,20 +114,21 @@ SIMULATION_COMPRESSION_RETRIEVER = ContextualCompressionRetriever(
 ANALYSIS_VECTORSTORE = Chroma(
     collection_name="analysis",
     embedding_function=EMBEDDINGS,
+    collection_metadata={"hnsw:space": "cosine"},
     client=CHROMA_CLIENT
 ) # created in indexer folder
 
-ANALYSIS_RETRIEVER = SIMULATION_VECTORSTORE.as_retriever(
+ANALYSIS_RETRIEVER = ANALYSIS_VECTORSTORE.as_retriever(
     search_type="similarity_score_threshold",
     search_kwargs={"k": int(os.getenv("CHROMA_TOP_K")), "score_threshold": float(os.getenv("CHROMA_THRESHOLD"))}
 ) # generalized retriever class
 
 ANALYSIS_COMPRESSION_RETRIEVER = ContextualCompressionRetriever(
     base_compressor=COMPRESSOR,
-    base_retriever=SIMULATION_RETRIEVER
+    base_retriever=ANALYSIS_RETRIEVER
 )
 
-DB = SIMULATION_COMPRESSION_RETRIEVER
+DB = ANALYSIS_COMPRESSION_RETRIEVER
 
 
 TRACING_CLIENT = get_client()

@@ -25,11 +25,11 @@ resources:
     branch: master
 
   # focus on simulations for now
-#  - type: git
-#    url: https://github.com/AliceO2Group/analysis-framework
-#    include: ["docs/**/*.md", "**/*.py", "**/*.sh", "**/*.pdf"]
-#    exclude: ["_saas/**"] # pwgTables.md are large
-#    branch: master
+  - type: git
+    url: https://github.com/AliceO2Group/analysis-framework
+    include: ["docs/**/*.md", "**/*.py", "**/*.sh", "**/*.pdf"]
+    exclude: ["_sass/**/*", "docs/datamodel/pwgTables.md"] # are large
+    branch: master
 
 #  - type: google-slide
 #    url: https://docs.google.com/presentation/d/1BEQmYtKLjmLshwWulLtqIgasmwGup61xfNF5feZPimY/edit?slide=id.p#slide=id.p

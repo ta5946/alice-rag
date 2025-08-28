@@ -4,7 +4,7 @@ import time
 import asyncio
 from tqdm import tqdm
 from functools import partial
-from src.chatbot.langchain_components import LLM, External
+from src.chatbot.langchain_components import LLM, External, DB
 from src.chatbot.basic_rag_qa import rag_response
 
 
@@ -22,7 +22,7 @@ async def base_gemini(question):
 # evaluation configuration
 DATASET_PATH = "eval/datasets/final_expert_qa_dataset.json"
 ANSWER_GENERATOR = partial(rag_response, include_links=False)
-ANSWER_PATH = "eval/answers/final/rag_external_deepseek.json"
+ANSWER_PATH = "eval/answers/vectorstores/external_qwen_analysis.json"
 N_ANSWERS = 5
 
 async def generate_answers():
@@ -40,7 +40,7 @@ async def generate_answers():
         item["times"] = []
         for i in range(N_ANSWERS):
             start = time.time()
-            generated_answer = await ANSWER_GENERATOR(item["question"])
+            generated_answer = await ANSWER_GENERATOR(LLM, DB, item["question"])
             print(generated_answer)
             item["generated_answers"].append(generated_answer)
             end = time.time()

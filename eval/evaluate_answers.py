@@ -7,9 +7,9 @@ from eval.metrics import *
 
 
 # evaluation configuration
-ANSWER_DIR = "eval/answers/final"
-RESULT_DIR = "eval/results/final"
-JUDGES = [External.DEEPSEEK]
+ANSWER_DIR = "eval/answers/vectorstores"
+RESULT_DIR = "eval/results/vectorstores"
+JUDGES = [External.QWEN]
 TIMEOUT = 0
 
 def single_calculate_results(answer_path, judge, timeout, result_path):

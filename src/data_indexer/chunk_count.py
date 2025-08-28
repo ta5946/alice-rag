@@ -1,13 +1,10 @@
-from src.chatbot.langchain_components import CHROMA_COLLECTION
+from src.chatbot.langchain_components import *
+
 
 if __name__ == "__main__":
     # print the nuber of stored chunks
-    print(CHROMA_COLLECTION.count())
-    # 2900 chunks for chunk size 1000 (best)
-    # 5200 chunks for chunk size 1000 + synthetic medium qa pairs
-    # 9000 chunks for chunk size 1000 + synthetic easy, medium and hard qa pairs
-    # 5880 chunks for chunk size 1000 + synthetic paraphrased documents
-    # 1450 chunks for chunk size 2000 - checks out
-    # 3700 chunks for similarity threshold 0.9
-
-    # 1900 chunks after fixing exclude patterns
+    print(f"Simulation vectorstore chunks: {SIMULATION_VECTORSTORE._collection.count()}")
+    print(f"Analysis vectorstore chunks: {ANALYSIS_VECTORSTORE._collection.count()}")
+    # as of 28. 8. 2025
+    # 1909
+    # 3531

@@ -6,8 +6,8 @@ import matplotlib.patches as mpatches
 
 
 # plot configuration
-RESULT_DIR = "eval/results/final/external_qwen_judge"
-PLOT_DIR = "img/plots/final/external_qwen_judge"
+RESULT_DIR = "eval/results/final/external_mistral_judge"
+PLOT_DIR = "img/plots/final/external_mistral_judge"
 MODEL_FILES = [
     {
         "before": "base_old_qwen.json",
