@@ -797,12 +797,20 @@ Example of a generated changelog:
 ---
 
 
+## Chatbot configuration and deployment
+
+Another user request was to be able to change the chatbot configuration (like models, hyperparameters) in the Mattermost interface.
+This is easily done with **flags** at the start of user message.
+They should be formatted like `#parameter:value` and separated with a whitespace. As of now, the following parameters are supported:
+
+| **Parameter** | **Description**                                                   | **Values**                                    | **Default** | **Example usage**    |
+|---------------|-------------------------------------------------------------------|-----------------------------------------------|-------------|----------------------|
+| `model`       | Which LLM to use for the response.                                | `gpt`, `qwen`, `mistral`, `gemma`, `deepseek` | Qwen        | #model:qwen question |
+| `db`          | How many documents to retrieve from the vector database (recall). | `low`, `med`, `high`                          | Medium      | #db:high question    |
+
+
 ## Future work
 
 ### Knowledge base
 - _Scrape Jira issues from O2 (filters general, production request)_
 - _Cluster Mattermost questions by similarity / topic_
-
-### Question answering
-- Repeat chatbot evaluation (Mistral and other models)
-- Configure LLM and RAG in Mattermost with prefix like `#deepseek` or `/llm_deepseek`

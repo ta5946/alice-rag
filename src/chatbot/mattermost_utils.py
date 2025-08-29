@@ -4,7 +4,6 @@ import asyncio
 from mattermostdriver import Driver
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 from langfuse import get_client
-import src.chatbot.simulation_chatbot_prompts as prompts
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -48,7 +47,7 @@ def get_thread_messages(thread_id):
                 message = re.sub(BOT_SUFFIX_RE + r".*$", "", message, flags=re.DOTALL).strip()
                 messages.append(AIMessage(content=message))
             else:
-                message = re.sub(USER_PARAMS_RE, "", message, flags=re.IGNORECASE).strip() # remove #model:_ and #db:_ tags from user messages
+                message = re.sub(USER_PARAMS_RE, "", message, flags=re.IGNORECASE).strip() # remove #model:_ and #db:_ flags from user messages
                 messages.append(HumanMessage(content=message))
         return messages
 

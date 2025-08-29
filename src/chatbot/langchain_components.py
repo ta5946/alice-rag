@@ -71,19 +71,20 @@ OLD_GEMMA = ChatOpenAI(
     api_key="any"
 )
 
+# TODO change the default LLM here
 LLM = External.QWEN
 
 
 EMBEDDINGS = HuggingFaceEmbeddings(
     model_name=os.getenv("HF_EMBEDDINGS_REPO"),
     cache_folder=os.getenv("HF_CACHE_DIR"),
-    model_kwargs={"device": "cuda"}, # cpu or cuda
+    model_kwargs={"device": "cuda", "trust_remote_code": True}, # cpu or cuda
     encode_kwargs={"batch_size": 10, "normalize_embeddings": True}
 ) # normalization not needed if we use cosine similarity
 
 RERANKER = HuggingFaceCrossEncoder(
     model_name=os.getenv("HF_RERANKER_REPO"),
-    model_kwargs={"cache_folder": os.getenv("HF_CACHE_DIR"), "device": "cuda"}
+    model_kwargs={"cache_folder": os.getenv("HF_CACHE_DIR"), "device": "cuda", "trust_remote_code": True}
 )
 
 COMPRESSOR = CrossEncoderReranker(
@@ -94,58 +95,68 @@ COMPRESSOR = CrossEncoderReranker(
 
 CHROMA_CLIENT = PersistentClient(path=os.getenv("CHROMA_DIR")) # can switch to chromadb.HttpClient()
 
-SIMULATION_VECTORSTORE = Chroma(
-    collection_name="simulation",
+VECTORSTORE = Chroma(
+    collection_name=os.getenv("CHROMA_COLLECTION_NAME"),
     embedding_function=EMBEDDINGS,
     collection_metadata={"hnsw:space": "cosine"}, # safer than get_or_create_collection()
     client=CHROMA_CLIENT
 ) # created in indexer folder
 
-SIMULATION_RETRIEVER = SIMULATION_VECTORSTORE.as_retriever(
+VECTORSTORE_RETRIEVER = VECTORSTORE.as_retriever(
     search_type="similarity_score_threshold",
     search_kwargs={"k": int(os.getenv("CHROMA_TOP_K")), "score_threshold": float(os.getenv("CHROMA_THRESHOLD"))}
 ) # generalized retriever class
 
-SIMULATION_COMPRESSION_RETRIEVER = ContextualCompressionRetriever(
+COMPRESSION_RETRIEVER = ContextualCompressionRetriever(
     base_compressor=COMPRESSOR,
-    base_retriever=SIMULATION_RETRIEVER
+    base_retriever=VECTORSTORE_RETRIEVER
 )
 
-ANALYSIS_VECTORSTORE = Chroma(
-    collection_name="analysis",
-    embedding_function=EMBEDDINGS,
-    collection_metadata={"hnsw:space": "cosine"},
-    client=CHROMA_CLIENT
-) # created in indexer folder
+DB = COMPRESSION_RETRIEVER
 
-ANALYSIS_RETRIEVER = ANALYSIS_VECTORSTORE.as_retriever(
-    search_type="similarity_score_threshold",
-    search_kwargs={"k": int(os.getenv("CHROMA_TOP_K")), "score_threshold": float(os.getenv("CHROMA_THRESHOLD"))}
-) # generalized retriever class
 
-ANALYSIS_COMPRESSION_RETRIEVER = ContextualCompressionRetriever(
-    base_compressor=COMPRESSOR,
-    base_retriever=ANALYSIS_RETRIEVER
-)
+async def invoke_db_config(db_config, search_query, callbacks=None):
+    db = db_config.get("db")
 
-LARGE_VECTORSTORE = Chroma(
-    collection_name="large",
-    embedding_function=EMBEDDINGS,
-    collection_metadata={"hnsw:space": "cosine"},
-    client=CHROMA_CLIENT
-)
+    old_top_k = db.base_retriever.search_kwargs.get("k")
+    old_top_n = db.base_compressor.top_n
+    old_similarity_threshold = db.base_retriever.search_kwargs.get("score_threshold")
 
-LARGE_RETRIEVER = LARGE_VECTORSTORE.as_retriever(
-    search_type="similarity_score_threshold",
-    search_kwargs={"k": int(os.getenv("CHROMA_TOP_K")), "score_threshold": float(os.getenv("CHROMA_THRESHOLD"))}
-)
+    db.base_retriever.search_kwargs["k"] = db_config.get("top_k")
+    db.base_compressor.top_n = db_config.get("top_n")
+    db.base_retriever.search_kwargs["score_threshold"] = db_config.get("similarity_threshold")
+    result = await db.ainvoke(search_query, config={"callbacks": callbacks})
 
-LARGE_COMPRESSION_RETRIEVER = ContextualCompressionRetriever(
-    base_compressor=COMPRESSOR,
-    base_retriever=LARGE_RETRIEVER
-)
+    # restore original configuration
+    db.base_retriever.search_kwargs["k"] = old_top_k
+    db.base_compressor.top_n = old_top_n
+    db.base_retriever.search_kwargs["score_threshold"] = old_similarity_threshold
+    return result
 
-DB = LARGE_COMPRESSION_RETRIEVER
+# based on information recall
+LOW_DB_CONFIG = {
+    "db": DB,
+    "name": "low recall",
+    "top_k": 25,
+    "top_n": 5,
+    "similarity_threshold": 0.5
+}
+
+MED_DB_CONFIG = {
+    "db": DB,
+    "name": "medium recall",
+    "top_k": 50,
+    "top_n": 10,
+    "similarity_threshold": 0.5
+}
+
+HIGH_DB_CONFIG = {
+    "db": DB,
+    "name": "high recall",
+    "top_k": 75,
+    "top_n": 15,
+    "similarity_threshold": 0.5
+}
 
 
 TRACING_CLIENT = get_client()
@@ -156,11 +167,11 @@ def messages_to_string(messages):
     str = "[\n"
     for msg in messages:
         if isinstance(msg, SystemMessage):
-            str += f"System: {msg.content}\n"
+            str += f"System: {msg.content},\n"
         elif isinstance(msg, HumanMessage):
-            str += f"User: {msg.content}\n"
+            str += f"User: {msg.content},\n"
         elif isinstance(msg, AIMessage):
-            str += f"Assistant: {msg.content}\n"
+            str += f"Assistant: {msg.content},\n"
         else:
             raise ValueError(f"Invalid message type: {msg.type}")
     str += "]"

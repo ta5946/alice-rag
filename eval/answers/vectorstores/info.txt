@@ -1,0 +1,3 @@
+Qwen3-30B-A3B-Instruct-2507 was used to generate all answers in this directory.
+"simulation": RAG with only O2 simulation documentation in the vectorstore
+"analysis": Includes both simulation and analysis documentation

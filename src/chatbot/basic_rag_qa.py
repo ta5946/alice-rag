@@ -92,7 +92,8 @@ async def generate_search_query(llm, prompt, message_history, mattermost_context
 
 async def retrieve_documents(db, search_query, mattermost_context):
     await async_update_post(mattermost_context, "📄 _Searching for documents..._")
-    retrieved_docs = await db.ainvoke(search_query, config={"callbacks": [TRACING_HANDLER]})
+    retrieved_docs = await invoke_db_config(db, search_query, callbacks=[TRACING_HANDLER])
+    # retrieved_docs = await db.ainvoke(search_query, config={"callbacks": [TRACING_HANDLER]})
     if isinstance(retrieved_docs, list):
         retrieved_docs = [Document(page_content=doc.page_content, metadata={"link": doc.metadata.get("link")}) for doc in retrieved_docs]
     if len(retrieved_docs) == 0:
@@ -139,9 +140,10 @@ VALID_PARAMS = {
         "deepseek": External.DEEPSEEK
     },
     "db": {
-        "default": DB,
-        "simulation": SIMULATION_COMPRESSION_RETRIEVER,
-        "analysis": ANALYSIS_COMPRESSION_RETRIEVER
+        "default": MED_DB_CONFIG,
+        "low": LOW_DB_CONFIG,
+        "med": MED_DB_CONFIG,
+        "high": HIGH_DB_CONFIG
     }
 }
 
@@ -164,22 +166,23 @@ def get_chatbot_params(user_question, mattermost_context):
                     print(f"Setting chatbot parameter {param} to {param_key} from thread tags!")
                     chatbot_params[param] = param_value
 
-    # override with user params
-    pattern = USER_PARAMS_RE
-    matches = re.findall(pattern, user_question, flags=re.IGNORECASE)
-    for key, value in matches:
-        if key in VALID_PARAMS and value in VALID_PARAMS[key]:
-            print(f"Setting chatbot parameter {key} to {value} from user params!")
-            chatbot_params[key] = VALID_PARAMS[key][value]
+    # override with user flags
+    cleaned_question = re.sub(USER_PARAMS_RE, "", user_question, flags=re.IGNORECASE).strip()
+    matches = re.findall(USER_PARAMS_RE, user_question, flags=re.IGNORECASE)
+    for param, param_key in matches:
+        param = param.lower()
+        param_key = param_key.lower()
+        if param in VALID_PARAMS and param_key in VALID_PARAMS[param]:
+            print(f"Setting chatbot parameter {param} to {param_key} from user params!")
+            chatbot_params[param] = VALID_PARAMS[param][param_key]
 
-    cleaned_question = re.sub(pattern, "", user_question).strip()
     return cleaned_question, chatbot_params
 
 def get_llm_name(llm):
     return llm.model_name
 
 def get_db_name(db):
-    return db.base_retriever.vectorstore._collection_name
+    return db.get("name")
 
 
 RESPONSE_MAP = {
@@ -206,7 +209,7 @@ async def qa_pipeline(question, message_history=None, feedback=True, mattermost_
             question_category = await classify_prompt(llm, question, message_history, mattermost_context)
             print("QUESTION CLASSIFICATION:", PROMPT_CATEGORY_MAP[question_category])
 
-            answer = await RESPONSE_MAP[question_category](llm, db, question, message_history, mattermost_context)
+            answer = await rag_response(llm, db, question, message_history, mattermost_context) # TODO rag response is hard coded for now
             tags = []
             tags.append(f"mode:{'dev' if dev_mode else 'prod'}")
             tags.append(f"model:{get_llm_name(llm)}")

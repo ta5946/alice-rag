@@ -47,7 +47,7 @@ user_feedback_suffix = PromptTemplate.from_template("""
 
 ---
 
-_This response used **{llm}** model and **{db}** database.
+_This response used **{llm}** model and a **{db}** database.
 Help us improve the askALICE chatbot by providing your feedback - React to this message with 👍 if the answer was helpful or 👎 if it was not._""")
 
 

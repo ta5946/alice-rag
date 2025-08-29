@@ -22,7 +22,7 @@ async def base_gemini(question):
 # evaluation configuration
 DATASET_PATH = "eval/datasets/final_expert_qa_dataset.json"
 ANSWER_GENERATOR = partial(rag_response, include_links=False)
-ANSWER_PATH = "eval/answers/vectorstores/external_qwen_large_med.json"
+ANSWER_PATH = "eval/answers/vectorstores/external_qwen_jina_med.json"
 N_ANSWERS = 5
 
 async def generate_answers():

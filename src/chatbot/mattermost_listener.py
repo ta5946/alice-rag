@@ -13,7 +13,7 @@ async def handle_post(event_data):
         print("HANDLING POST")
         print(event_data)
         post_data = json.loads(event_data.get("post"))
-        if post_data.get("user_id") == BOT_ID:  # ignore bot messages
+        if post_data.get("user_id") == BOT_ID: # ignore bot messages
             return
 
         channel_id = post_data.get("channel_id")
@@ -21,7 +21,9 @@ async def handle_post(event_data):
         post_message = post_data.get("message")
         thread_id = post_data.get("root_id") or post_id
         thread_messages = get_thread_messages(thread_id)
-        thread_messages = thread_messages[:-1] if thread_messages and thread_messages[-1].content == post_message else thread_messages  # exclude last message
+        # exclude last message
+        # use "in" instead of "==" because of user flags
+        thread_messages = thread_messages[:-1] if thread_messages and thread_messages[-1].content in post_message else thread_messages
 
         bot_post = MATTERMOST_DRIVER.posts.create_post({
             "channel_id": channel_id,
