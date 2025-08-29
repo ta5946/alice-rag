@@ -128,7 +128,24 @@ ANALYSIS_COMPRESSION_RETRIEVER = ContextualCompressionRetriever(
     base_retriever=ANALYSIS_RETRIEVER
 )
 
-DB = ANALYSIS_COMPRESSION_RETRIEVER
+LARGE_VECTORSTORE = Chroma(
+    collection_name="large",
+    embedding_function=EMBEDDINGS,
+    collection_metadata={"hnsw:space": "cosine"},
+    client=CHROMA_CLIENT
+)
+
+LARGE_RETRIEVER = LARGE_VECTORSTORE.as_retriever(
+    search_type="similarity_score_threshold",
+    search_kwargs={"k": int(os.getenv("CHROMA_TOP_K")), "score_threshold": float(os.getenv("CHROMA_THRESHOLD"))}
+)
+
+LARGE_COMPRESSION_RETRIEVER = ContextualCompressionRetriever(
+    base_compressor=COMPRESSOR,
+    base_retriever=LARGE_RETRIEVER
+)
+
+DB = LARGE_COMPRESSION_RETRIEVER
 
 
 TRACING_CLIENT = get_client()
