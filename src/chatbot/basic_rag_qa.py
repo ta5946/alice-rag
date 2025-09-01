@@ -8,11 +8,8 @@ from src.chatbot.langchain_components import *
 
 
 PROMPT_CATEGORY_MAP = {
-    1: "basic_question",
-    2: "rag_question",
-    3: "bug_report",
-    4: "script_request",
-    5: "changelog_request"
+    1: "rag_question",
+    2: "script_request"
 }
 
 # response streaming helper
@@ -27,10 +24,15 @@ async def stream_response(llm, db, messages, mattermost_context, update_interval
         assistant_text += event.content
         token_count += 1
         if token_count % update_interval == 0:
-            await async_update_post(mattermost_context, assistant_text)
+            try:
+                await asyncio.wait_for(async_update_post(mattermost_context, assistant_text), timeout=0.5) # avoid blocking
+            except Exception as error:
+                print("Skipping async_update_post():", error)
+                continue
 
     # manual source citation
     if links:
+        links = list(dict.fromkeys(links)) # deduplicate links
         sources_suffix = "\n\n**Sources:**\n"
         sources_suffix += "\n".join(f"{i + 1}. {link}" for i, link in enumerate(links))
         print(sources_suffix)
@@ -50,10 +52,7 @@ async def classify_prompt(llm, prompt, message_history, mattermost_context):
     user_message = HumanMessage(content=user_text.format(conversation_history=messages_to_string(message_history), question=prompt))
     messages = [system_message, user_message]
 
-    old_temperature = llm.temperature
-    llm.temperature = 0.0
-    assistant_message = await llm.ainvoke(messages, config={"callbacks": [TRACING_HANDLER]})
-    llm.temperature = old_temperature  # restore original temperature
+    assistant_message = await ainvoke_deterministic_llm(llm, messages, callbacks=[TRACING_HANDLER])
     for state in PROMPT_CATEGORY_MAP.keys():
         if str(state) in assistant_message.content:
             return state
@@ -92,7 +91,7 @@ async def generate_search_query(llm, prompt, message_history, mattermost_context
 
 async def retrieve_documents(db, search_query, mattermost_context):
     await async_update_post(mattermost_context, "📄 _Searching for documents..._")
-    retrieved_docs = await invoke_db_config(db, search_query, callbacks=[TRACING_HANDLER])
+    retrieved_docs = await ainvoke_db_config(db, search_query, callbacks=[TRACING_HANDLER])
     # retrieved_docs = await db.ainvoke(search_query, config={"callbacks": [TRACING_HANDLER]})
     if isinstance(retrieved_docs, list):
         retrieved_docs = [Document(page_content=doc.page_content, metadata={"link": doc.metadata.get("link")}) for doc in retrieved_docs]
@@ -121,9 +120,16 @@ async def rag_response(llm, db, prompt, message_history=None, mattermost_context
     return assistant_text
 
 # SCRIPT REQUEST
-async def script_response(llm, db, prompt, message_history, mattermost_context):
+async def script_confirmation_response(llm, db, prompt, message_history, mattermost_context):
+    await async_update_post(mattermost_context, "🤖 _Generating response..._")
+
+    assistant_text = prompts.script_confirmation_response
+    await async_update_post(mattermost_context, assistant_text)
+    return assistant_text
+
+async def script_generation_response(llm, db, prompt, message_history, mattermost_context):
     system_message = prompts.script_response_system_message
-    user_text = prompts.script_prompt_template.format(conversation_history=messages_to_string(message_history), user_message=prompt, script_template=prompts.prototype_script_template, variable_definitions=prompts.prototype_variable_definitions)
+    user_text = prompts.script_prompt_template.format(conversation_history=messages_to_string(message_history), user_message=prompt, script_template=prompts.script_template, variable_definitions=prompts.variable_definitions)
     messages = [system_message, user_text]
 
     assistant_text = await stream_response(llm, db, messages, mattermost_context, status="💻 _Generating script..._") # custom status
@@ -143,7 +149,8 @@ VALID_PARAMS = {
         "default": MED_DB_CONFIG,
         "low": LOW_DB_CONFIG,
         "med": MED_DB_CONFIG,
-        "high": HIGH_DB_CONFIG
+        "high": HIGH_DB_CONFIG,
+        "max": MAX_DB_CONFIG
     }
 }
 
@@ -186,11 +193,8 @@ def get_db_name(db):
 
 
 RESPONSE_MAP = {
-    1: basic_response,
-    2: rag_response,
-    3: ticket_response,
-    4: script_response,
-    5: basic_response
+    1: rag_response,
+    2: script_generation_response
 }
 
 # there is no additional latency caused by Mattermost interface!
@@ -209,7 +213,8 @@ async def qa_pipeline(question, message_history=None, feedback=True, mattermost_
             question_category = await classify_prompt(llm, question, message_history, mattermost_context)
             print("QUESTION CLASSIFICATION:", PROMPT_CATEGORY_MAP[question_category])
 
-            answer = await rag_response(llm, db, question, message_history, mattermost_context) # TODO rag response is hard coded for now
+            # TODO add script confirmation response
+            answer = await RESPONSE_MAP[question_category](llm, db, question, message_history, mattermost_context)
             tags = []
             tags.append(f"mode:{'dev' if dev_mode else 'prod'}")
             tags.append(f"model:{get_llm_name(llm)}")

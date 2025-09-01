@@ -1,0 +1,2 @@
+Final chatbot version results are consistent with previous.
+Semantic similarity is calculated with large embeddings.

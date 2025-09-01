@@ -74,6 +74,13 @@ OLD_GEMMA = ChatOpenAI(
 # TODO change the default LLM here
 LLM = External.QWEN
 
+async def ainvoke_deterministic_llm(llm, messages, callbacks=None):
+    old_temperature = llm.temperature
+    llm.temperature = 0.0
+    assistant_message = await llm.ainvoke(messages, config={"callbacks": callbacks})
+    llm.temperature = old_temperature  # restore original temperature
+    return assistant_message
+
 
 EMBEDDINGS = HuggingFaceEmbeddings(
     model_name=os.getenv("HF_EMBEDDINGS_REPO"),
@@ -115,7 +122,7 @@ COMPRESSION_RETRIEVER = ContextualCompressionRetriever(
 DB = COMPRESSION_RETRIEVER
 
 
-async def invoke_db_config(db_config, search_query, callbacks=None):
+async def ainvoke_db_config(db_config, search_query, callbacks=None):
     db = db_config.get("db")
 
     old_top_k = db.base_retriever.search_kwargs.get("k")
@@ -155,6 +162,14 @@ HIGH_DB_CONFIG = {
     "name": "high recall",
     "top_k": 75,
     "top_n": 15,
+    "similarity_threshold": 0.5
+}
+
+MAX_DB_CONFIG = {
+    "db": DB,
+    "name": "maximum recall",
+    "top_k": 100,
+    "top_n": 20,
     "similarity_threshold": 0.5
 }
 
