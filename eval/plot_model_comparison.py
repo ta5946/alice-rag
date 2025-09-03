@@ -6,8 +6,8 @@ import matplotlib.patches as mpatches
 
 
 # plot configuration
-RESULT_DIR = "eval/results/models/external_mistral_judge"
-PLOT_DIR = "img/plots/models/external_mistral_judge"
+RESULT_DIR = "eval/results/models/external_qwen_judge"
+PLOT_DIR = "img/plots/models/external_qwen_judge"
 MODEL_FILES = [
     {
         "before": "base_old_qwen.json",
@@ -134,6 +134,7 @@ def plot_metric(metric, y_label, y_min=None, y_max=None):
 
 if __name__ == "__main__":
     plot_metric("bleu_score", "BLEU score ∈ [0, 1]", 0, 0.12)
+    plot_metric("rouge_1_score", "ROUGE-1 score ∈ [0, 1]", 0, 0.35)
     plot_metric("rouge_l_score", "ROUGE-L score ∈ [0, 1]", 0, 0.25)
     plot_metric("semantic_similarity", "Semantic similarity score ∈ [0, 1]", 0.6, 0.9)
     plot_metric("llm_judge_score", "LLM-as-judge score ∈ [1, 5]", 1, 5)

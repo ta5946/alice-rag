@@ -1,0 +1,9 @@
+REPOSITORY                      TAG           DIGEST                                                                    IMAGE ID       CREATED        SIZE
+ghcr.io/open-webui/open-webui   v0.6.18       sha256:ff87dd7605720f33411d87ed5550357b665cec4880378176f2f95bfe751f5e32   954d675f1d23   6 weeks ago    4.78GB
+langfuse/langfuse-worker        3             sha256:65c39f22e42553cc0bcd94736e0bfa892a0600d46c2b42310e1cb45b6f316e2d   5e486b9d73f2   2 months ago   1.32GB
+langfuse/langfuse               3             sha256:7f9bdf2ee8b6cb27a4d564ddacceedb64789f1d75fa2cc66b341ab23a2e8928a   3d91a657f4d4   2 months ago   887MB
+ghcr.io/ggml-org/llama.cpp      server-cuda   sha256:7da7fb0cca3ff4f6c28511fc4d8d1220afb2c2cd3b18a85cae09d11c64f56773   5edd72fb2f09   2 months ago   2.58GB
+minio/minio                     latest        sha256:064117214caceaa8d8a90ef7caa58f2b2aeb316b5156afe9ee8da5b4d83e12c8   c4260bcf2c25   2 months ago   175MB
+postgres                        latest        sha256:3962158596daaef3682838cc8eb0e719ad1ce520f88e34596ce8d5de1b6330a1   445ed93b882f   2 months ago   438MB
+clickhouse/clickhouse-server    25.5.2        sha256:8b94fc9559b96cf12a23050fd19522ba63d557e0ae8d61ef281ce9485ed0410f   d8a6e6f39a54   3 months ago   691MB
+redis                           7             sha256:7b5ee51c14cf5febd4adde3a4b6cced72efdf154df7e9a0383163b13e16e9091   17c1c1b96fd1   3 months ago   117MB
