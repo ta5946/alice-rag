@@ -58,6 +58,7 @@ def plot_score_and_time(metric, y_label, y_min=None, y_max=None):
                  color=SCORE_COLOR, capsize=4, capthick=2, marker="o", markersize=5)
 
     ax1.set_xticks(x)
+    ax1.axvline(x=0.5, color='dimgray', linestyle='--', linewidth=2)
     ax1.set_xticklabels(labels, rotation=30)
     ax1.set_xlabel("Database configuration", fontsize=12)
     ax1.set_ylim(y_min, y_max)

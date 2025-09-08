@@ -207,7 +207,7 @@ async def qa_pipeline(question, message_history=None, feedback=True, mattermost_
     db = chatbot_params.get("db")
     try:
         with TRACING_CLIENT.start_as_current_span(
-                name="basic_rag_qa",
+                name="askALICE RAG",
                 input={"question": question, "messages": message_history}
         ) as qa_trace:
             question_category = await classify_prompt(llm, question, message_history, mattermost_context)

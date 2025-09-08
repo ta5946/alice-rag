@@ -533,6 +533,24 @@ _We should repeat that in the final evaluation with._
 - Try to include analysis documentation,
 - Try to include synthetic data,
 
+#### Results:
+
+Below are the final results of different LLMs with and without the RAG pipeline.
+We also observed how increasing the recall parameters affects chatbot performance and latency.
+
+1. Model comparison:
+![Qwen-as-judge comparison](/img/plots/models/external_qwen_judge/llm_judge_score_comparison.png)
+![Semantic similarity comparison](/img/plots/models/external_qwen_judge/semantic_similarity_comparison.png)
+![ROUGE-L score comparison](/img/plots/models/external_qwen_judge/rouge_l_score_comparison.png)
+![Average response time comparison](/img/plots/models/external_qwen_judge/time_comparison.png)
+
+2. Database configuration comparison:
+![Qwen-as-judge and response time](/img/plots/configurations/external_qwen_judge/llm_judge_score_and_time_comparison.png)
+![Semantic similarity and response time](/img/plots/configurations/external_qwen_judge/semantic_similarity_and_time_comparison.png)
+![ROUGE-L score and response time](/img/plots/configurations/external_qwen_judge/rouge_l_score_and_time_comparison.png)
+
+For future evaluations, more metrics are available here: https://wandb.ai/onlineinference/genai-research/reports/LLM-evaluation-metrics-A-comprehensive-guide-for-large-language-models--VmlldzoxMjU5ODA4NA
+
 
 ## Knowledge base
 
