@@ -24,3 +24,5 @@ A set of prototype scripts for hosting a minimal RAG chatbot for ALICE, more spe
 - `run.py`: Starts the chatbot service and connects it to Mattermost.
 
 Project outline and goals are available at: https://codimd.web.cern.ch/JgVlNcgvTjC38GURvriLhA.
+
+For further project development, hardware requirements and reproducibility, please take a look at the [developer notes](docs/developer_notes.md).

@@ -1,4 +1,4 @@
-# ALICE chatbot development notes
+# AskALICE chatbot technical notes
 
 _27. 6. 2025_
 

@@ -9,27 +9,74 @@ from scipy.stats import zscore, pearsonr, spearmanr
 
 RESULTS_DIR = "eval/results/1_sample"
 PLOT_DIR = "img/plots/correlations"
+MODEL_FOLDERS = [
+    {
+        "folder": "external_deepseek_judge",
+        "label": "DeepSeek-R1-Distill-32B"
+    },
+    {
+        "folder": "external_gemma_judge",
+        "label": "gemma-3-27B-it"
+    },
+    {
+        "folder": "external_gpt_judge",
+        "label": "gpt-oss-20b"
+    },
+    {
+        "folder": "external_mistral_judge",
+        "label": "Mistral-Small-3.2-24B-Instruct"
+    },
+    {
+        "folder": "external_qwen_judge",
+        "label": "Qwen3-30B-A3B-Instruct"
+    },
+    {
+        "folder": "gemini_judge",
+        "label": "Gemini-2.5-Flash"
+    },
+    {
+        "folder": "gemini_lite_judge",
+        "label": "Gemini-2.5-Flash-Lite"
+    },
+    {
+        "folder": "gemma_judge",
+        "label": "gemma-2-9b-it"
+    },
+    {
+        "folder": "llama_judge",
+        "label": "Meta-Llama-3.1-8B-Instruct"
+    },
+    {
+        "folder": "mistral_judge",
+        "label": "Mistral-7B-Instruct-v0.3"
+    },
+    {
+        "folder": "qwen2.5_judge",
+        "label": "Qwen2.5-7B-Instruct"
+    }
+]
 
-def plot_pearson_heatmap(pearson_matrix, folder_names):
+
+def plot_pearson_heatmap(pearson_matrix, labels):
     plt.figure(figsize=(12, 10))
-    sns.heatmap(pearson_matrix, annot=True, cmap="coolwarm", center=0, xticklabels=folder_names, yticklabels=folder_names)
-    plt.title("LLM Judge Pearson Correlation")
+    sns.heatmap(pearson_matrix, annot=True, cmap="coolwarm", xticklabels=labels, yticklabels=labels, center=0.5)
+    plt.title("LLM-as-judge score Pearson coorelations between models")
     plt.tight_layout()
     plt.savefig(os.path.join(PLOT_DIR, "pearson_correlation_heatmap.png"))
     plt.show()
 
-def plot_spearman_heatmap(spearman_matrix, folder_names):
+def plot_spearman_heatmap(spearman_matrix, labels):
     plt.figure(figsize=(12, 10))
-    sns.heatmap(spearman_matrix, annot=True, cmap="coolwarm", center=0, xticklabels=folder_names, yticklabels=folder_names)
-    plt.title("LLM Judge Spearman Correlation")
+    sns.heatmap(spearman_matrix, annot=True, cmap="coolwarm", xticklabels=labels, yticklabels=labels, center=0.5)
+    plt.title("LLM-as-judge score Spearman coorelations between models")
     plt.tight_layout()
     plt.savefig(os.path.join(PLOT_DIR, "spearman_correlation_heatmap.png"))
     plt.show()
 
-def plot_rmse_heatmap(rmse_matrix, folder_names):
+def plot_rmse_heatmap(rmse_matrix, labels):
     plt.figure(figsize=(12, 10))
-    sns.heatmap(rmse_matrix, annot=True, cmap="coolwarm", xticklabels=folder_names, yticklabels=folder_names)
-    plt.title("LLM Judge Root Mean Squared Error")
+    sns.heatmap(rmse_matrix, annot=True, cmap="coolwarm", xticklabels=labels, yticklabels=labels)
+    plt.title("LLM-as-judge score root mean squared errors (RMSE) between models")
     plt.tight_layout()
     plt.savefig(os.path.join(PLOT_DIR, "rmse_heatmap.png"))
     plt.show()
@@ -38,7 +85,7 @@ def plot_rmse_heatmap(rmse_matrix, folder_names):
 if __name__ == "__main__":
     results = {}
     # Load judge scores
-    for folder in sorted(os.listdir(RESULTS_DIR)):
+    for folder in [model_folder["folder"] for model_folder in MODEL_FOLDERS]:
         scores = []
         for file in sorted(os.listdir(f"{RESULTS_DIR}/{folder}")):
             if file.endswith(".json"):
@@ -79,9 +126,9 @@ if __name__ == "__main__":
                 spearman_matrix[i, j] = 1.0
                 rmse_matrix[i, j] = 0.0
 
-    # Generate heatmaps
+    # Generate heatmaps with model labels
     os.makedirs(PLOT_DIR, exist_ok=True)
-    folder_names = [name.replace("_judge", "") for name in folder_names]
-    plot_pearson_heatmap(pearson_matrix, folder_names)
-    plot_spearman_heatmap(spearman_matrix, folder_names)
-    plot_rmse_heatmap(rmse_matrix, folder_names)
+    model_labels = [model_folder["label"] for model_folder in MODEL_FOLDERS]
+    plot_pearson_heatmap(pearson_matrix, model_labels)
+    plot_spearman_heatmap(spearman_matrix, model_labels)
+    plot_rmse_heatmap(rmse_matrix, model_labels)
