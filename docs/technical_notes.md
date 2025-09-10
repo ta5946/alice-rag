@@ -832,3 +832,4 @@ They should be formatted like `#parameter:value` and separated with a whitespace
 ### Knowledge base
 - _Scrape Jira issues from O2 (filters general, production request)_
 - _Cluster Mattermost questions by similarity / topic_
+- **Include the evaluation dataset in the deployed vector database**

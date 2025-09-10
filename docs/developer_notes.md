@@ -50,10 +50,10 @@ Project home:
 ![LangFuse project home](/img/ss/langfuse.png)
 
 Tracing setup:
-- Sign up as a new user
-- Create a new organization
-- Create a new project
-- Use the API key in the chatbot environment (described later)
+- Sign up as a new user,
+- Create a new organization,
+- Create a new project,
+- Use the API key in the chatbot environment (described later).
 
 ### llama.cpp LLM server
 
@@ -169,7 +169,7 @@ And the chatbot can be started with:
 python run.py
 ```
 
-This starts the Mattermost listener that handles direct messages from real users. Logs are available in the `logs/chatbot.log` file.
+This starts the Mattermost listener that handles direct messages from real users. Logs are stored in the `logs/chatbot.log` file.
 
 All scripts should be run from the project **root directory**!
 Besides that, my user `.profile` contains:
@@ -183,6 +183,7 @@ cd ~/rag
 # set python path
 export PYTHONPATH="~/rag:$PYTHONPATH"
 export CUDA_VISIBLE_DEVICES=0
+```
 
 To check the GPU utilization and running processes:
 ```bash
@@ -227,19 +228,19 @@ root     1591843  0.2  3.3 10005204 1100108 ?    Ssl  Sep03  23:43 /usr/local/bi
 
 ## Key files and directories
 
-Below is a brief description of the most important files and directories in this project. Also take a look at the utilities and dependent files!
+Below is a brief description of the most important files and directories in this project. Also take a look at the utilities and **dependent files**!
 
 | File                                         | Description                                                |
 |----------------------------------------------|------------------------------------------------------------|
 | `run.py`                                     | Main script to run the chatbot service                     |
-| `.env.example`                               | Example environment variables to be configured.            |
-| `logs/chatbot.log`                           | Chatbot logs.                                              |
+| `.env.example`                               | Example environment variables to be configured             |
+| `logs/chatbot.log`                           | Chatbot logs                                               |
 | `src/data_indexer/index.py`                  | Script to create or update the vector database             |
-| `src/data_indexer/knowledge_base.yml`        | Definition of GitHub repositories and file types.          |
-| `src/chatbot/basic_rag_qa.py`                | Simulation and analysis RAG pipeline implementation.       |
-| `src/chatbot/langchain_components.py`        | Generic LangChain components.                              |
-| `src/chatbot/simulation_chatbot_prompts.py`  | Simulation, analysis and anchoredMC LLM prompts.           |
-| `src/chatbot/mattermost_listener.py`         | Service that handles Mattermost messages.                  |
+| `src/data_indexer/knowledge_base.yml`        | Definition of GitHub repositories and file types           |
+| `src/chatbot/basic_rag_qa.py`                | Simulation / analysis RAG pipeline implementation          |
+| `src/chatbot/langchain_components.py`        | Generic LangChain components                               |
+| `src/chatbot/simulation_chatbot_prompts.py`  | Simulation, analysis and anchoredMC LLM prompts            |
+| `src/chatbot/mattermost_listener.py`         | Service that handles Mattermost messages                   |
 | `eval/datasets/final_expert_qa_dataset.json` | Final expert evaluation dataset (35 question-answer pairs) |
 | `data/knowledge_base`                        | Files that are also included in the current knowledge base |
 
@@ -254,7 +255,7 @@ QWEN = ChatOpenAI(
 )
 ```
 
-And then define it in `basic_rag_qa.py` in VALID_PARAMS["model"].
+And then define it in `basic_rag_qa.py` with VALID_PARAMS["model"].
 
 ### How to change the embeddings?
 
@@ -281,7 +282,7 @@ LOW_DB_CONFIG = {
 }
 ```
 
-And use it in `basic_rag_qa.py` in VALID_PARAMS["db_config"].
+And use it in `basic_rag_qa.py` with VALID_PARAMS["db"].
 
 
 _If something does not work as expected, always feel free to contact me [tjas.ajdovec@gmail.com](mailto:tjas.ajdovec@gmail.com)_
