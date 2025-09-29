@@ -1,6 +1,6 @@
-# ALICE chatbot
+# AskALICE chatbot
 
-A set of prototype scripts for hosting a minimal RAG chatbot for ALICE, more specifically the O2 simulation documentation.
+A set of prototype scripts for hosting a minimal RAG chatbot for ALICE, more specifically the O2 framework simulation and analysis documentation.
 
 
 ## Repository structure:
