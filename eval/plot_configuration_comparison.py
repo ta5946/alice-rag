@@ -3,31 +3,17 @@ import json
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 RESULT_DIR = "eval/results/vectorstores/external_qwen_judge"
 PLOT_DIR = "img/plots/configurations/external_qwen_judge"
 SCORE_COLOR = "mediumblue"
 TIME_COLOR = "firebrick"
 CONFIG_FILES = [
-    {
-        "file": "base.json",
-        "label": "No RAG\n(n=0)"
-    },
-    {
-        "file": "analysis_bge_base_low.json",
-        "label": "Low recall\n(n=5)"
-    },
-    {
-        "file": "analysis_bge_base_med.json",
-        "label": "Medium recall\n(n=10)"
-    },
-    {
-        "file": "analysis_bge_base_high.json",
-        "label": "High recall\n(n=15)"
-    },
-    {
-        "file": "analysis_bge_base_max.json",
-        "label": "Maximum recall\n(n=20)"
-    }
+    {"file": "base.json", "label": "No RAG\n(n=0)"},
+    {"file": "analysis_bge_base_low.json", "label": "Low recall\n(n=5)"},
+    {"file": "analysis_bge_base_med.json", "label": "Medium recall\n(n=10)"},
+    {"file": "analysis_bge_base_high.json", "label": "High recall\n(n=15)"},
+    {"file": "analysis_bge_base_max.json", "label": "Maximum recall\n(n=20)"},
 ]
 
 

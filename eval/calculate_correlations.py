@@ -10,50 +10,17 @@ from scipy.stats import zscore, pearsonr, spearmanr
 RESULTS_DIR = "eval/results/1_sample"
 PLOT_DIR = "img/plots/correlations"
 MODEL_FOLDERS = [
-    {
-        "folder": "external_deepseek_judge",
-        "label": "DeepSeek-R1-Distill-32B"
-    },
-    {
-        "folder": "external_gemma_judge",
-        "label": "gemma-3-27B-it"
-    },
-    {
-        "folder": "external_gpt_judge",
-        "label": "gpt-oss-20b"
-    },
-    {
-        "folder": "external_mistral_judge",
-        "label": "Mistral-Small-3.2-24B-Instruct"
-    },
-    {
-        "folder": "external_qwen_judge",
-        "label": "Qwen3-30B-A3B-Instruct"
-    },
-    {
-        "folder": "gemini_judge",
-        "label": "Gemini-2.5-Flash"
-    },
-    {
-        "folder": "gemini_lite_judge",
-        "label": "Gemini-2.5-Flash-Lite"
-    },
-    {
-        "folder": "gemma_judge",
-        "label": "gemma-2-9b-it"
-    },
-    {
-        "folder": "llama_judge",
-        "label": "Meta-Llama-3.1-8B-Instruct"
-    },
-    {
-        "folder": "mistral_judge",
-        "label": "Mistral-7B-Instruct-v0.3"
-    },
-    {
-        "folder": "qwen2.5_judge",
-        "label": "Qwen2.5-7B-Instruct"
-    }
+    {"folder": "gemini_judge", "label": "Gemini-2.5-Flash"},
+    {"folder": "gemini_lite_judge", "label": "Gemini-2.5-Flash-Lite"},
+    {"folder": "external_qwen_judge", "label": "Qwen3-30B-A3B-Instruct"},
+    {"folder": "external_gemma_judge", "label": "gemma-3-27B-it"},
+    {"folder": "external_deepseek_judge", "label": "DeepSeek-R1-Distill-32B"},
+    {"folder": "external_gpt_judge", "label": "gpt-oss-20b"},
+    {"folder": "external_mistral_judge", "label": "Mistral-Small-3.2-24B-Instruct"},
+    {"folder": "gemma_judge", "label": "gemma-2-9b-it"},
+    {"folder": "mistral_judge", "label": "Mistral-7B-Instruct-v0.3"},
+    {"folder": "qwen2.5_judge", "label": "Qwen2.5-7B-Instruct"},
+    {"folder": "llama_judge", "label": "Meta-Llama-3.1-8B-Instruct"}
 ]
 
 
@@ -105,7 +72,12 @@ if __name__ == "__main__":
             s1 = results[f1]
             s2 = results[f2]
 
-            if f1 < f2:
+            if f1 == f2:
+                # Diagonal elements
+                pearson_matrix[i, j] = 1.0
+                spearman_matrix[i, j] = 1.0
+                rmse_matrix[i, j] = 0.0
+            else:
                 # Normalize scores
                 d1 = zscore(s1)
                 d2 = zscore(s2)
@@ -120,11 +92,6 @@ if __name__ == "__main__":
                 pearson_matrix[i, j] = pearson_matrix[j, i] = pearson
                 spearman_matrix[i, j] = spearman_matrix[j, i] = spearman
                 rmse_matrix[i, j] = rmse_matrix[j, i] = rmse
-            elif f1 == f2:
-                # Diagonal elements
-                pearson_matrix[i, j] = 1.0
-                spearman_matrix[i, j] = 1.0
-                rmse_matrix[i, j] = 0.0
 
     # Generate heatmaps with model labels
     os.makedirs(PLOT_DIR, exist_ok=True)

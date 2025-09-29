@@ -12,6 +12,7 @@ RESULT_DIR = "eval/results/final"
 JUDGES = [External.QWEN]
 TIMEOUT = 0
 
+
 def single_calculate_results(answer_path, judge, timeout, result_path):
     # load answers
     with open(answer_path, "r") as answer_file:

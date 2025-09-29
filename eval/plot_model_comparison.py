@@ -53,6 +53,7 @@ MODEL_FILES = [
     }
 ]
 
+
 def plot_metric(metric, y_label, y_min=None, y_max=None):
     plt.figure(figsize=(14, 8))
     before_averages = []

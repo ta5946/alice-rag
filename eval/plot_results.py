@@ -17,6 +17,7 @@ MODEL_COLORS = [
     "#ff851b",  # bright orange
 ]
 
+
 def plot_metric(metric, y_label, y_min=None, y_max=None):
     plt.figure(figsize=(12, 8))
     for result, model, color in zip(MODEL_RESULTS, MODEL_NAMES, MODEL_COLORS):

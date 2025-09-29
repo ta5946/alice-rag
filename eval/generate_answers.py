@@ -25,6 +25,7 @@ ANSWER_GENERATOR = partial(rag_response, include_links=False)
 ANSWER_PATH = "eval/answers/final/external_qwen_bge_m3_med.json"
 N_ANSWERS = 5
 
+
 async def generate_answers():
     # load dataset
     with open(DATASET_PATH, "r") as dataset_file:
